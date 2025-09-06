@@ -918,6 +918,24 @@ public class Leetcode
         return d1.Count == d2.Count;
     }
 
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2, int remainder)
+    {
+        if (l1 == null && l2 == null)
+            if (remainder == 0)
+                return null;
+            else return new ListNode(remainder);
+
+
+                int x = l1 == null ? 0 : l1.val;
+        int y = l2 == null ? 0 : l2.val;
+        int val = (remainder + x + y) % 10;
+        remainder = (remainder + x + y) / 10;
+
+        ListNode n = new ListNode(val);
+        n.next = AddTwoNumbers(l1?.next, l2?.next, remainder);
+
+        return n;
+    }
 
     public static void Main(string[] args)
     {
