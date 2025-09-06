@@ -891,6 +891,33 @@ public class Leetcode
         }
     }
 
+    public bool WordPattern(string pattern, string s)
+    {
+        if (string.IsNullOrEmpty(pattern) || string.IsNullOrEmpty(s))
+            return false;
+
+        Dictionary<char, string> d1 = new Dictionary<char, string>();
+        Dictionary<string, char> d2 = new Dictionary<string, char>();
+
+        string[] strArray = s.Split(" ");
+        if (pattern.Length != strArray.Length)
+            return false;
+
+        for (int i = 0; i < pattern.Length; i++)
+        {
+            if (!d1.ContainsKey(pattern[i]))
+                d1[pattern[i]] = strArray[i];
+            else if (d1[pattern[i]] != strArray[i])
+                return false;
+
+            if (!d2.ContainsKey(strArray[i]))
+                d2[strArray[i]] = pattern[i];
+            else if (d2[strArray[i]] != pattern[i])
+                return false;
+        }
+        return d1.Count == d2.Count;
+    }
+
 
     public static void Main(string[] args)
     {
