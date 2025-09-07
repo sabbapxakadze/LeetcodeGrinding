@@ -491,7 +491,7 @@ public class Leetcode
 
         Dictionary<int, int> d = new Dictionary<int, int>();
         int c = 0;
-        
+
         foreach (int i in nums)
         {
             if (d.ContainsKey(i))
@@ -570,7 +570,7 @@ public class Leetcode
                 newQ.Enqueue(q.Dequeue());
             }
             int res = q.Peek();
-            newQ.Enqueue(q.Dequeue()); 
+            newQ.Enqueue(q.Dequeue());
             q = newQ;
             return res;
         }
@@ -730,7 +730,7 @@ public class Leetcode
         if (s.Length != t.Length)
             return false;
 
-        List<char> set = [..s];
+        List<char> set = [.. s];
 
         foreach (char c in t)
         {
@@ -753,7 +753,7 @@ public class Leetcode
         }
 
         List<string> l = new List<string>();
-        
+
 
         if (root.left != null)
         {
@@ -926,7 +926,7 @@ public class Leetcode
             else return new ListNode(remainder);
 
 
-                int x = l1 == null ? 0 : l1.val;
+        int x = l1 == null ? 0 : l1.val;
         int y = l2 == null ? 0 : l2.val;
         int val = (remainder + x + y) % 10;
         remainder = (remainder + x + y) / 10;
@@ -935,6 +935,65 @@ public class Leetcode
         n.next = AddTwoNumbers(l1?.next, l2?.next, remainder);
 
         return n;
+    }
+
+    public bool CanWinNim(int n, Dictionary<int, bool>? memo = null)
+    {
+        //    memo ??= new Dictionary<int, bool>();
+        //    if (memo.ContainsKey(n))
+        //        return memo[n];
+
+        //    if (n <= 3)
+        //        return true;
+
+        //    if (n == 4)
+        //        return false;
+
+        //    bool result = !CanWinNim(n - 1, memo) ||
+        //                  !CanWinNim(n - 2, memo) ||
+        //                  !CanWinNim(n - 3, memo);
+
+        //    memo[n] = result;
+        //    return memo[n]; This is correct but on big inputs stack gets BOOMED.
+        //                      So I tried Induction on this one :D
+        //                      And so on it deduces that CanWinNim(n) = n % 4 != 0 :DDDDDD
+        return n % 4 != 0;
+    }
+
+    public class NumArray
+    {
+        int[] nums;
+        public NumArray(int[] nums)
+        {
+            this.nums = nums;
+        }
+
+        public int SumRange(int left, int right)
+        {
+            if (left < 0 || right >= nums.Length)
+                return -1;
+
+            if (left > right)
+                return -1;
+
+            int sum = 0;
+            while (left <= right)
+            {
+                sum += nums[left];
+                left++;
+            }
+            return sum;
+        }
+    }
+
+    public bool IsPowerOfThree(int n)
+    {
+        if (n < 1)
+            return false;
+        if (n == 1)
+            return true;
+        int rem = n % 3;
+        return rem == 0 && IsPowerOfThree(n / 3);
     }
 
     public static void Main(string[] args)
