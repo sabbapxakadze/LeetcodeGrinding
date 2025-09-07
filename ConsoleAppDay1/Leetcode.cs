@@ -1029,7 +1029,38 @@ public class Leetcode
         return true;
     }
 
+    public void ReverseString(char[] s)
+    {
+        if (s == null)
+            return;
+        if (s.Length == 0)
+            return;
 
+        for (int i = 0, j = s.Length - 1; i <= j; i++, j--)
+        {
+            char temp = s[i];
+            s[i] = s[j];
+            s[j] = temp;
+        }
+    }
+    public int[] Intersection(int[] nums1, int[] nums2)
+    {
+        if (nums1 == null || nums2 == null)
+            return null;
+
+        Dictionary<int, bool> d = nums1.
+            Distinct().
+            ToDictionary(x => x, x => false);
+
+        foreach (int i in nums2)
+        {
+            if (d.ContainsKey(i))
+            {
+                d[i] = true;
+            }
+        }
+        return d.Where(x => x.Value == true).Select(x => x.Key).ToArray();
+    }
 
 
     public static void Main(string[] args)
