@@ -1172,6 +1172,55 @@ public class Leetcode
         return d.FirstOrDefault(x => x.Value == 1).Key;
     }
 
+    public IList<string> ReadBinaryWatch(int turnedOn)
+    {
+        List<string> res = new List<string>();
+
+        for(int h = 0; h < 12; h++)
+        {
+            int hBits = BitCount(h);
+            for (int m = 0; m < 60; m++)
+            {
+                int mBits = BitCount(m);
+                if (hBits + mBits == turnedOn)
+                {
+                    if (m < 10)
+                        res.Add($"{h}:0{m}");
+                    else
+                        res.Add($"{h}:{m}");
+                }
+            }
+        }
+        return res;
+    }
+    public int BitCount(int x)
+    {
+        int c = 0;
+        while (x != 0)
+        {
+            c += x & 1;
+            x >>= 1;
+        }
+        return c;
+    }
+
+    public string ToHex(int num)
+    {
+        if (num == 0)
+            return "0";
+
+        string hex = "0123456789abcdef";
+        string res = "";
+        uint n = (uint)num;
+
+        while (n != 0)
+        {
+            char c = hex[(int)(n % 16)];
+            n /= 16;
+            res = c + res;
+        }
+        return res;
+    }
     public static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
