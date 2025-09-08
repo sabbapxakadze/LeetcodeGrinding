@@ -375,15 +375,6 @@ public class Leetcode
         return GetIntersectionNode(headA, headB, null);
     }
 
-
-
-
-    public string ConvertToTitle(int columnNumber)
-    {
-        string x = columnNumber.ToString();
-        return x;
-    }
-
     public int ReverseBits(int n)
     {
         uint result = 0;
@@ -1221,6 +1212,23 @@ public class Leetcode
         }
         return res;
     }
+    public string ConvertToTitle(int columnNumber)
+    {
+        if (columnNumber == 0)
+            return "";
+
+        string res = "";
+
+        while (columnNumber > 0)
+        {
+            int x = columnNumber-- % 26;
+            char c = (char)('A' + x);
+            res = c + res;
+            columnNumber /= 26;
+        }
+        return res;
+    }
+    
     public static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
