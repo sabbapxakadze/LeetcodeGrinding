@@ -1062,6 +1062,74 @@ public class Leetcode
         return d.Where(x => x.Value == true).Select(x => x.Key).ToArray();
     }
 
+    public int[] Intersect(int[] nums1, int[] nums2)
+    {
+        if (nums1 == null || nums2 == null)
+            return null;
+
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        List<int> l = new List<int>();
+
+        foreach (int i in nums1)
+        {
+            if (d.ContainsKey(i))
+                d[i]++;
+            else
+                d[i] = 1;
+        }
+
+        foreach (int i in nums2)
+        {
+            if (d.ContainsKey(i) && d[i] > 0)
+            {
+                l.Add(i);
+                d[i]--;
+            }
+        }
+        return l.ToArray();
+    }
+
+    public bool IsPerfectSquare(int num)
+    {
+        if (num <= 0)
+            return false;
+
+        long i = 0;
+        while (i * i <= num)
+        {
+            if (i * i == num)
+                return true;
+            i++;
+        }
+        return false;
+    }
+
+    public bool CanConstruct(string ransomNote, string magazine)
+    {
+        if (string.IsNullOrEmpty(ransomNote) || string.IsNullOrEmpty(magazine))
+            return false;
+
+        Dictionary<char, int> d = new Dictionary<char, int>();
+        foreach (char c in magazine)
+        {
+            if (d.ContainsKey(c))
+                d[c]++;
+            else
+                d[c] = 1;
+        }
+
+        foreach (char c in ransomNote)
+        {
+            if (d.ContainsKey(c))
+                d[c]--;
+            else
+                return false;
+            if (d[c] < 0)
+                return false;
+        }
+        return true;
+    }
+
 
     public static void Main(string[] args)
     {
