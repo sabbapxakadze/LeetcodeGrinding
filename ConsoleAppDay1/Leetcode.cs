@@ -1130,6 +1130,47 @@ public class Leetcode
         return true;
     }
 
+    public int FirstUniqChar(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return -1;
+
+        Dictionary<char, int> d = new Dictionary<char, int>();
+        foreach (char c in s)
+        {
+            if (d.ContainsKey(c))
+                d[c]++;
+            else
+                d[c] = 1;
+        }
+        
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (d[s[i]] == 1)
+                    return i;
+        }
+        return -1;
+    }
+
+    public char FindTheDifference(string s, string t)
+    {
+        if (string.IsNullOrEmpty(s))
+            return t[0];
+
+        Dictionary<char, int> d = new Dictionary<char, int>();
+        foreach (char c in t)
+        {
+            if (d.ContainsKey(c))
+                d[c]++;
+            else
+                d[c] = 1;
+        }
+        foreach (char c in s)
+        {
+            d[c]--;
+        }
+        return d.FirstOrDefault(x => x.Value == 1).Key;
+    }
 
     public static void Main(string[] args)
     {
