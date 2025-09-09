@@ -1241,6 +1241,77 @@ public class Leetcode
         }
         return (int)c;
     }
+    public int LongestPalindrome(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+        if (s.Length == 1)
+            return 1;
+
+        Dictionary<char, int> d = new Dictionary<char, int>();
+        foreach (char c in s)
+        {
+            if (d.ContainsKey(c))
+                d[c]++;
+            else
+                d[c] = 1;
+        }
+        int res = 0;
+
+        bool odd = false;
+        foreach (var x in d)
+        {
+            if (d[x.Key] % 2 == 1)
+            {
+                odd = true;
+                res += d[x.Key] - 1;
+            }
+            else
+                res += d[x.Key];
+        }
+        return odd ? res + 1 : res;
+    }
+
+    public int ThirdMax(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        if (nums.Length == 1)
+            return nums[0];
+
+
+        long first = long.MinValue;
+        long second = first;
+        long third = second;
+        if (nums.Length == 2)
+        {
+            return Math.Max(nums[0], nums[1]);
+        }
+
+        foreach (int i in nums)
+        {
+            if (i == third || i == second || i == first)
+                continue;
+
+            if (i > first)
+            {
+                third = second;
+                second = first;
+                first = i;
+            }
+            else if (i >= second)
+            {
+                third = second;
+                second = i;
+            }
+            else if (i >= third)
+            {
+                third = i;
+            }
+        }
+        return third == long.MinValue ? (int)first : (int)third;
+    }
 
     public static void Main(string[] args)
     {
