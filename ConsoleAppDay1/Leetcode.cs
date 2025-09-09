@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 
 public class Leetcode
 {
@@ -1312,11 +1314,118 @@ public class Leetcode
         }
         return third == long.MinValue ? (int)first : (int)third;
     }
-
-    public static void Main(string[] args)
+    public string AddStrings(string num1, string num2)
     {
-        Leetcode l = new Leetcode();
-        Console.WriteLine("aa" == "aa");
-    }
+        if (num1 == "0")
+            return num2;
+        if (num2 == "0")
+            return num1;
 
+        int i = num1.Length - 1, j = num2.Length - 1;
+        int reminder = 0;
+        string res = "";
+        while (i >= 0 || j >= 0)
+        {
+            int x = 0, y = 0;
+            if (i >= 0)
+            {
+                x = num1[i--] - '0';
+            }
+            if (j >= 0)
+            {
+                y = num2[j--] - '0';
+            }
+            res = ((reminder + x + y)%10) + res;
+            reminder = (reminder + x + y) / 10;
+        }
+        return reminder == 0 ? res : reminder + res;
+    }
+    public int CountSegments(string s)
+    {
+        if (string.IsNullOrWhiteSpace(s))
+            return 0;
+
+        string fixedStr = FixSpaces(s);
+        return fixedStr.Split(" ").Length;
+    }
+    public string FixSpaces(string s)
+    {
+        StringBuilder sb = new StringBuilder();
+        bool wasSpace = false;
+        foreach (char c in s.Trim())
+        {
+            if (c == ' ')
+            {
+                if (!wasSpace)
+                {
+                    sb.Append(c);
+                    wasSpace = true;
+                }
+            }
+            else
+            {
+                wasSpace = false;
+                sb.Append(c);
+            }
+        }
+        return sb.ToString();
+    }
+    public int ArrangeCoins(int n)
+    {
+        if (n <= 0)
+            return 0;
+        int rows = 0;
+        int index = 1;
+        while (n > 0)
+        {
+            n -= index++;
+            if (n < 0)
+                return rows;
+            rows++;
+        }
+        return rows;
+    }
+    public IList<int> FindDisappearedNumbers(int[] nums)
+    {
+        if (nums.Length == 0 || nums == null)
+            return new List<int>();
+
+        HashSet<int> set = new HashSet<int>(nums);
+        List<int> l = new List<int>();
+
+        for (int i = 1; i <= nums.Length; i++)
+        {
+            if (!set.Contains(i))
+                l.Add(i);
+        }
+        return l;
+    }
+    public int FindContentChildren(int[] g, int[] s)
+    {
+        if (s == null || s.Length == 0)
+            return 0;
+        int count = 0;
+        List<int> children = g.OrderBy(x => x).ToList();
+        List<int> snacks = s.OrderBy(x => x).ToList();
+
+        int i = 0;
+        int j = 0;
+
+        while (i < children.Count && j < snacks.Count)
+        {
+            if (children[i] > snacks[j])
+                j++;
+            else
+            {
+                i++;
+                j++;
+                count++;
+            }
+        }
+        return count;
+    }
+    static void Main(string[] args)
+    {
+
+    }
 }
