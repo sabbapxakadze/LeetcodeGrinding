@@ -1228,7 +1228,20 @@ public class Leetcode
         }
         return res;
     }
-    
+    public int TitleToNumber(string columnTitle)
+    {
+        if (string.IsNullOrEmpty(columnTitle))
+            return 0;
+
+        double c = 0;
+        for (int i = 0; i < columnTitle.Length; i++)
+        {
+            int v = columnTitle[i] - 64;
+            c += v * Math.Pow(26, columnTitle.Length - i - 1);
+        }
+        return (int)c;
+    }
+
     public static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
