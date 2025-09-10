@@ -1424,8 +1424,50 @@ public class Leetcode
         }
         return count;
     }
+    public bool RepeatedSubstringPattern(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return false;
+        if (s.Length == 1)
+            return false;
+
+        
+        int len = 1;
+        while (len < s.Length / 2)
+        {
+            StringBuilder sb = new StringBuilder();
+            int count = s.Length / len;
+            if (s.Length % len != 0)
+            {
+                len++;
+                continue;
+            }
+                
+            while (count != 0)
+            {
+                sb.Append(s.Substring(0, len));
+                count--;
+            }
+            if (sb.ToString() == s)
+                return true;
+            len++;
+        }
+        return false;
+    }
+    public int HammingDistance(int x, int y)
+    {
+        int c = 0;
+        for (int i = 0; i < 32; i++)
+        {
+            c = (x & 1) == (y & 1) ? c : ++c;
+            x >>= 1;
+            y >>= 1;
+        }
+        return c;
+    }
     static void Main(string[] args)
     {
-
+        Leetcode l = new Leetcode();
+        Console.WriteLine(l.RepeatedSubstringPattern("abcdbabc"));
     }
 }
