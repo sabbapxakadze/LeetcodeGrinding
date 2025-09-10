@@ -1136,11 +1136,11 @@ public class Leetcode
             else
                 d[c] = 1;
         }
-        
+
         for (int i = 0; i < s.Length; i++)
         {
             if (d[s[i]] == 1)
-                    return i;
+                return i;
         }
         return -1;
     }
@@ -1169,7 +1169,7 @@ public class Leetcode
     {
         List<string> res = new List<string>();
 
-        for(int h = 0; h < 12; h++)
+        for (int h = 0; h < 12; h++)
         {
             int hBits = BitCount(h);
             for (int m = 0; m < 60; m++)
@@ -1335,7 +1335,7 @@ public class Leetcode
             {
                 y = num2[j--] - '0';
             }
-            res = ((reminder + x + y)%10) + res;
+            res = ((reminder + x + y) % 10) + res;
             reminder = (reminder + x + y) / 10;
         }
         return reminder == 0 ? res : reminder + res;
@@ -1431,7 +1431,7 @@ public class Leetcode
         if (s.Length == 1)
             return false;
 
-        
+
         int len = 1;
         while (len < s.Length / 2)
         {
@@ -1442,7 +1442,7 @@ public class Leetcode
                 len++;
                 continue;
             }
-                
+
             while (count != 0)
             {
                 sb.Append(s.Substring(0, len));
@@ -1484,7 +1484,7 @@ public class Leetcode
                     if (j != 0)
                         minJ = grid[i][j - 1] == 1 ? 2 : 0;
                     res += 4 - minI - minJ;
-                }                
+                }
             }
         }
         return res;
@@ -1505,6 +1505,56 @@ public class Leetcode
             n += Math.Pow(2, i) * (lastBit - '0');
         }
         return (int)n;
+    }
+    public string LicenseKeyFormatting(string s, int k)
+    {
+        string x = s.Replace("-", "").ToUpper();
+        if (x.Length <= k)
+            return x;
+        int rem = x.Length % k;
+        string res = "";
+        int c = 0;
+        if (rem != 0)
+        {
+            while (rem != 0)
+            {
+                res += x[c];
+                c++;
+                rem--;
+            }
+            res += "-";
+        }
+        for (int i = c; i < x.Length; i = i + k)
+        {
+            res += x.Substring(i, k);
+            if (i != x.Length - k)
+            {
+                res += "-";
+            }
+        }
+        return res;
+    }
+    public int FindMaxConsecutiveOnes(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        int i = 0;
+        int max = 0;
+        int temp = 0;
+        while (i < nums.Length)
+        {
+            if (nums[i] == 1)
+            {
+                temp++;
+                if (temp > max)
+                    max = temp;
+            }
+            else
+                temp = 0;
+            i++;
+        }
+        return max;
     }
     static void Main(string[] args)
     {
