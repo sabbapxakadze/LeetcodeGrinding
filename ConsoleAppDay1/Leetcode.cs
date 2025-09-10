@@ -1556,6 +1556,19 @@ public class Leetcode
         }
         return max;
     }
+    public int[] ConstructRectangle(int area)
+    {
+        if (area <= 0)
+            return new int[] { };
+
+        int i = (int)Math.Sqrt(area);
+
+        while (area % i != 0)
+        {
+            i--;
+        }
+        return new int[] { area / i, i };
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
