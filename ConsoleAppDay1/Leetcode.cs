@@ -1465,6 +1465,30 @@ public class Leetcode
         }
         return c;
     }
+    public int IslandPerimeter(int[][] grid)
+    {
+        if (grid == null)
+            return 0;
+        int res = 0;
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[i].Length; j++)
+            {
+                int toAdd = 0;
+                if (grid[i][j] == 1)
+                {
+                    int minI = 0;
+                    if (i != 0)
+                        minI = grid[i - 1][j] == 1 ? 2 : 0;
+                    int minJ = 0;
+                    if (j != 0)
+                        minJ = grid[i][j - 1] == 1 ? 2 : 0;
+                    res += 4 - minI - minJ;
+                }                
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
