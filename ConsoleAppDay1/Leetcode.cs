@@ -1489,6 +1489,23 @@ public class Leetcode
         }
         return res;
     }
+    public int FindComplement(int num)
+    {
+        string res = "";
+        while (num > 0)
+        {
+            int comp = (num & 1) ^ 1;
+            res = comp.ToString() + res;
+            num >>= 1;
+        }
+        double n = 0;
+        for (int i = 0; i < res.Length; i++)
+        {
+            char lastBit = res[res.Length - 1 - i];
+            n += Math.Pow(2, i) * (lastBit - '0');
+        }
+        return (int)n;
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
