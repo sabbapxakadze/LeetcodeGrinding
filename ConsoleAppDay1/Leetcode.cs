@@ -1569,6 +1569,50 @@ public class Leetcode
         }
         return new int[] { area / i, i };
     }
+    public int FindPoisonedDuration(int[] timeSeries, int duration)
+    {
+        if (timeSeries == null || timeSeries.Length == 0)
+            return 0;
+        if (duration == 0)
+            return 0;
+
+        int count = duration;
+
+        for (int i = 1; i < timeSeries.Length; i++)
+        {
+            if (timeSeries[i] - timeSeries[i - 1] < duration)
+                count +=
+                timeSeries[i] - timeSeries[i - 1];
+            else
+                count += duration;
+        }
+        return count;
+    }
+    public int[] NextGreaterElement(int[] nums1, int[] nums2)
+    {
+        if (nums2 == null || nums1 == null)
+            return null;
+
+        Stack<int> s = new Stack<int>();
+        Dictionary<int, int> nexts = new Dictionary<int, int>();
+        foreach (int i in nums2)
+        {
+            while (s.Count != 0 && s.Peek() > i)
+            {
+                nexts[i] = s.Pop();
+            }
+            s.Push(i);
+        }
+        List<int> l = new List<int>();
+        foreach (var item in nums1)
+        {
+            if (!nexts.ContainsKey(item))
+                l.Add(-1);
+            else
+                l.Add(nexts[item]);
+        }
+        return l.ToArray();
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
