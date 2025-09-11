@@ -1667,6 +1667,25 @@ public class Leetcode
         FillMemo(root.left, memo);
         FillMemo(root.right, memo);
     }
+    public string ConvertToBase7(int num)
+    {
+        if (num == 0)
+            return "0";
+
+        int cnt = 0;
+        string res = "";
+        int temp = num;
+        if (temp < 0)
+            temp = -temp;
+
+        while (temp != 0)
+        {
+            int rem = temp % 7;
+            temp /= 7;
+            res = rem + res;
+        }
+        return num < 0 ? $"-{res}" : res;
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
