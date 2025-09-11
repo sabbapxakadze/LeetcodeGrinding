@@ -1613,6 +1613,60 @@ public class Leetcode
         }
         return l.ToArray();
     }
+    public string[] FindWords(string[] words)
+    {
+        if (words == null || words.Length == 0)
+            return null;
+        string f = "QWERTYUIOPqwertyuiop", 
+            s = "ASDFGHJKLasdfghjkl", 
+            t = "ZXCVBNMzxcvbnm";
+        HashSet<char> fRow = new HashSet<char>(f);
+        HashSet<char> sRow = new HashSet<char>(s);
+        HashSet<char> tRow = new HashSet<char>(t);
+
+        List<string> strs = new List<string>();
+        foreach (string w in words)
+        {
+            HashSet<int> i = new HashSet<int>();
+            foreach (char c in w)
+            {
+                if (fRow.Contains(c))
+                    i.Add(1);
+                if (sRow.Contains(c))
+                    i.Add(2);
+                if (tRow.Contains(c))
+                    i.Add(3);
+            }
+            if (i.Count == 1)
+                strs.Add(w);
+        }
+        return strs.ToArray();
+    }
+
+    public int[] FindMode(TreeNode root)
+    {
+        if (root == null)
+            return Array.Empty<int>();
+
+        var memo = new Dictionary<int, int>();
+        FillMemo(root, memo);
+        int max = memo.Max(x => x.Value);
+        return memo.Where(x => x.Value == max)
+            .Select(x => x.Key).ToArray();
+    }
+    public static void FillMemo(TreeNode root, Dictionary<int, int>? memo = null)
+    {
+        memo ??= new Dictionary<int, int>();
+
+        if (root == null)
+            return;
+        if (memo.ContainsKey(root.val))
+            memo[root.val]++;
+        else
+            memo[root.val] = 1;
+        FillMemo(root.left, memo);
+        FillMemo(root.right, memo);
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
