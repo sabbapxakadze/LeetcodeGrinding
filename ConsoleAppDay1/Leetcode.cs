@@ -1751,6 +1751,60 @@ public class Leetcode
             return -1;
         return Math.Max(a.Length, b.Length);
     }
+    public int GetMinimumDifference(TreeNode root)
+    {
+        var list = new List<int>();
+        InOrder(root, list);
+
+        list.Sort();
+        int min = int.MaxValue;
+        for (int i = 1; i < list.Count; i++)
+        {
+            int r = list[i] - list[i - 1];
+            if (r < min)
+                min = r;
+        }
+        return min;
+    }
+    public void InOrder(TreeNode root, List<int> l)
+    {
+        if (root == null)
+            return;
+
+        InOrder(root.left, l);
+        l.Add(root.val);
+        InOrder(root.right, l);
+    }
+    public string ReverseStr(string s, int k)
+    {
+        char[] c = s.ToCharArray();
+
+        for (int st = 0; st < s.Length; st += 2 * k)
+        {
+            int i = st, j = Math.Min(c.Length - 1, st + k - 1);
+            while (i < j)
+            {
+                char temp = c[i];
+                c[i] = c[j];
+                c[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        return new string(c);
+    }
+    //public int DiameterOfBinaryTree(TreeNode root)
+    //{
+    //    if (root == null)
+    //        return 0;
+
+    //    int left = root.left != null ? 1 : 0;
+    //    int right = root.right != null ? 1 : 0;
+
+    //    return left + right
+    //        + Math.Max(DiameterOfBinaryTree(root.left), DiameterOfBinaryTree(root.right));
+    //}
+
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
