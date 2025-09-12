@@ -1617,8 +1617,8 @@ public class Leetcode
     {
         if (words == null || words.Length == 0)
             return null;
-        string f = "QWERTYUIOPqwertyuiop", 
-            s = "ASDFGHJKLasdfghjkl", 
+        string f = "QWERTYUIOPqwertyuiop",
+            s = "ASDFGHJKLasdfghjkl",
             t = "ZXCVBNMzxcvbnm";
         HashSet<char> fRow = new HashSet<char>(f);
         HashSet<char> sRow = new HashSet<char>(s);
@@ -1686,6 +1686,35 @@ public class Leetcode
         }
         return num < 0 ? $"-{res}" : res;
     }
+    public string[] FindRelativeRanks(int[] score)
+    {
+        if (score == null || score.Length == 0)
+            return null;
+
+        int n = score.Length;
+        string[] result = new string[n];
+
+        var sorted = score
+            .Select((val, idx) => new { Value = val, Index = idx })
+            .OrderByDescending(x => x.Value)
+            .ToList();
+
+        for (int i = 0; i < n; i++)
+        {
+            string rank;
+            switch (i)
+            {
+                case 0: rank = "Gold Medal"; break;
+                case 1: rank = "Silver Medal"; break;
+                case 2: rank = "Bronze Medal"; break;
+                default: rank = (i + 1).ToString(); break;
+            }
+            result[sorted[i].Index] = rank;
+        }
+
+        return result;
+    }
+
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
