@@ -1714,7 +1714,43 @@ public class Leetcode
 
         return result;
     }
+    public bool CheckPerfectNumber(int num)
+    {
+        int sum = 0;
+        int i = 1;
+        while (i * i <= num)
+        {
+            if (num % i == 0)
+                sum += i;
+            if (i * i != num)
+                sum += num / i;
+        }
+        return sum - num == num;
+    }
+    public bool DetectCapitalUse(string word)
+    {
+        if (string.IsNullOrEmpty(word))
+            return false;
 
+        int upperCount = 0;
+        bool firstUpper = false;
+        for (int i = 0; i < word.Length; i++)
+        {
+            if (char.IsUpper(word[i]))
+            {
+                upperCount++;
+                firstUpper = i == 0 ? true : false;
+            }
+        }
+        return (upperCount == 0) || (upperCount == word.Length)
+            || (upperCount == 1 && firstUpper);
+    }
+    public int FindLUSlength(string a, string b)
+    {
+        if (a == b)
+            return -1;
+        return Math.Max(a.Length, b.Length);
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
