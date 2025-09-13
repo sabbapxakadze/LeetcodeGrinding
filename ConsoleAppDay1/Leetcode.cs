@@ -1793,17 +1793,101 @@ public class Leetcode
         }
         return new string(c);
     }
-    //public int DiameterOfBinaryTree(TreeNode root)
-    //{
-    //    if (root == null)
-    //        return 0;
+    public int DiameterOfBinaryTree(TreeNode root)
+    {
+        if (root == null)
+            return 0;
 
-    //    int left = root.left != null ? 1 : 0;
-    //    int right = root.right != null ? 1 : 0;
+        int max = 0;
 
-    //    return left + right
-    //        + Math.Max(DiameterOfBinaryTree(root.left), DiameterOfBinaryTree(root.right));
-    //}
+        int DFS(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+            int leftH = DFS(root.left);
+            int rightH = DFS(root.right);
+            max = Math.Max(max, leftH + rightH);
+            return 1 + Math.Max(leftH, rightH);
+        }
+        DFS(root);
+        return max;
+    }
+    public bool CheckRecord(string s)
+    {
+        //A absent P present L late 3 late consecutive A < 2
+        if (string.IsNullOrEmpty(s))
+            return true;
+        int late = 0;
+        int abs = 0;
+        foreach (char c in s)
+        {
+            if (abs >= 2)
+                return false;
+            if (late == 3)
+                return false;
+            if (c != 'L')
+                late = 0;
+            else
+                late++;
+            if (c == 'A')
+                abs++;
+        }
+        return true;
+    }
+    public string ReverseWords(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return "";
+
+        string[] arr = s.Split(" ");
+
+        string ReverseWordsI(string a)
+        {
+            char[] chs = a.ToCharArray();
+            int i = 0, j = a.Length - 1;
+            while (i <= j)
+            {
+                char temp = chs[i];
+                chs[i] = chs[j];
+                chs[j] = temp;
+                i++; j--;
+            }
+            return new string(chs);
+        }
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i] = ReverseWordsI(arr[i]);
+        }
+        return string.Join(" ", arr);
+    }
+    public class Node
+    {
+        public int val;
+        public IList<Node> children;
+        public Node() { }
+        public Node(int _val)
+        {
+            val = _val;
+        }
+        public Node(int _val, IList<Node> _children)
+        {
+            val = _val;
+            children = _children;
+        }
+    }
+    public int MaxDepth(Node root)
+    {
+        if (root == null)
+            return 0;
+        if (root.children == null || root.children.Count == 0)
+            return 1;
+        HashSet<int> s = new HashSet<int>();
+        foreach (var item in root.children)
+        {
+            s.Add(MaxDepth(item));
+        }
+        return 1 + s.Max();
+    }
 
     static void Main(string[] args)
     {
