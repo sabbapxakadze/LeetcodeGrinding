@@ -1888,7 +1888,37 @@ public class Leetcode
         }
         return 1 + s.Max();
     }
+    public int ArrayPairSum(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
 
+        Array.Sort(nums);
+
+        int res = 0;
+        for (int i = 0; i < nums.Length; i+= 2)
+        {
+            res += nums[i];
+        }
+        return res;
+    }
+    //public int FindTilt(TreeNode root)
+    //{
+    //    if (root == null)
+    //        return 0;
+    //    int TreeSum(TreeNode root)
+    //    {
+    //        if (root == null)
+    //            return 0;
+    //        return root.val + FindTilt(root.left) + FindTilt(root.right);
+    //    }
+    //    int leftSum = TreeSum(root.left);
+    //    int rightSum = TreeSum(root.right);
+    //    int tilt = leftSum - rightSum;
+    //    tilt = tilt < 0 ? -1 * (tilt) : tilt;
+
+    //    return tilt + FindTilt(root.left) + FindTilt(root.right);
+    //}
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
