@@ -1902,23 +1902,60 @@ public class Leetcode
         }
         return res;
     }
-    //public int FindTilt(TreeNode root)
-    //{
-    //    if (root == null)
-    //        return 0;
-    //    int TreeSum(TreeNode root)
-    //    {
-    //        if (root == null)
-    //            return 0;
-    //        return root.val + FindTilt(root.left) + FindTilt(root.right);
-    //    }
-    //    int leftSum = TreeSum(root.left);
-    //    int rightSum = TreeSum(root.right);
-    //    int tilt = leftSum - rightSum;
-    //    tilt = tilt < 0 ? -1 * (tilt) : tilt;
+    public int FindTilt(TreeNode root)
+    {
+        if (root == null)
+            return 0;
 
-    //    return tilt + FindTilt(root.left) + FindTilt(root.right);
-    //}
+        int TreeSum(TreeNode root, Dictionary<TreeNode, int>? memo = null)
+        {
+            memo ??= new Dictionary<TreeNode, int>();
+            if (root == null)
+                return 0;
+            if (memo.ContainsKey(root))
+                return memo[root];
+            
+            memo[root] = root.val + TreeSum(root.left, memo) + TreeSum(root.right, memo);
+            return memo[root];
+        }
+        Dictionary<TreeNode, int> memo = new Dictionary<TreeNode, int>();
+        int leftSum = TreeSum(root.left, memo);
+        int rightSum = TreeSum(root.right, memo);
+        int tilt = leftSum - rightSum;
+        tilt = tilt < 0 ? -1 * (tilt) : tilt;
+
+        return tilt + FindTilt(root.left) + FindTilt(root.right);
+    }
+    public int[][] MatrixReshape(int[][] mat, int r, int c)
+    {
+        if (mat == null)
+            return null;
+        if (r * c != mat.Length * mat[0].Length)
+            return mat;
+
+        int[][] arr = new int[r][];
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i] = new int[c];
+        }
+
+        int r1 = 0;
+        int c1 = 0;
+
+        for (int i = 0; i < mat.Length; i++)
+        {
+            for (int j = 0; j < mat[0].Length; j++)
+            {
+                arr[r1][c1++] = mat[i][j];
+                if (c1 == c)
+                {
+                    c1 = 0;
+                    r1++;
+                }
+            }
+        }
+        return arr;
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
