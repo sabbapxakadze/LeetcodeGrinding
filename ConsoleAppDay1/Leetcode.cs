@@ -1956,6 +1956,69 @@ public class Leetcode
         }
         return arr;
     }
+    public bool IsSubtree(TreeNode root, TreeNode subRoot)
+    {
+        if (root == null)
+            return false;
+
+        bool SameTree(TreeNode n, TreeNode m)
+        {
+            if (n == null && m == null)
+                return true;
+            if (n == null || m == null)
+                return false;
+            if (n.val != m.val)
+                return false;
+            return n.val == m.val && SameTree(n.left, m.left) && SameTree(n.right, m.right);
+        }
+
+        if (SameTree(root, subRoot))
+            return true;
+
+        return IsSubtree(root.left, subRoot) ||
+            IsSubtree(root.right, subRoot);
+    }
+    public int DistributeCandies(int[] candyType)
+    {
+        if (candyType == null || candyType.Length == 0)
+            return 0;
+
+        HashSet<int> set = new HashSet<int>(candyType);
+        int size = candyType.Length / 2;
+        if (set.Count > size)
+            return size;
+        else
+            return set.Count;
+    }
+    public IList<int> Preorder(Node root)
+    {
+        if (root == null)
+            return new List<int>();
+
+        List<int> l = new List<int>();
+        l.Add(root.val);
+
+        foreach (var node in root.children)
+        {
+            l.AddRange(Preorder(node));
+        }
+        return l;
+    }
+    public IList<int> Postorder(Node root)
+    {
+        if (root == null)
+            return new List<int>();
+
+        List<int> l = new List<int>();
+        ;
+        foreach (var node in root.children)
+        {
+            l.AddRange(Postorder(node));
+        }
+        l.Add(root.val);
+
+        return l;
+    }
     static void Main(string[] args)
     {
         Leetcode l = new Leetcode();
