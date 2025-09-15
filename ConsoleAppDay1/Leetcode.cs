@@ -2019,9 +2019,33 @@ public class Leetcode
 
         return l;
     }
+    public int FindLHS(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        if (nums.Length == 1)
+            return nums[0];
+
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (int i in nums)
+        {
+            if (d.ContainsKey(i))
+                d[i]++;
+            else
+                d[i] = 1;
+        }
+
+        int max = 0;
+        foreach (var item in d)
+        {
+            if (d.ContainsKey(item.Key + 1))
+                if (max < item.Value + d[item.Key + 1])
+                    max = item.Value + d[item.Key + 1];
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
-        Leetcode l = new Leetcode();
-        Console.WriteLine(l.RepeatedSubstringPattern("abcdbabc"));
+        Dictionary<int, int> d = new Dictionary<int, int>();
     }
 }
