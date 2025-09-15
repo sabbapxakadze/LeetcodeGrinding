@@ -2114,11 +2114,99 @@ public class Leetcode
 
         return Math.Max(max1 * max2 * max3, max1 * min1 * min2);
     }
+    public IList<double> AverageOfLevels(TreeNode root)
+    {
+        if (root == null)
+            return new List<double>();
+
+        void InitMemo(TreeNode root, int lvl = 0,
+        Dictionary<int, List<double>>? memo = null)
+        {
+            if (root == null) return;
+            memo ??= new Dictionary<int, List<double>>();
+
+            if (!memo.ContainsKey(lvl))
+                memo[lvl] = new List<double>();
+
+            memo[lvl].Add(root.val);
+
+            InitMemo(root.left, lvl + 1, memo);
+            InitMemo(root.right, lvl + 1, memo);
+        }
+
+        Dictionary<int, List<double>> memo = new Dictionary<int, List<double>>();
+        InitMemo(root, 1, memo);
+
+        var averages = memo
+                .OrderBy(kv => kv.Key)
+                .Select(kv => kv.Value.Average())
+                .ToList();
+
+        return averages;
+    }
+    public int[] FindErrorNums(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return Array.Empty<int>();
+
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        int numSum = 0;
+        int sum = 0;
+        foreach (int i in nums)
+        {
+            if (d.ContainsKey(i))
+                d[i]++;
+            else
+                d[i] = 1;
+
+            numSum += i;
+        }
+        int x = nums.Length;
+        for (int i = 1; i <= x; i++)
+        {
+            sum += i;
+        }
+     
+        int repeatedNum = d.Where(x => x.Value == 2).Select(x => x.Key).First();
+        int lostNum = repeatedNum - (numSum - sum);
+        return new int[] { repeatedNum, lostNum };
+    }
+    public bool FindTarget(TreeNode root, int k)
+    {
+        if (root == null)
+            return false;
+
+        Dictionary<int, int> d = new Dictionary<int, int>();
+
+        void InitMemo(TreeNode root, Dictionary<int, int>? memo = null)
+        {
+            memo ??= new Dictionary<int, int>();
+            if (root == null)
+                return;
+            if (memo.ContainsKey(root.val))
+                memo[root.val]++;
+            else
+                memo[root.val] = 1;
+            InitMemo(root.left, memo);
+            InitMemo(root.right, memo);
+        }
+
+        InitMemo(root, d);
+        foreach (var item in d)
+        {
+            if (k - item.Key == item.Key)
+            {
+                if (d[item.Key] != 1)
+                    return true;
+            }
+            else if (d.ContainsKey(k - item.Key) && k - item.Key != item.Key)
+                return true;
+        }
+        return false;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
-
-        Console.WriteLine(MaxCount(3, 3, [[2, 2], [3, 3], [3, 3], [3, 3], [2, 2], [3, 3], [3, 3], [3, 3], [2, 2], [3, 3], [3, 3], [3, 3]]));
         Console.WriteLine();
     }
 }
