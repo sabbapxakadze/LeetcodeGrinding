@@ -2204,6 +2204,98 @@ public class Leetcode
         }
         return false;
     }
+    public bool JudgeCircle(string moves)
+    {
+        if (string.IsNullOrEmpty(moves))
+            return false;
+
+        int x = moves.Where(x => x == 'L').Count();
+        int y = moves.Where(x => x == 'R').Count();
+        int z = moves.Where(x => x == 'U').Count();
+        int v = moves.Where(x => x == 'D').Count();
+
+        return x == y && z == v;
+    }
+    public int[][] ImageSmoother(int[][] img)
+    {
+        if (img == null || img.Length == 0 || img[0].Length == 0)
+            return Array.Empty<int[]>();
+
+        int rows = img.Length;
+        int cols = img[0].Length;
+
+        int[][] arr = new int[rows][];
+        for (int i = 0; i < rows; i++)
+            arr[i] = new int[cols];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                int sum = 0;
+                int count = 0;
+
+                for (int r = i - 1; r <= i + 1; r++)
+                {
+                    for (int c = j - 1; c <= j + 1; c++)
+                    {
+                        if (r >= 0 && r < rows && c >= 0 && c < cols)
+                        {
+                            sum += img[r][c];
+                            count++;
+                        }
+                    }
+                }
+                arr[i][j] = sum / count; 
+            }
+        }
+        return arr;
+    }
+    public int FindSecondMinimumValue(TreeNode root)
+    {
+        if (root == null)
+            return -1;
+
+        void InitSet(TreeNode root, HashSet<int> set)
+        {
+            if (root == null)
+                return;
+            
+            set.Add(root.val);
+            InitSet(root.left, set);
+            InitSet(root.right, set);
+        }
+        HashSet<int> s = new HashSet<int>();
+        InitSet(root, s);
+        if (s.Count > 1)
+        {
+            int min = s.Min();
+            s.Remove(min);
+            return s.Min();
+        }
+        return -1;
+    }
+    public int FindLengthOfLCIS(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        int max = 1;
+        int current = 1;
+        for (int i = 1; i < nums.Length; i++)
+        {
+            if (nums[i] > nums[i-1])
+            {
+                current++;
+            }
+            else
+            {
+                current = 1;
+            }
+            max = Math.Max(max, current);
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
