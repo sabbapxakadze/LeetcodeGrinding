@@ -2296,6 +2296,38 @@ public class Leetcode
         }
         return max;
     }
+    public bool ValidPalindrome(string s)
+    {
+        bool Palindrome(string s, int i, int j)
+        {
+            if (string.IsNullOrEmpty(s))
+                return true;
+
+            while (i <= j)
+            {
+                if (s[i++] != s[j--])
+                    return false;
+            }
+            return true;
+        }
+
+        if (Palindrome(s, 0 , s.Length - 1))
+            return true;
+        int i = 0, j = s.Length - 1;
+
+        while (i <= j)
+        {
+            if (s[i] != s[j])
+            {
+                string first = s.Substring(0, i) + s.Substring(i + 1);
+                string second = s.Substring(0, j) + s.Substring(j + 1);
+
+                return Palindrome(first, 0, first.Length - 1) || Palindrome(second, 0, second.Length - 1);
+            }
+            i++; j--;
+        }
+        return false;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
