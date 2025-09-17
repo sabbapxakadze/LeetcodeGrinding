@@ -2355,6 +2355,26 @@ public class Leetcode
 
         return l.Sum();
     }
+    public bool HasAlternatingBits(int n)
+    {
+        if (n < 0)
+            return false;
+
+        int lastBit = n & 1;
+        n >>= 1;
+        while (n != 0)
+        {
+            int last = n & 1;
+            n >>= 1;
+            if (lastBit != last)
+            {
+                lastBit = last;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
