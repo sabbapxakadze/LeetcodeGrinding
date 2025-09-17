@@ -2375,6 +2375,39 @@ public class Leetcode
         }
         return true;
     }
+    public int CountBinarySubstrings(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+
+        char last = s[0];
+        int cntZero = s[0] == '0' ? 1 : 0;
+        int cntOne = s[0] == '1' ? 1 : 0;
+        int cnt = 0;
+        for (int i = 1; i < s.Length; i++)
+        {
+            if (last != s[i])
+            {
+                cnt += Math.Min(cntZero, cntOne);
+                if (last == '0')
+                {
+                    cntOne = 1;
+                }
+                else
+                {
+                    cntZero = 1;
+                }
+                
+            }
+            else
+            {
+                cntZero += last == '0' ? 1 : 0;
+                cntOne += last == '1' ? 1 : 0;
+            }
+            last = s[i];
+        }
+        return cnt + Math.Min(cntZero, cntOne);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
