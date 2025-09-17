@@ -2328,6 +2328,33 @@ public class Leetcode
         }
         return false;
     }
+    public int CalPoints(string[] operations)
+    {
+        List<int> l = new List<int>();
+        int sum = 0;
+
+        for (int i = 0; i < operations.Length; i++)
+        {
+            if (operations[i] == "+")
+            {
+                l.Add(l[l.Count - 2] + l[l.Count - 1]); 
+            }
+            else if (operations[i] == "C")
+            {
+                l.RemoveAt(l.Count - 1);
+            }
+            else if (operations[i] == "D")
+            {
+                l.Add(l[l.Count - 1] * 2);
+            }
+            else
+            {
+                l.Add(int.Parse(operations[i]));
+            }
+        }
+
+        return l.Sum();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
