@@ -2421,19 +2421,31 @@ public class Leetcode
             else
                 d[x] = 1;
         }
-        int max = d.OrderByDescending(x => x.Value).First().Key;
+        var max = d.OrderByDescending(x => x.Value).First();
+        var degrees = d.Where(x => x.Value == max.Value);
 
-        int i = 0, j = nums.Length - 1;
-        while (i <= j)
+        int min = nums.Length;
+
+        foreach (var item in degrees)
         {
-            if (nums[i] != max)
-                i++;
-            if (nums[j] != max)
-                j--;
-            if (nums[i] == max && nums[j] == max)
-                return j - i + 1;
+            int a = 0;
+            int b = nums.Length - 1;
+
+            while (a <= b)
+            {
+                if (nums[a] != item.Key)
+                    a++;
+                if (nums[b] != item.Key)
+                    b--;
+                if (nums[a] == item.Key && nums[b] == item.Key)
+                {
+                    int len = b - a + 1;
+                    min = min > len ? len : min;
+                    break;
+                }
+            }
         }
-        return 0;
+        return min;
     }
     static void Main(string[] args)
     {
