@@ -2672,6 +2672,24 @@ public class Leetcode
 
         return image;
     }
+    public char NextGreatestLetter(char[] letters, char target)
+    {
+        if (letters == null || letters.Length == 0)
+            return '/';
+
+        int i = 0, j = letters.Length - 1;
+
+        while (i <= j)
+        {
+            int mid = i + (j - i) / 2;
+            if (letters[mid] > target)
+                j = mid - 1;
+            else
+                i = mid + 1;
+        }
+
+        return i < letters.Length ? letters[i] : letters[0];
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
