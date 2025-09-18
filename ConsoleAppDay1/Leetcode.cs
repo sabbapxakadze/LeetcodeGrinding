@@ -2535,6 +2535,54 @@ public class Leetcode
             return false;
         }
     }
+    public class MyHashMap
+    {
+        List<int[]> map;
+        public MyHashMap()
+        {
+            map = new List<int[]>();
+        }
+
+        public void Put(int key, int value)
+        {
+            foreach (var item in map)
+            {
+                if (item[0] == key)
+                {
+                    item[1] = value;
+                    return;
+                }  
+            }
+            map.Add(new int[] { key, value });
+        }
+
+        public int Get(int key)
+        {
+            foreach (var item in map)
+            {
+                if (item[0] == key)
+                    return item[1];
+            }
+            return -1;
+        }
+
+        public void Remove(int key)
+        {
+            bool exists = false;
+            int[] refs = null;
+            foreach (var item in map)
+            {
+                if (item[0] == key)
+                {
+                    refs = item;
+                    exists = true;
+                    break;
+                }
+            }
+            if (exists)
+                map.Remove(refs);
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
