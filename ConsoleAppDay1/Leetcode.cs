@@ -2643,6 +2643,35 @@ public class Leetcode
         }
         return l;
     }
+    public int[][] FloodFill(int[][] image, int sr, int sc, int color)
+    {
+        if (image == null || image.Length == 0)
+            return image;
+
+        int orig = image[sr][sc];
+
+        if (orig == color)
+            return image;
+
+        void Paint(int r, int c)
+        {
+            if (r < 0 || c < 0 || r > image.Length - 1 || c > image[0].Length - 1)
+                return;
+
+            if (image[r][c] != orig)
+                return;
+
+            image[r][c] = color;
+
+            Paint(r + 1, c);
+            Paint(r - 1, c);
+            Paint(r, c + 1);
+            Paint(r, c - 1);
+        }
+        Paint(sr, sc);
+
+        return image;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
