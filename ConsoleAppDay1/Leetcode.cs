@@ -2492,6 +2492,49 @@ public class Leetcode
         }
         return -1;
     }
+    public class MyHashSet
+    {
+        List<int> set;
+        public MyHashSet()
+        {
+            set = new List<int>();
+        }
+
+        public void Add(int key)
+        {
+            foreach (int i in set)
+            {
+                if (key == i)
+                    return;
+            }
+            set.Add(key);
+        }
+
+        public void Remove(int key)
+        {
+            bool contains = false;
+            foreach (int i in set)
+            {
+                if (key == i)
+                {
+                    contains = true;
+                    break;
+                }
+            }
+            if (contains)
+                set.Remove(key);
+        }
+
+        public bool Contains(int key)
+        {
+            foreach (int i in set)
+            {
+                if (key == i)
+                    return true;
+            }
+            return false;
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
