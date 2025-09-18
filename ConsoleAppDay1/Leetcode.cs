@@ -2408,6 +2408,33 @@ public class Leetcode
         }
         return cnt + Math.Min(cntZero, cntOne);
     }
+    public int FindShortestSubArray(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (int x in nums)
+        {
+            if (d.ContainsKey(x))
+                d[x]++;
+            else
+                d[x] = 1;
+        }
+        int max = d.OrderByDescending(x => x.Value).First().Key;
+
+        int i = 0, j = nums.Length - 1;
+        while (i <= j)
+        {
+            if (nums[i] != max)
+                i++;
+            if (nums[j] != max)
+                j--;
+            if (nums[i] == max && nums[j] == max)
+                return j - i + 1;
+        }
+        return 0;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
