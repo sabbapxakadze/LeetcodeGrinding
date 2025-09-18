@@ -2622,6 +2622,27 @@ public class Leetcode
         }
         return bits[bits.Length - 1] == 0 && !inTwo;
     }
+    public IList<int> SelfDividingNumbers(int left, int right)
+    {
+        List<int> l = new List<int>();
+        while (left <= right)
+        {
+            int lfi = left, rfi = right;
+            while (lfi != 0)
+            {
+                if (lfi % 10 == 0 || left % (lfi % 10) != 0)
+                    break;
+                else
+                {
+                    lfi /= 10;
+                }
+            }
+            if (lfi == 0)
+                l.Add(left);
+            left++;
+        }
+        return l;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
