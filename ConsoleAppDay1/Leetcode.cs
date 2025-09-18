@@ -2598,6 +2598,30 @@ public class Leetcode
         }
         return res;
     }
+    public bool IsOneBitCharacter(int[] bits)
+    {
+        if (bits == null || bits.Length == 0)
+            return false;
+        if (bits.Length == 1)
+            return bits[0] == 0;
+
+        bool inTwo = bits[0] == 1;    // 1 1 1 0 false  1 1 0
+        for (int i = 1; i < bits.Length - 1; i++)
+        {
+            if (!inTwo)
+            {
+                if (bits[i] == 1)
+                {
+                    inTwo = true;
+                }
+            }
+            else
+            {
+                inTwo = false;
+            }
+        }
+        return bits[bits.Length - 1] == 0 && !inTwo;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
