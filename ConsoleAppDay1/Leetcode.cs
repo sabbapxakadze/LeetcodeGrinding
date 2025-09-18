@@ -2583,6 +2583,21 @@ public class Leetcode
                 map.Remove(refs);
         }
     }
+    public string ToLowerCase(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return s;
+        string res = "";
+        
+        foreach (char c in s)
+        {
+            if (c >= 'A' && c <= 'Z')
+                res += (char)(c + 32);
+            else
+                res += c;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
