@@ -2166,7 +2166,7 @@ public class Leetcode
         {
             sum += i;
         }
-     
+
         int repeatedNum = d.Where(x => x.Value == 2).Select(x => x.Key).First();
         int lostNum = repeatedNum - (numSum - sum);
         return new int[] { repeatedNum, lostNum };
@@ -2246,7 +2246,7 @@ public class Leetcode
                         }
                     }
                 }
-                arr[i][j] = sum / count; 
+                arr[i][j] = sum / count;
             }
         }
         return arr;
@@ -2260,7 +2260,7 @@ public class Leetcode
         {
             if (root == null)
                 return;
-            
+
             set.Add(root.val);
             InitSet(root.left, set);
             InitSet(root.right, set);
@@ -2284,7 +2284,7 @@ public class Leetcode
         int current = 1;
         for (int i = 1; i < nums.Length; i++)
         {
-            if (nums[i] > nums[i-1])
+            if (nums[i] > nums[i - 1])
             {
                 current++;
             }
@@ -2311,7 +2311,7 @@ public class Leetcode
             return true;
         }
 
-        if (Palindrome(s, 0 , s.Length - 1))
+        if (Palindrome(s, 0, s.Length - 1))
             return true;
         int i = 0, j = s.Length - 1;
 
@@ -2337,7 +2337,7 @@ public class Leetcode
         {
             if (operations[i] == "+")
             {
-                l.Add(l[l.Count - 2] + l[l.Count - 1]); 
+                l.Add(l[l.Count - 2] + l[l.Count - 1]);
             }
             else if (operations[i] == "C")
             {
@@ -2397,7 +2397,7 @@ public class Leetcode
                 {
                     cntZero = 1;
                 }
-                
+
             }
             else
             {
@@ -2447,7 +2447,7 @@ public class Leetcode
         }
         return min;
     }
-      class KthLargest
+    class KthLargest
     {
         private int k;
         private PriorityQueue<int, int> minHeap;
@@ -2551,7 +2551,7 @@ public class Leetcode
                 {
                     item[1] = value;
                     return;
-                }  
+                }
             }
             map.Add(new int[] { key, value });
         }
@@ -2588,7 +2588,7 @@ public class Leetcode
         if (string.IsNullOrEmpty(s))
             return s;
         string res = "";
-        
+
         foreach (char c in s)
         {
             if (c >= 'A' && c <= 'Z')
@@ -2689,6 +2689,19 @@ public class Leetcode
         }
 
         return i < letters.Length ? letters[i] : letters[0];
+    }
+    public int MinCostClimbingStairs(int[] cost)
+    {
+        if (cost == null || cost.Length == 0)
+            return 0;
+
+        Array.Resize(ref cost, cost.Length + 2);
+
+        for (int i = cost.Length - 3; i >= 0; i--)
+        {
+            cost[i] += Math.Min(cost[i + 1], cost[i + 2]);
+        }
+        return Math.Min(cost[0], cost[1]);
     }
     static void Main(string[] args)
     {
