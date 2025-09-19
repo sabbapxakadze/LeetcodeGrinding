@@ -2771,6 +2771,47 @@ public class Leetcode
         }
         return res;
     }
+    public int CountPrimeSetBits(int left, int right)
+    {
+        bool IsPrime(int x)
+        {
+            if (x == 2)
+                return true;
+            if (x <= 1 || x % 2 == 0)
+                return false;
+
+            int i = 3;
+            while (i * i <= x)
+            {
+                if (x % i == 0)
+                    return false;
+                i += 2;
+            }
+            return true;
+        }
+        int CountOneBits(int x)
+        {
+            int c = 0;
+            while (x != 0)
+            {
+                if ((x & 1) == 1)
+                    c++;
+                x >>= 1;
+            }
+            return c;
+        }
+
+        int count = 0;
+
+        while (left <= right)
+        {
+            int ones = CountOneBits(left);
+            if (IsPrime(ones))
+                count++;
+            left++;
+        }
+        return count;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
