@@ -2703,6 +2703,29 @@ public class Leetcode
         }
         return Math.Min(cost[0], cost[1]);
     }
+    public int DominantIndex(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return -1;
+        if (nums.Length == 1)
+            return 0;
+
+        int max = 0;
+        int secMax = -1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (nums[i] > nums[max])
+            {
+                secMax = max;
+                max = i;
+            }
+            else if (secMax == -1 || nums[i] > nums[secMax])
+            {
+                secMax = i;
+            }
+        }
+        return 2 * nums[secMax] <= nums[max] ? max : -1;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
