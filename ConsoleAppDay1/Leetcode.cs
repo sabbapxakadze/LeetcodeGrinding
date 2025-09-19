@@ -2726,6 +2726,51 @@ public class Leetcode
         }
         return 2 * nums[secMax] <= nums[max] ? max : -1;
     }
+    public string ShortestCompletingWord(string licensePlate, string[] words)
+    {
+        if (string.IsNullOrEmpty(licensePlate) || words == null || words.Length == 0)
+            return null;
+
+        Dictionary<char, int> need = new Dictionary<char, int>();
+        foreach (char c in licensePlate.ToLower())
+        {
+            if (char.IsLetter(c))
+            {
+                if (!need.ContainsKey(c)) need[c] = 0;
+                need[c]++;
+            }
+        }
+
+        bool IsCompleting(string word)
+        {
+            var count = new Dictionary<char, int>();
+            foreach (char c in word.ToLower())
+            {
+                if (!char.IsLetter(c)) continue;
+                if (!count.ContainsKey(c)) count[c] = 0;
+                count[c]++;
+            }
+
+            foreach (var kv in need)
+                if (!count.ContainsKey(kv.Key) || count[kv.Key] < kv.Value)
+                    return false;
+
+            return true;
+        }
+
+        int min = int.MaxValue;
+        string res = "";
+
+        foreach (string w in words)
+        {
+            if (IsCompleting(w) && w.Length < min)
+            {
+                min = w.Length;
+                res = w; 
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
