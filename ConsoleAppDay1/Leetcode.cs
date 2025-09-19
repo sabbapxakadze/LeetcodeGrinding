@@ -2844,6 +2844,21 @@ public class Leetcode
         }
         return true;
     }
+    public int NumJewelsInStones(string jewels, string stones)
+    {
+        if (string.IsNullOrEmpty(jewels) || string.IsNullOrEmpty(stones))
+            return 0;
+
+        int count = 0;
+
+        foreach (char c in jewels)
+        {
+            string x = stones;
+            x = x.Replace(c.ToString(), "");
+            count += stones.Length - x.Length;
+        }
+        return count;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
