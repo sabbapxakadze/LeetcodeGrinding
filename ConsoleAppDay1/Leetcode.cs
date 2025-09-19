@@ -2812,6 +2812,38 @@ public class Leetcode
         }
         return count;
     }
+    public bool IsToeplitzMatrix(int[][] matrix)
+    {
+        if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0)
+            return false;
+
+        int rows = matrix.Length;
+        int cols = matrix[0].Length;
+        
+        for (int col = 0; col < cols; col++)
+        {
+            int r = 0, c = col;
+            int temp = matrix[r][c];
+            while (r < rows && c < cols)
+            {
+                if (temp != matrix[r][c])
+                    return false;
+                r++; c++;
+            }
+        }
+        for (int row = 1; row < rows; row++)
+        {
+            int c = 0, r = row;
+            int temp = matrix[r][c];
+            while (r < rows && c < cols)
+            {
+                if (temp != matrix[r][c])
+                    return false;
+                r++; c++;
+            }
+        }
+        return true;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
