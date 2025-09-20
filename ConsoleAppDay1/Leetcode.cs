@@ -2859,6 +2859,36 @@ public class Leetcode
         }
         return count;
     }
+    public int MinDiffInBST(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+
+        List<int> pre = new List<int>();
+
+        void Preorder(TreeNode root, List<int> list)
+        {
+            if (root == null)
+                return;
+            if (root.left == null && root.right == null)
+            {
+                list.Add(root.val);
+                return;
+            }
+            Preorder(root.left, list);
+            list.Add(root.val);
+            Preorder(root.right, list);
+        }
+        Preorder(root, pre);
+        int min = int.MaxValue;
+        for (int i = 1; i < pre.Count; i++)
+        {
+            int iter = pre[i] - pre[i - 1];
+            if (min > iter)
+                min = iter;
+        }
+        return min;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
