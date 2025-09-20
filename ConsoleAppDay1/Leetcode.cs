@@ -2889,6 +2889,21 @@ public class Leetcode
         }
         return min;
     }
+    public bool RotateString(string s, string goal)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(goal))
+            return false;
+
+        int i = s.Length;
+        while (i >= 1)
+        {
+            s = s.Substring(1) + s[0];
+            if (s == goal)
+                return true;
+            i--;
+        }
+        return false;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
