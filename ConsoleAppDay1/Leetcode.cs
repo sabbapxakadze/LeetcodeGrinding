@@ -2904,6 +2904,52 @@ public class Leetcode
         }
         return false;
     }
+    public int UniqueMorseRepresentations(string[] words)
+    {
+        if (words == null || words.Length == 0)
+            return 0;
+        Dictionary<char, string> code = new Dictionary<char, string>(){
+            {'a', ".-"}, 
+            {'b', "-..."}, {'c', "-.-."}, {'d', "-.."}, 
+            {'e', "."}, {'f', "..-."}, {'g', "--."}, {'h', "...."}, 
+            {'i', ".."}, {'j', ".---"}, {'k', "-.-"}, {'l', ".-.."}, 
+            {'m', "--"}, {'n', "-."}, {'o', "---"}, {'p', ".--."}, 
+            {'q', "--.-"}, {'r', ".-."}, {'s', "..."}, {'t', "-"}, 
+            {'u', "..-"}, {'v', "...-"}, {'w', ".--"}, {'x', "-..-"}, 
+            {'y', "-.--"}, {'z', "--.."}, };
+
+        HashSet<string> set = new HashSet<string>();
+        foreach (string s in words)
+        {
+            string x = "";
+            foreach (char c in s)
+            {
+                x += code[c];
+            }
+            set.Add(x);
+        }
+        return set.Count;
+    }
+    public int[] NumberOfLines(int[] widths, string s)
+    {
+        if (widths == null || string.IsNullOrEmpty(s))
+            return Array.Empty<int>();
+
+        int x = 100;
+        int c = 0;
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            int index = s[i] - 'a';
+            if (x < widths[index])
+            {
+                c++;
+                x = 100;
+            }
+            x -= widths[index];
+        }
+        return new int[] { c, 100 - x };
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
