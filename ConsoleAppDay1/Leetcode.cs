@@ -2949,6 +2949,56 @@ public class Leetcode
         }
         return new int[] { c, 100 - x };
     }
+    public double LargestTriangleArea(int[][] points)
+    {
+        double maxArea = 0.0;
+        int n = points.Length;
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                for (int k = j + 1; k < n; k++)
+                {
+                    double area = Math.Abs(
+                        points[i][0] * (points[j][1] - points[k][1]) +
+                        points[j][0] * (points[k][1] - points[i][1]) +
+                        points[k][0] * (points[i][1] - points[j][1])
+                    ) / 2.0;
+                    maxArea = Math.Max(maxArea, area);
+                }
+            }
+        }
+        return maxArea;
+    }
+    //public string MostCommonWord(string paragraph, string[] banned)
+    //{
+    //    if (string.IsNullOrEmpty(paragraph) || banned == null)
+    //        return null;
+    //    paragraph = paragraph.ToLower();
+
+    //    char[] punct = { '!', '?', '\'', ',', ';', '.', '`', '-', '_' };
+    //    foreach (var p in punct)
+    //    {
+    //        paragraph = paragraph.Replace(p.ToString(), " ");
+    //    }
+
+    //    var arr = paragraph.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+    //    Dictionary<string, int> d = new Dictionary<string, int>();
+    //    HashSet<string> bans = new HashSet<string>(banned.Select(x => x.ToLower()));
+    //    foreach(var item in arr)
+    //    {
+    //        if (bans.Contains(item))
+    //            continue;
+
+    //        if (!d.ContainsKey(item))
+    //            d[item] = 0;
+    //        else
+    //            d[item]++;
+    //    }
+    //    int mostCommon = d.Max(x => x.Value);
+    //    return d.Where(x => x.Value == mostCommon).First().Key;
+    //}
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
