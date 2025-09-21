@@ -2971,34 +2971,33 @@ public class Leetcode
         }
         return maxArea;
     }
-    //public string MostCommonWord(string paragraph, string[] banned)
-    //{
-    //    if (string.IsNullOrEmpty(paragraph) || banned == null)
-    //        return null;
-    //    paragraph = paragraph.ToLower();
+    public string MostCommonWord(string paragraph, string[] banned)
+    {
+        if (string.IsNullOrEmpty(paragraph) || banned == null)
+            return null;
+        paragraph = paragraph.ToLower();
 
-    //    char[] punct = { '!', '?', '\'', ',', ';', '.', '`', '-', '_' };
-    //    foreach (var p in punct)
-    //    {
-    //        paragraph = paragraph.Replace(p.ToString(), " ");
-    //    }
+        char[] punct = { '!', '?', '\'', ',', ';', '.', '`', '-', '_' };
+        foreach (var p in punct)
+        {
+            paragraph = paragraph.Replace(p.ToString(), " ");
+        }
+        var arr = paragraph.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        Dictionary<string, int> d = new Dictionary<string, int>();
+        HashSet<string> bans = new HashSet<string>(banned.Select(x => x.ToLower()));
+        foreach (var item in arr)
+        {
+            if (bans.Contains(item))
+                continue;
 
-    //    var arr = paragraph.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-    //    Dictionary<string, int> d = new Dictionary<string, int>();
-    //    HashSet<string> bans = new HashSet<string>(banned.Select(x => x.ToLower()));
-    //    foreach(var item in arr)
-    //    {
-    //        if (bans.Contains(item))
-    //            continue;
-
-    //        if (!d.ContainsKey(item))
-    //            d[item] = 0;
-    //        else
-    //            d[item]++;
-    //    }
-    //    int mostCommon = d.Max(x => x.Value);
-    //    return d.Where(x => x.Value == mostCommon).First().Key;
-    //}
+            if (!d.ContainsKey(item))
+                d[item] = 0;
+            else
+                d[item]++;
+        }
+        int mostCommon = d.Max(x => x.Value);
+        return d.Where(x => x.Value == mostCommon).First().Key;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
