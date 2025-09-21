@@ -2766,7 +2766,7 @@ public class Leetcode
             if (IsCompleting(w) && w.Length < min)
             {
                 min = w.Length;
-                res = w; 
+                res = w;
             }
         }
         return res;
@@ -2819,7 +2819,7 @@ public class Leetcode
 
         int rows = matrix.Length;
         int cols = matrix[0].Length;
-        
+
         for (int col = 0; col < cols; col++)
         {
             int r = 0, c = col;
@@ -2998,6 +2998,57 @@ public class Leetcode
         int mostCommon = d.Max(x => x.Value);
         return d.Where(x => x.Value == mostCommon).First().Key;
     }
+
+    public int[] ShortestToChar(string s, char c)
+    {
+        if (string.IsNullOrEmpty(s))
+            return Array.Empty<int>();
+
+        List<int> l = new List<int>();
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (s[i] == c)
+                l.Add(i);
+        }
+        int[] res = new int[s.Length];
+        for (int i = 0; i < res.Length; i++)
+            res[i] = int.MaxValue;
+
+        foreach (int x in l)
+            res[x] = 0;
+
+        int temp = int.MaxValue;
+
+        for (int i = 0; i < res.Length; i++)
+        {
+            if (res[i] == 0)
+            {
+                temp = 0;
+            }
+            else if (temp != int.MaxValue)
+            {
+                temp++;
+                res[i] = temp;
+            }
+        }
+
+        temp = int.MaxValue;
+        for (int i = res.Length - 1; i >= 0; i--)
+        {
+            if (res[i] == 0)
+            {
+                temp = 0;
+            }
+            else if (temp != int.MaxValue)
+            {
+                temp++;
+                res[i] = Math.Min(res[i], temp);
+            }
+        }
+        return res;
+    }
+
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
