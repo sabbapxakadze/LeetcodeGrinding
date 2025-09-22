@@ -3125,6 +3125,43 @@ public class Leetcode
 
         return true;
     }
+    public bool BackspaceCompare(string s, string t)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t))
+            return false;
+
+        string n1 = "";
+        string n2 = "";
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (s[i] == '#')
+            {
+                if (n1.Length > 0)
+                {
+                    n1 = n1.Substring(0, n1.Length - 1);
+                }
+            }
+            else
+            {
+                n1 += s[i];
+            }
+        }
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (t[i] == '#')
+            {
+                if (n2.Length > 0)
+                {
+                    n2 = n2.Substring(0, n2.Length - 1);
+                }
+            }
+            else
+            {
+                n2 += t[i];
+            }
+        }
+        return n1 == n2;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
