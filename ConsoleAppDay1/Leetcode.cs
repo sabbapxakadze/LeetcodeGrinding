@@ -3004,51 +3004,75 @@ public class Leetcode
         if (string.IsNullOrEmpty(s))
             return Array.Empty<int>();
 
-        List<int> l = new List<int>();
+        
+        int[] res = new int[s.Length];
+        int last_c = -1 * s.Length;
 
-        for (int i = 0; i < s.Length; i++)
+        for (int i = 0; i < res.Length; i++)
         {
             if (s[i] == c)
-                l.Add(i);
+                last_c = i;
+            res[i] = i - last_c;
         }
-        int[] res = new int[s.Length];
-        for (int i = 0; i < res.Length; i++)
-            res[i] = int.MaxValue;
-
-        foreach (int x in l)
-            res[x] = 0;
-
-        int temp = int.MaxValue;
-
-        for (int i = 0; i < res.Length; i++)
+        for (int i = s.Length - 1; i >= 0; i--)
         {
-            if (res[i] == 0)
-            {
-                temp = 0;
-            }
-            else if (temp != int.MaxValue)
-            {
-                temp++;
-                res[i] = temp;
-            }
-        }
-
-        temp = int.MaxValue;
-        for (int i = res.Length - 1; i >= 0; i--)
-        {
-            if (res[i] == 0)
-            {
-                temp = 0;
-            }
-            else if (temp != int.MaxValue)
-            {
-                temp++;
-                res[i] = Math.Min(res[i], temp);
-            }
+            if (s[i] == c)
+                last_c = i;
+            else
+                res[i] = Math.Min(res[i], Math.Abs(last_c - i));
         }
         return res;
     }
+    public string ToGoatLatin(string sentence)
+    {
+        if (string.IsNullOrEmpty(sentence))
+            return sentence;
 
+        bool IsVowel(char c)
+        {
+            c = char.ToLower(c);
+            switch (c)
+            {
+                case 'a':
+                    return true;
+                case 'e':
+                    return true;
+                case 'i':
+                    return true;
+                case 'o':
+                    return true;
+                case 'u':
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        string ACount(int cnt)
+        {
+            string res = "";
+            for (int i = 0; i < cnt; i++)
+            {
+                res += "a";
+            }
+            return res;
+        }
+        string res = "";
+        string[] arr = sentence.Split(" ");
+        int cnt = 1;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (IsVowel(arr[i][0]))
+                res += arr[i] + "ma";
+            else
+                res += arr[i].Substring(1, arr[i].Length - 1) + arr[i][0] + "ma";
+            res += ACount(cnt);
+            cnt++;
+
+            if (i != arr.Length - 1)
+                res += " ";
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
