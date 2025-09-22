@@ -3162,6 +3162,38 @@ public class Leetcode
         }
         return n1 == n2;
     }
+    public bool BuddyStrings(string s, string goal)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(goal))
+            return false;
+
+        if (s.Length != goal.Length)
+            return false;
+
+        List<char> difs = new List<char>();
+        int temp = 0;
+        if (s == goal)
+        {
+            var set = new HashSet<char>();
+            foreach (var x in s)
+            {
+                if (set.Contains(x))
+                    return true;
+                set.Add(x);
+            }
+            return false;
+        }
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (s[i] != goal[i])
+            {
+                difs.Add(s[i]);
+                difs.Add(goal[i]);
+            }
+        }
+        return difs.Count == 4 && difs[0] == difs[3]
+            && difs[1] == difs[2];
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
