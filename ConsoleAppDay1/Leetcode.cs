@@ -3073,6 +3073,28 @@ public class Leetcode
         }
         return res;
     }
+    public IList<IList<int>> LargeGroupPositions(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return null;
+
+        IList<IList<int>> lists = new List<IList<int>>();
+        char temp = s[0];
+        int currStart = 0;
+        for (int i = 1; i < s.Length; i++)
+        {
+            if (temp != s[i])
+            {
+                if (i - 1 - currStart >= 2)
+                    lists.Add(new List<int> { currStart, i - 1 });
+                currStart = i;
+                temp = s[i];
+            }
+        }
+        if (s.Length - currStart >= 3)
+            lists.Add(new List<int> { currStart, s.Length - 1 });
+        return lists;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
