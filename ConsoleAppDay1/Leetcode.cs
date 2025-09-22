@@ -3004,7 +3004,7 @@ public class Leetcode
         if (string.IsNullOrEmpty(s))
             return Array.Empty<int>();
 
-        
+
         int[] res = new int[s.Length];
         int last_c = -1 * s.Length;
 
@@ -3094,6 +3094,26 @@ public class Leetcode
         if (s.Length - currStart >= 3)
             lists.Add(new List<int> { currStart, s.Length - 1 });
         return lists;
+    }
+    public int[][] FlipAndInvertImage(int[][] image)
+    {
+        if (image == null || image.Length == 0)
+            return Array.Empty<int[]>();
+
+        int[][] arr = new int[image.Length][];
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i] = new int[image[0].Length];
+        }
+
+        for (int i = 0; i < image.Length; i++)
+        {
+            for (int j = image[0].Length - 1; j >= 0; j--)
+            {
+                arr[i][arr[0].Length - j - 1] = 1 ^ image[i][j];
+            }
+        }
+        return arr;
     }
     static void Main(string[] args)
     {
