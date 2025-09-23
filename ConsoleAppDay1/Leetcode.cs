@@ -3298,6 +3298,27 @@ public class Leetcode
         }
         return slow;
     }
+    public int ProjectionArea(int[][] grid)
+    {
+        if (grid == null)
+            return 0;
+        int cnt = 0;
+        for (int i = 0; i < grid.Length; i++)
+        {
+            int maxC = 0;
+            int maxR = 0;
+            for (int j = 0; j < grid[i].Length; j++)
+            {
+                if (grid[i][j] > 0)
+                    cnt++;
+
+                maxC = Math.Max(grid[i][j], maxC);
+                maxR = Math.Max(grid[j][i], maxR);
+            }
+            cnt += maxC + maxR;
+        }
+        return cnt;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
