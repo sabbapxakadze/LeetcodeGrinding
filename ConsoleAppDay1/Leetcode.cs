@@ -3194,6 +3194,45 @@ public class Leetcode
         return difs.Count == 4 && difs[0] == difs[3]
             && difs[1] == difs[2];
     }
+    public bool LemonadeChange(int[] bills)
+    {
+        if (bills == null || bills.Length == 0)
+            return false;
+
+        int count5 = 0, count10 = 0;
+
+        foreach (int x in bills)
+        {
+            if (x == 5)
+            {
+                count5++;
+            }
+            else if (x == 10)
+            {
+                if (count5 <= 0)
+                    return false;
+                count10++;
+                count5--;
+            }
+            else
+            {
+                if (count10 > 0 && count5 > 0)
+                {
+                    count10--;
+                    count5--;
+                }
+                else if (count5 >= 3)
+                {
+                    count5 -= 3;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
