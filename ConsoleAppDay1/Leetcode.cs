@@ -3253,6 +3253,36 @@ public class Leetcode
         }
         return res;
     }
+    public int BinaryGap(int n)
+    {
+        if (n <= 0) return 0;
+
+        int maxGap = 0;
+        int cnt = 0;
+        bool temp = false;
+
+        while (n != 0)
+        {
+            if ((n & 1) == 1)
+            {
+                if (temp)
+                {
+                    maxGap = Math.Max(maxGap, cnt);
+                }
+                cnt = 1;
+                temp = true;
+            }
+            else
+            {
+                if (temp)
+                {
+                    cnt++;
+                }
+            }
+            n >>= 1;
+        }
+        return maxGap;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
