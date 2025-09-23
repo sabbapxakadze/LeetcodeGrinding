@@ -3283,6 +3283,21 @@ public class Leetcode
         }
         return maxGap;
     }
+    public ListNode MiddleNode(ListNode head)
+    {
+        if (head == null)
+            return null;
+
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
