@@ -3233,6 +3233,26 @@ public class Leetcode
         }
         return true;
     }
+    public int[][] Transpose(int[][] matrix)
+    {
+        if (matrix == null)
+            return Array.Empty<int[]>();
+
+        int[][] res = new int[matrix[0].Length][];
+        for (int i = 0; i < res.Length; i++)
+        {
+            res[i] = new int[matrix.Length];
+        }
+
+        for (int i = 0; i < res.Length; i++)
+        {
+            for (int j = 0; j < res[0].Length; j++)
+            {
+                res[i][j] = matrix[j][i];
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
