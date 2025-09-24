@@ -3480,6 +3480,31 @@ public class Leetcode
         int max = nums[nums.Length - 1] - k;
         return Math.Max(max - min, 0);
     }
+    public bool HasGroupsSizeX(int[] deck)
+    {
+        if (deck == null || deck.Length <= 1)
+            return false;
+
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (var i in deck)
+        {
+            if (d.ContainsKey(i))
+                d[i]++;
+            else
+                d[i] = 1;
+        }
+        int GCD(int a, int b)
+        {
+            if (b == 0) return a;
+            return GCD(b, a % b);
+        }
+        int gcd = 0;
+        foreach (var item in d.Values)
+        {
+            gcd = GCD(gcd, item);
+        }
+        return gcd >= 2;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
