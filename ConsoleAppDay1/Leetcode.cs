@@ -3393,6 +3393,33 @@ public class Leetcode
         }
         return area;
     }
+    public bool IsMonotonic(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return false;
+        if (nums.Length == 1)
+            return true;
+
+        bool IsIncreasing(int[] arr)
+        {
+            for (int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i] < arr[i - 1])
+                    return false;
+            }
+            return true;
+        }
+        bool IsDecreasing(int[] arr)
+        {
+            for (int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i] > arr[i - 1])
+                    return false;
+            }
+            return true;
+        }
+        return IsIncreasing(nums) || IsDecreasing(nums);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
