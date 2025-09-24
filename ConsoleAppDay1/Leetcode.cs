@@ -3345,6 +3345,26 @@ public class Leetcode
         }
         return d1.Where(x => x.Value == 1).Select(x => x.Key).ToArray();       
     }
+    public int[] FairCandySwap(int[] aliceSizes, int[] bobSizes)
+    {
+        if (aliceSizes == null || bobSizes == null)
+            return Array.Empty<int>();
+
+        int aliceSum = aliceSizes.Sum();
+        int bobSum = bobSizes.Sum();
+        
+        HashSet<int> set = new HashSet<int>(bobSizes);
+        int difference = (bobSum - aliceSum) / 2;
+        foreach (int a in aliceSizes)
+        {
+            if (set.Contains(a + difference))
+            {
+                return new int[] { a, a + difference };
+            }
+        }
+
+        return Array.Empty<int>();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
