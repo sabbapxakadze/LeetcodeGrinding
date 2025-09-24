@@ -3319,6 +3319,32 @@ public class Leetcode
         }
         return cnt;
     }
+    public string[] UncommonFromSentences(string s1, string s2)
+    {
+        if (string.IsNullOrEmpty(s1) || string.IsNullOrEmpty(s2))
+            return Array.Empty<string>();
+
+        var first = s1.Split(" ");
+        var second = s2.Split(" ");
+
+        Dictionary<string, int> d1 = new Dictionary<string, int>();
+
+        foreach (var item in first)
+        {
+            if (d1.ContainsKey(item))
+                d1[item]++;
+            else
+                d1[item] = 1;
+        }
+        foreach (var item in second)
+        {
+            if (d1.ContainsKey(item))
+                d1[item]++;
+            else
+                d1[item] = 1;
+        }
+        return d1.Where(x => x.Value == 1).Select(x => x.Key).ToArray();       
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
