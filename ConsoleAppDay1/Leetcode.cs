@@ -3467,6 +3467,19 @@ public class Leetcode
         }
         return res;
     }
+    public int SmallestRangeI(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        if (k < 0)
+            return 0;
+
+        Array.Sort(nums);
+        k = k > 0 ? k : -k;
+        int min = nums[0] + k;
+        int max = nums[nums.Length - 1] - k;
+        return Math.Max(max - min, 0);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
