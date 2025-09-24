@@ -3420,6 +3420,34 @@ public class Leetcode
         }
         return IsIncreasing(nums) || IsDecreasing(nums);
     }
+    public TreeNode IncreasingBST(TreeNode root)
+    {
+        if (root == null)
+            return null;
+        List<int> InOrder(TreeNode node)
+        {
+            if (node == null)
+                return new List<int>();
+
+            List<int> l = new List<int>();
+            l.AddRange(InOrder(node.left));
+            l.Add(node.val);
+            l.AddRange(InOrder(node.right));
+
+            return l;
+        }
+        List<int> list = InOrder(root);
+
+        TreeNode res = new TreeNode(list[0]);
+        TreeNode temp = res;
+
+        for (int i = 1; i < list.Count; i++)
+        {
+            temp.right = new TreeNode(list[i]);
+            temp = temp.right;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
