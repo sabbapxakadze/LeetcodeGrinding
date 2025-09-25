@@ -3588,6 +3588,37 @@ public class Leetcode
         }
         return i == name.Length;
     }
+    public int NumUniqueEmails(string[] emails)
+    {
+        if (emails == null || emails.Length == 0)
+            return 0;
+
+        HashSet<string> set = new HashSet<string>();
+
+        foreach (string email in emails)
+        {
+            var items = email.Split("@");
+            string l = "";
+            foreach (char c in items[0])
+            {
+                if (c == '.')
+                    continue;
+                else if (c == '+')
+                    break;
+                else
+                    l += c;
+            }
+            foreach (char c in items[1])
+            {
+                if (c == '.' || c == '+')
+                    continue;
+                else
+                    d += c;
+            }
+            set.Add(l + "@" + items[1]);
+        }
+        return set.Count;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
