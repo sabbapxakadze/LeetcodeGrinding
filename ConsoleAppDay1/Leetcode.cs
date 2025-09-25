@@ -3505,6 +3505,43 @@ public class Leetcode
         }
         return gcd >= 2;
     }
+    public string ReverseOnlyLetters(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return s;
+
+        int i = 0, j = s.Length - 1;
+        char[] arr = new char[s.Length];
+        while (i <= j)
+        {
+            if (char.IsLetter(s[i]) && char.IsLetter(s[j]))
+            {
+                arr[i] = s[j];
+                arr[j] = s[i];
+                i++;
+                j--;
+                continue;
+            }
+            if (!char.IsLetter(s[i]) && !char.IsLetter(s[j]))
+            {
+                arr[i] = s[i];
+                arr[j] = s[j];
+                i++;
+                j--;
+            }
+            else if (!char.IsLetter(s[i]))
+            {
+                arr[i] = s[i];
+                i++;
+            }
+            else if (!char.IsLetter(s[j]))
+            {
+                arr[j] = s[j];
+                j--;
+            }
+        }
+        return new string(arr);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
