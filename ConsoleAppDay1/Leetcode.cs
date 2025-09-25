@@ -3542,6 +3542,29 @@ public class Leetcode
         }
         return new string(arr);
     }
+    public int[] SortArrayByParityII(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return Array.Empty<int>();
+
+        int[] res = new int[nums.Length];
+        int even = 0, odd = 1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int temp = nums[i] % 2;
+            if (temp == 0)
+            {
+                res[even] = nums[i];
+                even += 2;
+            }   
+            else
+            {
+                res[odd] = nums[i];
+                odd += 2;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
