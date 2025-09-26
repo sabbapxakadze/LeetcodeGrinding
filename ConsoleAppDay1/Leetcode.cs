@@ -3691,6 +3691,33 @@ public class Leetcode
 
         return IsIncreasing(arr, 0, indexMax) && IsDecreasing(arr, indexMax, arr.Length - 1);
     }
+    public int[] DiStringMatch(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return Array.Empty<int>();
+
+        int[] res = new int[s.Length + 1];
+
+        int min = 0, max = s.Length;
+
+        int index = 0;
+        foreach (char c in s)
+        {
+            if (c == 'D')
+            {
+                res[index] = max;
+                max--;
+            }
+            else
+            {
+                
+                res[index] = min;
+                min++;
+            }
+        }
+        res[index] = min;
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
