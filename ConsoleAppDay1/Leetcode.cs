@@ -3731,7 +3731,7 @@ public class Leetcode
                 return true;
             for (int i = 1; i < l.Length; i++)
             {
-                if (l[i].CompareTo(l[i-1]) < 0)
+                if (l[i].CompareTo(l[i - 1]) < 0)
                     return false;
             }
             return true;
@@ -3748,6 +3748,37 @@ public class Leetcode
                 res++;
         }
         return res;
+    }
+    public bool IsAlienSorted(string[] words, string order)
+    {
+        if (words == null || words.Length == 0)
+            return false;
+        if (string.IsNullOrEmpty(order))
+            return false;
+
+        Dictionary<char, int> map = new Dictionary<char, int>();
+        for (int i = 0; i < order.Length; i++)
+        {
+            map[order[i]] = i;
+        }
+
+        bool IsAscending(string curr, string prev)
+        {
+            int len = Math.Min(curr.Length, prev.Length);
+
+            for (int i = 0; i < len; i++)
+            {
+                if (map[curr[i]] != map[prev[i]])
+                    return map[curr[i]] > map[prev[i]];
+            }
+            return curr.Length >= prev.Length;
+        }
+        for (int i = 1; i < words.Length; i++)
+        {
+            if (!IsAscending(words[i], words[i - 1]))
+                return false;
+        }
+        return true;
     }
     static void Main(string[] args)
     {
