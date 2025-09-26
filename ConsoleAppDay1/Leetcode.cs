@@ -3343,7 +3343,7 @@ public class Leetcode
             else
                 d1[item] = 1;
         }
-        return d1.Where(x => x.Value == 1).Select(x => x.Key).ToArray();       
+        return d1.Where(x => x.Value == 1).Select(x => x.Key).ToArray();
     }
     public int[] FairCandySwap(int[] aliceSizes, int[] bobSizes)
     {
@@ -3352,7 +3352,7 @@ public class Leetcode
 
         int aliceSum = aliceSizes.Sum();
         int bobSum = bobSizes.Sum();
-        
+
         HashSet<int> set = new HashSet<int>(bobSizes);
         int difference = (bobSum - aliceSum) / 2;
         foreach (int a in aliceSizes)
@@ -3556,7 +3556,7 @@ public class Leetcode
             {
                 res[even] = nums[i];
                 even += 2;
-            }   
+            }
             else
             {
                 res[odd] = nums[i];
@@ -3634,7 +3634,7 @@ public class Leetcode
                 PreOrderForRangeSum(root.right, l);
                 return;
             }
-                
+
             if (root.val > high)
             {
                 PreOrderForRangeSum(root.left, l);
@@ -3664,13 +3664,13 @@ public class Leetcode
                 max = arr[i];
                 indexMax = i;
             }
-                
+
         }
         bool IsIncreasing(int[] arr, int i, int j)
         {
             while (i < j)
             {
-                if (arr[i] >= arr[i+1])
+                if (arr[i] >= arr[i + 1])
                     return false;
                 i++;
             }
@@ -3710,12 +3710,43 @@ public class Leetcode
             }
             else
             {
-                
+
                 res[index] = min;
                 min++;
             }
         }
         res[index] = min;
+        return res;
+    }
+    public int MinDeletionSize(string[] strs)
+    {
+        if (strs == null || strs.Length == 0)
+            return 0;
+        if (strs.Length == 1)
+            return 0;
+
+        bool IsAscending(string l)
+        {
+            if (l.Length == 1)
+                return true;
+            for (int i = 1; i < l.Length; i++)
+            {
+                if (l[i].CompareTo(l[i-1]) < 0)
+                    return false;
+            }
+            return true;
+        }
+        int res = 0;
+        for (int i = 0; i < strs[0].Length; i++)
+        {
+            string temp = "";
+            for (int j = 0; j < strs.Length; j++)
+            {
+                temp += strs[j][i];
+            }
+            if (!IsAscending(temp))
+                res++;
+        }
         return res;
     }
     static void Main(string[] args)
