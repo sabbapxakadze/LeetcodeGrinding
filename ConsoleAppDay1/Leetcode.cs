@@ -3613,11 +3613,42 @@ public class Leetcode
                 if (c == '.' || c == '+')
                     continue;
                 else
-                    d += c;
+                    l += c;
             }
             set.Add(l + "@" + items[1]);
         }
         return set.Count;
+    }
+    public int RangeSumBST(TreeNode root, int low, int high)
+    {
+        if (root == null || low > high)
+            return 0;
+
+        void PreOrderForRangeSum(TreeNode root, List<int> l)
+        {
+            if (root == null)
+                return;
+
+            if (root.val < low)
+            {
+                PreOrderForRangeSum(root.right, l);
+                return;
+            }
+                
+            if (root.val > high)
+            {
+                PreOrderForRangeSum(root.left, l);
+                return;
+            }
+
+            PreOrderForRangeSum(root.left, l);
+            l.Add(root.val);
+            PreOrderForRangeSum(root.right, l);
+        }
+        List<int> l = new List<int>();
+        PreOrderForRangeSum(root, l);
+
+        return l.Sum();
     }
     static void Main(string[] args)
     {
