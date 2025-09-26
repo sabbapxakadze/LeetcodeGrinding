@@ -3650,6 +3650,47 @@ public class Leetcode
 
         return l.Sum();
     }
+    public bool ValidMountainArray(int[] arr)
+    {
+        if (arr == null || arr.Length <= 1)
+            return false;
+
+        int max = int.MinValue;
+        int indexMax = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] > max)
+            {
+                max = arr[i];
+                indexMax = i;
+            }
+                
+        }
+        bool IsIncreasing(int[] arr, int i, int j)
+        {
+            while (i < j)
+            {
+                if (arr[i] >= arr[i+1])
+                    return false;
+                i++;
+            }
+            return true;
+        }
+        bool IsDecreasing(int[] arr, int i, int j)
+        {
+            if (i == j)
+                return false;
+            while (i < j)
+            {
+                if (arr[i] <= arr[i + 1])
+                    return false;
+                i++;
+            }
+            return true;
+        }
+
+        return IsIncreasing(arr, 0, indexMax) && IsDecreasing(arr, indexMax, arr.Length - 1);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
