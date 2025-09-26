@@ -3780,6 +3780,20 @@ public class Leetcode
         }
         return true;
     }
+    public int RepeatedNTimes(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (int x in nums)
+        {
+            if (!d.ContainsKey(x))
+                d[x] = 1;
+            else
+                d[x]++;
+        }
+        return d.Where(x => x.Value == nums.Length / 2).First().Key;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
