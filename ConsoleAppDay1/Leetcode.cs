@@ -3843,6 +3843,32 @@ public class Leetcode
         Backtrack(0);
         return result;
     }
+    public IList<IList<int>> CombinationSum(int[] candidates, int target)
+    {
+        if (candidates == null || candidates.Length == 0)
+            return new List<IList<int>>();
+
+        List<IList<int>> res = new List<IList<int>>();
+        List<int> current = new List<int>();
+        void Backtrack(int targ, int index)
+        {
+            if (targ == 0)
+            {
+                res.Add(new List<int>(current));
+            }
+            for (int i = index; i < candidates.Length; i++)
+            {
+                if (candidates[i] > targ)
+                    continue;
+
+                current.Add(candidates[i]);
+                Backtrack(targ - candidates[i], i);
+                current.RemoveAt(current.Count - 1);
+            }
+        }
+        Backtrack(target, 0);
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
