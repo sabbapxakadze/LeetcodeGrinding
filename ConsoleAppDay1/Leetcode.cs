@@ -3794,6 +3794,29 @@ public class Leetcode
         }
         return d.Where(x => x.Value == nums.Length / 2).First().Key;
     }
+    public IList<IList<int>> Permute(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return null;
+
+        List<IList<int>> Recursion(List<int> head, List<int> nums)
+        {
+            if (nums.Count == 0)
+                return new List<IList<int>> { new List<int>(head) };
+
+            List<IList<int>> ls = new List<IList<int>>();
+            foreach (int i in nums)
+            {
+                List<int> l = new List<int>(head);
+                l.Add(i);
+                List<int> n = new List<int>(nums);
+                n.Remove(i);
+                ls.AddRange(Recursion(l, n));
+            }
+            return ls;
+        }
+        return Recursion(new List<int>(), nums.ToList());
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
