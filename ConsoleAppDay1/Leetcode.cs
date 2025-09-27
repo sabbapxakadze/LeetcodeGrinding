@@ -3794,6 +3794,7 @@ public class Leetcode
         }
         return d.Where(x => x.Value == nums.Length / 2).First().Key;
     }
+    // First Assignment
     public IList<IList<int>> Permute(int[] nums)
     {
         if (nums == null || nums.Length == 0)
@@ -3816,6 +3817,31 @@ public class Leetcode
             return ls;
         }
         return Recursion(new List<int>(), nums.ToList());
+    }
+    public IList<IList<int>> Subsets(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>() { new List<int>() };
+
+        List<IList<int>> result = new List<IList<int>>();
+
+        List<int> set = new List<int>();
+        void Backtrack(int index)
+        { 
+            if (index > nums.Length - 1)
+            {
+                result.Add(new List<int>(set));
+                return;
+            }
+
+            set.Add(nums[index]);
+            Backtrack(index + 1);
+
+            set.RemoveAt(set.Count - 1);
+            Backtrack(index + 1);
+        }
+        Backtrack(0);
+        return result;
     }
     static void Main(string[] args)
     {
