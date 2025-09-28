@@ -3869,6 +3869,53 @@ public class Leetcode
         Backtrack(target, 0);
         return res;
     }
+    public IList<string> LetterCombinations(string digits)
+    {
+        if (string.IsNullOrEmpty(digits))
+            return new List<string>();
+        Dictionary<int, string> map = new Dictionary<int, string>()
+        {
+            { 2, "abc"},
+            { 3, "def" },
+            { 4, "ghi" },
+            { 5, "jkl" },
+            { 6, "mno" },
+            { 7, "pqrs" },
+            { 8, "tuv" },
+            { 9, "wxyz" },
+        };
+
+        List<string> Recursion(string comb)
+        {
+            if (string.IsNullOrEmpty(comb))
+                return new List<string>() { "" };
+
+            int num = int.Parse(comb);
+            
+            if (num < 10 && num > 1)
+            {
+                List<string> l = new List<string>();
+                foreach (char c in map[num])
+                {
+                    l.Add(c.ToString());
+                }
+                return l;
+            }
+
+            int firstDigit = int.Parse(comb.Substring(0, 1));
+            List<string> lis = new List<string>();
+            var rec = Recursion(comb.Substring(1));
+            foreach (var x in map[firstDigit])
+            {
+                foreach (var y in rec)
+                {
+                    lis.Add(x + y.ToString());
+                }
+            }
+            return lis;
+        }
+        return Recursion(digits);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
