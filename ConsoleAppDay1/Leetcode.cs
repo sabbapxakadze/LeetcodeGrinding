@@ -3916,6 +3916,31 @@ public class Leetcode
         }
         return Recursion(digits);
     }
+    public IList<string> GenerateParenthesis(int n)
+    {
+        if (n <= 0)
+            return new List<string>();
+
+        int open = 0;
+        int closed = 0;
+
+        List<string> res = new List<string>();
+
+        void Recursion(string curr, int open, int closed)
+        {
+            if (curr.Length == 2*n)
+            {
+                res.Add(curr);
+                return;
+            }
+            if (open < n)
+                Recursion(curr + "(", open + 1, closed);
+            if (closed < open)
+                Recursion(curr + ")", open, closed + 1);
+        }
+        Recursion("", 0, 0);
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
