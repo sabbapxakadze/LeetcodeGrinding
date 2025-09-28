@@ -3941,6 +3941,45 @@ public class Leetcode
         Recursion("", 0, 0);
         return res;
     }
+    public bool Exist(char[][] board, string word)
+    {
+        if (board == null || string.IsNullOrEmpty(word))
+            return false;
+        int row = board.Length;
+        int col = board[0].Length;
+        bool[,] visited = new bool[row, col];
+
+        bool Recursion(int i, int j, int index)
+        {
+            if (index == word.Length)
+                return true;
+
+            if (i >= row || j >= col || i < 0 || j < 0)
+                return false;
+            if (visited[i, j] || board[i][j] != word[index])
+                return false;
+            
+            visited[i, j] = true;
+            bool res = Recursion(i + 1, j, index + 1)
+                || Recursion(i - 1, j, index + 1)
+                || Recursion(i, j + 1, index + 1)
+                || Recursion(i, j - 1, index + 1);
+
+            visited[i, j] = false;
+            return res;
+        }
+        
+        bool res = false;
+        for (int i = 0; i < board.Length; i++)
+        {
+            for (int j = 0; j < board[0].Length; j++)
+            {
+                if (board[i][j] == word[0] && Recursion(i, j, 0))
+                    return true;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
