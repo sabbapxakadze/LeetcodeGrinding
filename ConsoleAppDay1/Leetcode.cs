@@ -4017,6 +4017,24 @@ public class Leetcode
         }
         return max;
     }
+    public int LargestPerimeter(int[] nums)
+    {
+        Array.Sort(nums);
+        if (nums.Length < 2)
+            return 0;
+        int max = 0;
+        int a = nums[0], b = nums[1];
+
+        for (int i = 2; i < nums.Length; i++)
+        {
+            if (a + b > nums[i] && a + nums[i] > b && b + nums[i] > a)
+                max = a + b + nums[i];
+
+            a = nums[i - 1];
+            b = nums[i];
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
