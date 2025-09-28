@@ -3980,6 +3980,21 @@ public class Leetcode
         }
         return res;
     }
+    // End of 1st Assignment
+    public bool IsUnivalTree(TreeNode root)
+    {
+        if (root == null)
+            return true;
+        bool Recursion(int val, TreeNode node)
+        {
+            if (node == null)
+                return true;
+            if (val != node.val)
+                return false;
+            return Recursion(val, node.left) && Recursion(val, node.right);
+        }
+        return Recursion(root.val, root);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
