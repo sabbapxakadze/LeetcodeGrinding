@@ -3827,7 +3827,7 @@ public class Leetcode
 
         List<int> set = new List<int>();
         void Backtrack(int index)
-        { 
+        {
             if (index > nums.Length - 1)
             {
                 result.Add(new List<int>(set));
@@ -3891,7 +3891,7 @@ public class Leetcode
                 return new List<string>() { "" };
 
             int num = int.Parse(comb);
-            
+
             if (num < 10 && num > 1)
             {
                 List<string> l = new List<string>();
@@ -3928,7 +3928,7 @@ public class Leetcode
 
         void Recursion(string curr, int open, int closed)
         {
-            if (curr.Length == 2*n)
+            if (curr.Length == 2 * n)
             {
                 res.Add(curr);
                 return;
@@ -3958,7 +3958,7 @@ public class Leetcode
                 return false;
             if (visited[i, j] || board[i][j] != word[index])
                 return false;
-            
+
             visited[i, j] = true;
             bool res = Recursion(i + 1, j, index + 1)
                 || Recursion(i - 1, j, index + 1)
@@ -3968,7 +3968,7 @@ public class Leetcode
             visited[i, j] = false;
             return res;
         }
-        
+
         bool res = false;
         for (int i = 0; i < board.Length; i++)
         {
@@ -3994,6 +3994,28 @@ public class Leetcode
             return Recursion(val, node.left) && Recursion(val, node.right);
         }
         return Recursion(root.val, root);
+    }
+    public int LengthOfLongestSubstring(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+        if (s.Length == 1)
+            return 1;
+
+        int max = int.MinValue;
+        HashSet<char> set = new HashSet<char>();
+        int l = 0;
+        for (int r = 0; r < s.Length; r++)
+        {
+            while (set.Contains(s[r]))
+            {
+                set.Remove(s[l]);
+                l++;
+            }
+            max = Math.Max(max, r - l + 1);
+            set.Add(s[r]);
+        }
+        return max;
     }
     static void Main(string[] args)
     {
