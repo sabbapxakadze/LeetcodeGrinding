@@ -4142,6 +4142,36 @@ public class Leetcode
         }
         return Divide(nums);
     }
+    public void SortColors(int[] nums)
+    {
+        int r = 0, g = 0, b = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (nums[i] == 0)
+                r++;
+            else if (nums[i] == 1)
+                g++;
+            else
+                b++;
+        }
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (r != 0)
+            {
+                nums[i] = 0;
+                r--;
+            }
+            else if (g != 0)
+            {
+                nums[i] = 1;
+                g--;
+            }
+            else
+            {
+                nums[i] = 2;
+            }
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
