@@ -4172,6 +4172,23 @@ public class Leetcode
             }
         }
     }
+    public int[] TopKFrequent(int[] nums, int k)
+    {
+        if (nums == null || k <= 0)
+            return Array.Empty<int>();
+
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (int i in nums)
+        {
+            if (!d.ContainsKey(i))
+                d[i] = 1;
+            else
+                d[i]++;
+        }
+        if (k > d.Count)
+            return Array.Empty<int>();
+        return d.OrderByDescending(x => x.Value).Take(k).Select(x => x.Key).ToArray();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
