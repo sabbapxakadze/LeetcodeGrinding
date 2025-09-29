@@ -4063,6 +4063,36 @@ public class Leetcode
         }
         return Array.Empty<int>();
     }
+    public IList<IList<string>> GroupAnagrams(string[] strs)
+    {
+        if (strs == null || strs.Length == 0)
+            return new List<IList<string>>() { new List<string>() };
+
+        List<IList<string>> res = new List<IList<string>>();
+
+        Dictionary<string, List<string>> d = new Dictionary<string, List<string>>();
+
+        for (int i = 0; i < strs.Length; i++)
+        {
+            char[] arr = strs[i].ToCharArray();
+            Array.Sort(arr);
+            string temp = new string(arr);
+
+            if (d.ContainsKey(temp))
+            {
+                d[temp].Add(strs[i]);
+            }
+            else
+            {
+                d[temp] = new List<string> { strs[i] };
+            }
+        }
+        foreach (var item in d)
+        {
+            res.Add(item.Value);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
