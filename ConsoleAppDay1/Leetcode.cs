@@ -4253,6 +4253,21 @@ public class Leetcode
         }
         return res;
     }
+    public string MergeAlternately(string word1, string word2)
+    {
+        if (string.IsNullOrEmpty(word1) || string.IsNullOrEmpty(word2))
+            return "";
+        int i = 0, j = 0;
+        string res = "";
+        while (i < word1.Length || j < word2.Length)
+        {
+            if (i < word1.Length)
+                res += word1[i++];
+            if (j < word2.Length)
+                res += word2[j++];
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
