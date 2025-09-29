@@ -4035,6 +4035,18 @@ public class Leetcode
         }
         return max;
     }
+    public int[] GetConcatenation(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return Array.Empty<int>();
+
+        int[] res = new int[nums.Length * 2];
+        for (int i = 0; i < res.Length; i++)
+        {
+            res[i] = nums[i % nums.Length];
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
