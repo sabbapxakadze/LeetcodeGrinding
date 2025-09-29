@@ -4093,6 +4093,55 @@ public class Leetcode
         }
         return res;
     }
+    public int[] SortArray(int[] nums)
+    {
+        int[] Divide(int[] arr)
+        {
+            if (arr.Length == 1)
+                return arr;
+            if (arr.Length == 2)
+                return Sort(new int[] { arr[0] }, new int[] { arr[1] });
+
+            int[] f = new int[(arr.Length + 1) / 2];
+            int[] s = new int[arr.Length / 2];
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (i >= f.Length)
+                {
+                    s[i - f.Length] = arr[i];
+                }
+                else
+                {
+                    f[i] = arr[i];
+                }
+            }
+            return Sort(Divide(f), Divide(s));
+        }
+
+        int[] Sort(int[] arr1, int[] arr2)
+        {
+            int i = 0, j = 0;
+            int[] res = new int[arr1.Length + arr2.Length];
+            while (i < arr1.Length && j < arr2.Length)
+            {
+                if (arr1[i] > arr2[j])
+                    res[i + j] = arr2[j++];
+                else if (arr1[i] <= arr2[j])
+                    res[i + j] = arr1[i++];
+            }
+            while (i < arr1.Length)
+            {
+                res[i + j] = arr1[i++];
+            }
+            while (j < arr2.Length)
+            {
+                res[i + j] = arr2[j++];
+            }
+            return res;
+        }
+        return Divide(nums);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
