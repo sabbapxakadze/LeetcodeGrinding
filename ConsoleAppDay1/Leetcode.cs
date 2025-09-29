@@ -4223,6 +4223,36 @@ public class Leetcode
             return total - above - left + overlap;
         }
     }
+    public int[] ProductExceptSelf(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return Array.Empty<int>();
+        int[] pr = new int[nums.Length];
+        int[] sf = new int[nums.Length];
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (i == 0)
+                pr[0] = 1;
+            else
+            {
+                pr[i] = pr[i - 1] * nums[i - 1];
+            }
+        }
+
+        for (int i = nums.Length - 1; i >= 0; i--)
+        {
+            if (i == nums.Length - 1)
+                sf[i] = 1;
+            else
+                sf[i] = pr[i + 1] * nums[i + 1];
+        }
+        int[] res = new int[nums.Length];
+        for (int i = 0; i < nums.Length; i++)
+        {
+            res[i] = sf[i] * sf[i];
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
