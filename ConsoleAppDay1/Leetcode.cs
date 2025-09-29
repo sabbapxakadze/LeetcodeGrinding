@@ -4047,6 +4047,22 @@ public class Leetcode
         }
         return res;
     }
+    public int[] TwoSum(int[] nums, int target)
+    {
+        if (nums == null || nums.Length == 0)
+            return Array.Empty<int>();
+
+        List<int> l = nums.ToList();
+        foreach (var item in l)
+        {
+            if (l.Contains(target - item))
+                if (item != target - item)
+                    return new int[] { l.IndexOf(item), l.IndexOf(target - item) };
+                else if (l.Where(x => x == item).Count() > 1)
+                    return new int[] { l.IndexOf(item), l.LastIndexOf(item) };
+        }
+        return Array.Empty<int>();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
