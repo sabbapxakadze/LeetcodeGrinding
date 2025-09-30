@@ -4288,9 +4288,66 @@ public class Leetcode
                 i++;
             }
             max = Math.Max(max, j - i + 1);
-            j++;         
+            j++;
         }
         return max;
+    }
+    public bool CheckInclusion(string s1, string s2)
+    {
+        if (string.IsNullOrEmpty(s1) || string.IsNullOrEmpty(s2))
+            return false;
+
+        Dictionary<char, int> firstMap = new Dictionary<char, int>();
+        foreach (char c in s1)
+        {
+            if (!firstMap.ContainsKey(c))
+                firstMap[c] = 0;
+            firstMap[c]++;
+        }
+
+        Dictionary<char, int> windowMap = new Dictionary<char, int>();
+        int i = 0, j = 0;
+        while (i < s2.Length && j < s2.Length)
+        {
+            char c = s2[j];
+            if (!firstMap.ContainsKey(c))
+            {
+                j++;
+                i = j;
+                windowMap = new Dictionary<char, int>();
+                continue;
+            }
+
+            if (!windowMap.ContainsKey(c))
+                windowMap[c] = 0;
+            windowMap[c]++;
+
+            if (j - i + 1 > s1.Length)
+            {
+                char leftCharacter = s2[i++];
+                if (windowMap[leftCharacter] == 1)
+                    windowMap.Remove(leftCharacter);
+                else
+                    windowMap[leftCharacter]--;
+            }
+            if (windowMap.Count == firstMap.Count)
+            {
+                bool tempRes = true;
+                foreach (var k in windowMap.Keys)
+                {
+                    if (!firstMap.ContainsKey(k) || windowMap[k] != firstMap[k])
+                    {
+                        tempRes = false;
+                        break;
+                    }    
+                }
+                if (tempRes)
+                    return true;
+            }
+
+            j++;
+        }
+        return false;
     }
     static void Main(string[] args)
     {
