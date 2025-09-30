@@ -4370,6 +4370,48 @@ public class Leetcode
         }
         return min == nums.Length + 1 ? 0 : min;
     }
+    public class MinStack
+    {
+        int[] stack;
+        int[] minStack;
+        int curr;
+        public MinStack()
+        {
+            stack = new int[64];
+            minStack = new int[64];
+            curr = 0;
+        }
+        public void Push(int val)
+        {
+            if (curr == stack.Length)
+            {
+                Array.Resize(ref stack, stack.Length * 2);
+                Array.Resize(ref minStack, minStack.Length * 2);
+            }
+
+            stack[curr] = val;
+            if (curr == 0)
+                minStack[curr] = val;
+            else
+                minStack[curr] = Math.Min(val, minStack[curr - 1]);
+            curr++;
+        }
+        public void Pop()
+        {
+            if (curr == 0) return;
+            curr--;
+        }
+        public int Top()
+        {
+            if (curr == 0) return 0;
+            return stack[curr - 1];
+        }
+        public int GetMin()
+        {
+            if (curr == 0) return 0;
+            return minStack[curr - 1];
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
