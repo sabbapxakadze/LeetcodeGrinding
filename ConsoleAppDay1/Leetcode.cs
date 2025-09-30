@@ -4268,6 +4268,30 @@ public class Leetcode
         }
         return res;
     }
+    public int CharacterReplacement(string s, int k)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+        Dictionary<char, int> d = new Dictionary<char, int>();
+        int i = 0, j = 0;
+        int max = 0;
+        while (i < s.Length && j < s.Length)
+        {
+            if (!d.ContainsKey(s[j]))
+                d[s[j]] = 0;
+            d[s[j]]++;
+            int maxVal = d.Max(x => x.Value);
+            int windowSize = j - i + 1;
+            if (windowSize - maxVal > k)
+            {
+                d[s[i]]--;
+                i++;
+            }
+            max = Math.Max(max, j - i + 1);
+            j++;         
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
