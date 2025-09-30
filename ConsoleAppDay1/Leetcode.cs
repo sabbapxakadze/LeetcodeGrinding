@@ -4339,7 +4339,7 @@ public class Leetcode
                     {
                         tempRes = false;
                         break;
-                    }    
+                    }
                 }
                 if (tempRes)
                     return true;
@@ -4348,6 +4348,27 @@ public class Leetcode
             j++;
         }
         return false;
+    }
+    public int MinSubArrayLen(int target, int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        int i = 0, j = 0;
+        int min = nums.Length + 1;
+        int tempTarg = target;
+        while (i < nums.Length && j < nums.Length)
+        {
+            tempTarg -= nums[j];
+            j++;
+            while (tempTarg <= 0)
+            {
+                min = Math.Min(min, j - i);
+                tempTarg += nums[i];
+                i++;
+            }
+        }
+        return min == nums.Length + 1 ? 0 : min;
     }
     static void Main(string[] args)
     {
