@@ -4501,6 +4501,31 @@ public class Leetcode
         }
         return false;
     }
+    public int MinEatingSpeed(int[] piles, int h)
+    {
+        if (piles == null || h <= 0)
+            return 0;
+
+        int i = 1, j = piles.Max();
+        while (i <= j)
+        {
+            int mid = i + (j - i) / 2;
+            long sum = 0;
+            foreach (int p in piles)
+            {
+                sum += (long)(p + mid - 1) / mid;
+            }
+            if (sum <= h)
+            {
+                j = mid - 1;
+            }
+            else
+            {
+                i = mid + 1;
+            }
+        }
+        return i;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
