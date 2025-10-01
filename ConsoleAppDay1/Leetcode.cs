@@ -4561,6 +4561,33 @@ public class Leetcode
             second = tmp2;
         }
     }
+    public ListNode RemoveNthFromEnd(ListNode head, int n)
+    {
+        List<int> l = new List<int>();
+        ListNode temp = head;
+        while (temp != null)
+        {
+            l.Add(temp.val);
+            temp = temp.next;
+        }
+        l.RemoveAt(l.Count - n);
+        ListNode res = null;
+        ListNode current = null;
+        for (int i = 0; i < l.Count; i++)
+        {
+            if (res == null)
+            {
+                res = new ListNode(l[i]);
+                current = res;
+            }
+            else
+            {
+                current.next = new ListNode(l[i]);
+                current = current.next;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
