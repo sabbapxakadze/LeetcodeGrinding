@@ -4440,6 +4440,46 @@ public class Leetcode
         }
         return int.Parse(st.Peek());
     }
+    public int[] AsteroidCollision(int[] asteroids)
+    {
+        if (asteroids == null || asteroids.Length == 0)
+            return Array.Empty<int>();
+
+        Stack<int> st = new Stack<int>();
+        int i = 0;
+        while (i < asteroids.Length)
+        {
+            if (st.Count == 0)
+                st.Push(asteroids[i++]);
+            else
+            {
+                if (st.Peek() < 0 || asteroids[i] > 0)
+                    st.Push(asteroids[i++]);
+                else
+                {
+                    if (Math.Abs(asteroids[i]) > Math.Abs(st.Peek()))
+                    {
+                        st.Pop();
+                    }
+                    else if (asteroids[i] + st.Peek() == 0)
+                    {
+                        st.Pop();
+                        i++;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+        }
+        int[] res = new int[st.Count];
+        for (int j = res.Length - 1; j >= 0; j--)
+        {
+            res[j] = st.Pop();
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
