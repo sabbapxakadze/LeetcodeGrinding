@@ -4412,6 +4412,34 @@ public class Leetcode
             return minStack[curr - 1];
         }
     }
+    public int EvalRPN(string[] tokens)
+    {
+        if (tokens == null || tokens.Length == 0)
+            return 0;
+
+        int count = 0;
+        Stack<string> st = new Stack<string>();
+        for (int i = 0; i < tokens.Length; i++)
+        {
+            if (tokens[i] == "+" || tokens[i] == "-"
+                || tokens[i] == "/" || tokens[i] == "*")
+            {
+                if (st.Count < 2)
+                    return 0;
+                int sec = int.Parse(st.Pop());
+                int first = int.Parse(st.Pop());
+                string res = "";
+                if (tokens[i] == "+") res = (first + sec).ToString();
+                else if (tokens[i] == "-") res = (first - sec).ToString();
+                else if (tokens[i] == "/") res = (first / sec).ToString();
+                else if (tokens[i] == "*") res = (first * sec).ToString();
+                st.Push(res);
+            }
+            else
+                st.Push(tokens[i]);
+        }
+        return int.Parse(st.Peek());
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
