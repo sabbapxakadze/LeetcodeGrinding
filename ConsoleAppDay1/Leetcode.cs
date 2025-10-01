@@ -4480,6 +4480,27 @@ public class Leetcode
         }
         return res;
     }
+    public bool SearchMatrix(int[][] matrix, int target)
+    {
+        if (matrix == null || matrix.Length == 0 || matrix[0].Length == 0)
+            return false;
+
+        int m = matrix.Length;
+        int n = matrix[0].Length;
+
+        int left = 0, right = m * n - 1;
+
+        while (left <= right)
+        {
+            int mid = left + (right - left) / 2;
+            int midVal = matrix[mid / n][mid % n];
+
+            if (midVal == target) return true;
+            if (midVal < target) left = mid + 1;
+            else right = mid - 1;
+        }
+        return false;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
