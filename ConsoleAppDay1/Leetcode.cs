@@ -4588,6 +4588,21 @@ public class Leetcode
         }
         return res;
     }
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+    {
+        if (root == null)
+            return null;
+
+        if (root.val < p.val && root.val < q.val)
+        {
+            return LowestCommonAncestor(root.right, p, q);
+        }
+        else if (root.val > p.val && root.val > q.val)
+        {
+            return LowestCommonAncestor(root.left, p, q);
+        }
+        return root;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
