@@ -4718,6 +4718,30 @@ public class Leetcode
         }
         return true;
     }
+    public int KthSmallest(TreeNode root, int k)
+    {
+        if (root == null || k <= 0)
+            return 0;
+
+        int res = 0;
+        int index = 0;
+        void InOrder(TreeNode node)
+        {
+            if (node == null || index >= k)
+                return;
+
+            InOrder(node.left);
+            index++;
+            if (index == k)
+            {
+                res = node.val;
+                return;
+            }
+            InOrder(node.right);
+        }
+        InOrder(root);
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
