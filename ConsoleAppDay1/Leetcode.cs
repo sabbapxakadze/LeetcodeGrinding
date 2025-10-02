@@ -4644,6 +4644,31 @@ public class Leetcode
         }
         return root;
     }
+    public IList<IList<int>> LevelOrder(TreeNode root)
+    {
+        if (root == null)
+            return new List<IList<int>>();
+        List<IList<int>> res = new List<IList<int>>();
+        Dictionary<int, List<int>> d = new Dictionary<int, List<int>>();
+        void Travel(TreeNode node, int level = 0)
+        {
+            if (node == null)
+                return;
+
+            if (d.ContainsKey(level))
+                d[level].Add(node.val);
+            else
+                d[level] = new List<int> { node.val };
+            Travel(node.left, level + 1);
+            Travel(node.right, level + 1);
+        }
+        Travel(root);
+        foreach (var item in d)
+        {
+            res.Add(item.Value);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
