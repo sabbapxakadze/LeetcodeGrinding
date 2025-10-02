@@ -1860,34 +1860,34 @@ public class Leetcode
         }
         return string.Join(" ", arr);
     }
-    public class Node
-    {
-        public int val;
-        public IList<Node> children;
-        public Node() { }
-        public Node(int _val)
-        {
-            val = _val;
-        }
-        public Node(int _val, IList<Node> _children)
-        {
-            val = _val;
-            children = _children;
-        }
-    }
-    public int MaxDepth(Node root)
-    {
-        if (root == null)
-            return 0;
-        if (root.children == null || root.children.Count == 0)
-            return 1;
-        HashSet<int> s = new HashSet<int>();
-        foreach (var item in root.children)
-        {
-            s.Add(MaxDepth(item));
-        }
-        return 1 + s.Max();
-    }
+    //public class Node
+    //{
+    //    public int val;
+    //    public IList<Node> children;
+    //    public Node() { }
+    //    public Node(int _val)
+    //    {
+    //        val = _val;
+    //    }
+    //    public Node(int _val, IList<Node> _children)
+    //    {
+    //        val = _val;
+    //        children = _children;
+    //    }
+    //}
+    //public int MaxDepth(Node root)
+    //{
+    //    if (root == null)
+    //        return 0;
+    //    if (root.children == null || root.children.Count == 0)
+    //        return 1;
+    //    HashSet<int> s = new HashSet<int>();
+    //    foreach (var item in root.children)
+    //    {
+    //        s.Add(MaxDepth(item));
+    //    }
+    //    return 1 + s.Max();
+    //}
     public int ArrayPairSum(int[] nums)
     {
         if (nums == null || nums.Length == 0)
@@ -1990,35 +1990,35 @@ public class Leetcode
         else
             return set.Count;
     }
-    public IList<int> Preorder(Node root)
-    {
-        if (root == null)
-            return new List<int>();
+    //public IList<int> Preorder(Node root)
+    //{
+    //    if (root == null)
+    //        return new List<int>();
 
-        List<int> l = new List<int>();
-        l.Add(root.val);
+    //    List<int> l = new List<int>();
+    //    l.Add(root.val);
 
-        foreach (var node in root.children)
-        {
-            l.AddRange(Preorder(node));
-        }
-        return l;
-    }
-    public IList<int> Postorder(Node root)
-    {
-        if (root == null)
-            return new List<int>();
+    //    foreach (var node in root.children)
+    //    {
+    //        l.AddRange(Preorder(node));
+    //    }
+    //    return l;
+    //}
+    //public IList<int> Postorder(Node root)
+    //{
+    //    if (root == null)
+    //        return new List<int>();
 
-        List<int> l = new List<int>();
-        ;
-        foreach (var node in root.children)
-        {
-            l.AddRange(Postorder(node));
-        }
-        l.Add(root.val);
+    //    List<int> l = new List<int>();
+    //    ;
+    //    foreach (var node in root.children)
+    //    {
+    //        l.AddRange(Postorder(node));
+    //    }
+    //    l.Add(root.val);
 
-        return l;
-    }
+    //    return l;
+    //}
     public int FindLHS(int[] nums)
     {
         if (nums == null || nums.Length == 0)
@@ -4741,6 +4741,40 @@ public class Leetcode
         }
         InOrder(root);
         return res;
+    }
+    public class Node
+    {
+        public int val;
+        public Node next;
+        public Node random;
+
+        public Node(int _val)
+        {
+            val = _val;
+            next = null;
+            random = null;
+        }
+    }
+    public Node CopyRandomList(Node head)
+    {
+        if (head == null)
+            return null;
+
+        Dictionary<Node, Node> d = new Dictionary<Node, Node>();
+        Node curr = head;
+        while (curr != null)
+        {
+            d[curr] = new Node(curr.val);
+            curr = curr.next;
+        }
+        curr = head;
+        while (curr != null)
+        {
+            d[curr].next = curr.next == null ? null : d[curr.next];
+            d[curr].random = curr.random == null ? null : d[curr.random];
+            curr = curr.next;
+        }
+        return d[head];
     }
     static void Main(string[] args)
     {
