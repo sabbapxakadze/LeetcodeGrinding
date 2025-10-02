@@ -4603,6 +4603,21 @@ public class Leetcode
         }
         return root;
     }
+    public TreeNode InsertIntoBST(TreeNode root, int val)
+    {
+        if (root == null)
+            return new TreeNode(val);
+
+        if (root.val > val)
+        {
+            return new TreeNode(root.val, InsertIntoBST(root.left, val), root.right);
+        }
+        if (root.val < val)
+        {
+            return new TreeNode(root.val, root.left, InsertIntoBST(root.right, val));
+        }
+        return root;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
