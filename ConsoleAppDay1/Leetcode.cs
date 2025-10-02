@@ -4669,6 +4669,33 @@ public class Leetcode
         }
         return res;
     }
+    public IList<int> RightSideView(TreeNode root)
+    {
+        if (root == null)
+            return new List<int>();
+        Dictionary<int, List<int>> d = new Dictionary<int, List<int>>();
+
+        void Travel(TreeNode node, int level = 0)
+        {
+            if (node == null)
+                return;
+
+            if (d.ContainsKey(level))
+                d[level].Add(node.val);
+            else
+                d[level] = new List<int> { node.val };
+            Travel(node.left, level + 1);
+            Travel(node.right, level + 1);
+        }
+        Travel(root);
+        List<int> res = new List<int>();
+        foreach (var i in d.Values)
+        {
+            if (i.Count != 0)
+                res.Add(i.ElementAt(i.Count - 1));
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
