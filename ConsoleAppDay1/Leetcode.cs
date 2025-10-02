@@ -4696,6 +4696,28 @@ public class Leetcode
         }
         return res;
     }
+    public bool IsValidBST(TreeNode root)
+    {
+        if (root == null)
+            return true;
+
+        List<int> l = new List<int>();
+        void InOrder(TreeNode node)
+        {
+            if (node == null)
+                return;
+            InOrder(node.left);
+            l.Add(node.val);
+            InOrder(node.right);
+        }
+        InOrder(root);
+        for (int i = 1; i < l.Count; i++)
+        {
+            if (l[i - 1] >= l[i])
+                return false;
+        }
+        return true;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
