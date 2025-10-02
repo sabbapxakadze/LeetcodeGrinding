@@ -4618,6 +4618,32 @@ public class Leetcode
         }
         return root;
     }
+    public TreeNode DeleteNode(TreeNode root, int key)
+    {
+        if (root == null)
+            return root;
+
+        if (root.val > key)
+            return new TreeNode(root.val, DeleteNode(root.left, key), root.right);
+        else if (root.val < key)
+            return new TreeNode(root.val, root.left, DeleteNode(root.right, key));
+        if (root.val == key)
+        {
+            if (root.left == null)
+                return root.right;
+            if (root.right == null)
+                return root.left;
+
+            TreeNode cur = root.right;
+            while (cur.left != null)
+            {
+                cur = cur.left;
+            }
+            root.val = cur.val;
+            root.right = DeleteNode(root.right, root.val);
+        }
+        return root;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
