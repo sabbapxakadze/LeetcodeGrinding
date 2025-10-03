@@ -4810,7 +4810,7 @@ public class Leetcode
         Dictionary<int, double> d = new Dictionary<int, double>();
         for (int i = 0; i < points.Length; i++)
         {
-            d[i] = Math.Sqrt(Math.Pow(points[i][0], 2) + Math.Pow(points[i][1], 2));
+            d[i] = points[i][0] * points[i][0] + points[i][1] * points[i][1];
         }
         var ks = d.OrderBy(x => x.Value).Select(x => x.Key).ToList();
         int[][] res = new int[k][];
@@ -4821,6 +4821,23 @@ public class Leetcode
             res[i][1] = points[ks[i]][1];
         }
         return res;
+    }
+    public int FindKthLargest(int[] nums, int k)
+    {
+        if (nums == null || k <= 0)
+            return 1;
+        PriorityQueue<int, int> q = new PriorityQueue<int, int>();
+        foreach (var item in nums)
+        {
+            q.Enqueue(item, item);
+        }
+        int i = 0;
+        while (i != nums.Length - k)
+        {
+            q.Dequeue();
+            i++;
+        }
+        return q.Dequeue();
     }
     static void Main(string[] args)
     {
