@@ -4839,6 +4839,42 @@ public class Leetcode
         }
         return q.Dequeue();
     }
+    public int LeastInterval(char[] tasks, int n)
+    {
+        if (tasks == null || n < 0)
+            return 0;
+        Dictionary<char, int> d = new Dictionary<char, int>();
+        foreach (char c in tasks)
+        {
+            if (!d.ContainsKey(c))
+                d[c] = 0;
+            d[c]++;
+        }
+        PriorityQueue<int, int> pq = new PriorityQueue<int, int>();
+        foreach (var item in d.Values)
+        {
+            pq.Enqueue(item, -item);
+        }
+        int time = 0;
+        while (pq.Count > 0)
+        {
+            var temp = new List<int>();
+            int cyc = n + 1;
+            while (cyc > 0 && pq.Count > 0)
+            {
+                int cnt = pq.Dequeue();
+                if (cnt - 1 > 0)
+                    temp.Add(cnt - 1);
+                time++;
+                cyc--;
+            }
+            foreach (var item in temp)
+                pq.Enqueue(item, -item);
+            if (pq.Count > 0)
+                time += cyc;
+        }
+        return time;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
