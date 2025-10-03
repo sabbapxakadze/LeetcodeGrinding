@@ -4888,6 +4888,36 @@ public class Leetcode
         }
         return DFS(0, 0, nums);
     }
+    public IList<IList<int>> CombinationSum2(int[] candidates, int target)
+    {
+        if (candidates == null)
+            return new List<IList<int>>();
+        List<IList<int>> res = new List<IList<int>>();
+        Array.Sort(candidates);
+
+        void Recursion(int s, List<int> current, int targ)
+        {
+            if (targ == 0)
+            {
+                res.Add(new List<int>(current));
+                return;
+            }
+            if (targ < 0)
+                return;
+
+            for (int i = s; i < candidates.Length; i++)
+            {
+                if (i != s && candidates[i] == candidates[i - 1])
+                    continue;
+
+                current.Add(candidates[i]);
+                Recursion(i + 1, current, targ - candidates[i]);
+                current.RemoveAt(current.Count - 1);
+            }
+        }
+        Recursion(0, new List<int>(), target);
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
