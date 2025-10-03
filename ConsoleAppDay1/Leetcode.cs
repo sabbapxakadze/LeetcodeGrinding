@@ -1860,34 +1860,34 @@ public class Leetcode
         }
         return string.Join(" ", arr);
     }
-    //public class Node
-    //{
-    //    public int val;
-    //    public IList<Node> children;
-    //    public Node() { }
-    //    public Node(int _val)
-    //    {
-    //        val = _val;
-    //    }
-    //    public Node(int _val, IList<Node> _children)
-    //    {
-    //        val = _val;
-    //        children = _children;
-    //    }
-    //}
-    //public int MaxDepth(Node root)
-    //{
-    //    if (root == null)
-    //        return 0;
-    //    if (root.children == null || root.children.Count == 0)
-    //        return 1;
-    //    HashSet<int> s = new HashSet<int>();
-    //    foreach (var item in root.children)
-    //    {
-    //        s.Add(MaxDepth(item));
-    //    }
-    //    return 1 + s.Max();
-    //}
+    public class Node
+    {
+        public int val;
+        public IList<Node> children;
+        public Node() { }
+        public Node(int _val)
+        {
+            val = _val;
+        }
+        public Node(int _val, IList<Node> _children)
+        {
+            val = _val;
+            children = _children;
+        }
+    }
+    public int MaxDepth(Node root)
+    {
+        if (root == null)
+            return 0;
+        if (root.children == null || root.children.Count == 0)
+            return 1;
+        HashSet<int> s = new HashSet<int>();
+        foreach (var item in root.children)
+        {
+            s.Add(MaxDepth(item));
+        }
+        return 1 + s.Max();
+    }
     public int ArrayPairSum(int[] nums)
     {
         if (nums == null || nums.Length == 0)
@@ -1990,35 +1990,35 @@ public class Leetcode
         else
             return set.Count;
     }
-    //public IList<int> Preorder(Node root)
-    //{
-    //    if (root == null)
-    //        return new List<int>();
+    public IList<int> Preorder(Node root)
+    {
+        if (root == null)
+            return new List<int>();
 
-    //    List<int> l = new List<int>();
-    //    l.Add(root.val);
+        List<int> l = new List<int>();
+        l.Add(root.val);
 
-    //    foreach (var node in root.children)
-    //    {
-    //        l.AddRange(Preorder(node));
-    //    }
-    //    return l;
-    //}
-    //public IList<int> Postorder(Node root)
-    //{
-    //    if (root == null)
-    //        return new List<int>();
+        foreach (var node in root.children)
+        {
+            l.AddRange(Preorder(node));
+        }
+        return l;
+    }
+    public IList<int> Postorder(Node root)
+    {
+        if (root == null)
+            return new List<int>();
 
-    //    List<int> l = new List<int>();
-    //    ;
-    //    foreach (var node in root.children)
-    //    {
-    //        l.AddRange(Postorder(node));
-    //    }
-    //    l.Add(root.val);
+        List<int> l = new List<int>();
+        ;
+        foreach (var node in root.children)
+        {
+            l.AddRange(Postorder(node));
+        }
+        l.Add(root.val);
 
-    //    return l;
-    //}
+        return l;
+    }
     public int FindLHS(int[] nums)
     {
         if (nums == null || nums.Length == 0)
@@ -4742,29 +4742,29 @@ public class Leetcode
         InOrder(root);
         return res;
     }
-    public class Node
+    public class Node1
     {
         public int val;
-        public Node next;
-        public Node random;
+        public Node1 next;
+        public Node1 random;
 
-        public Node(int _val)
+        public Node1(int _val)
         {
             val = _val;
             next = null;
             random = null;
         }
     }
-    public Node CopyRandomList(Node head)
+    public Node1 CopyRandomList(Node1 head)
     {
         if (head == null)
             return null;
 
-        Dictionary<Node, Node> d = new Dictionary<Node, Node>();
-        Node curr = head;
+        Dictionary<Node1, Node1> d = new Dictionary<Node1, Node1>();
+        Node1 curr = head;
         while (curr != null)
         {
-            d[curr] = new Node(curr.val);
+            d[curr] = new Node1(curr.val);
             curr = curr.next;
         }
         curr = head;
@@ -4775,6 +4775,32 @@ public class Leetcode
             curr = curr.next;
         }
         return d[head];
+    }
+    public int LastStoneWeight(int[] stones)
+    {
+        if (stones == null || stones.Length == 0)
+            return 0;
+        Array.Sort(stones);
+        List<int> l = new List<int>(stones);
+        while (l.Count > 1)
+        {
+            int big = l[l.Count - 1];
+            int small = l[l.Count - 2];
+            if (big == small)
+            {
+                l.RemoveAt(l.Count - 1);
+                l.RemoveAt(l.Count - 1);
+            }
+            else
+            {
+                int temp = big - small;
+                l.RemoveAt(l.Count - 1);
+                l.RemoveAt(l.Count - 1);
+                l.Add(temp);
+                l.Sort();
+            }
+        }
+        return l.Count == 1 ? l[0] : 0;
     }
     static void Main(string[] args)
     {
