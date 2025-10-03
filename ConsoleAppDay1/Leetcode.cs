@@ -4875,6 +4875,19 @@ public class Leetcode
         }
         return time;
     }
+    public int SubsetXORSum(int[] nums)
+    {
+        if (nums == null)
+            return 0;
+        
+        int DFS(int i, int sum, int[] arr)
+        {
+            if (i == arr.Length)
+                return sum;
+            return DFS(i + 1, sum ^ arr[i], arr) + DFS(i + 1, sum, arr);
+        }
+        return DFS(0, 0, nums);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
