@@ -4802,6 +4802,26 @@ public class Leetcode
         }
         return l.Count == 1 ? l[0] : 0;
     }
+    public int[][] KClosest(int[][] points, int k)
+    {
+        if (points == null || k <= 0)
+            return Array.Empty<int[]>();
+
+        Dictionary<int, double> d = new Dictionary<int, double>();
+        for (int i = 0; i < points.Length; i++)
+        {
+            d[i] = Math.Sqrt(Math.Pow(points[i][0], 2) + Math.Pow(points[i][1], 2));
+        }
+        var ks = d.OrderBy(x => x.Value).Select(x => x.Key).ToList();
+        int[][] res = new int[k][];
+        for (int i = 0; i < res.Length; i++)
+        {
+            res[i] = new int[2];
+            res[i][0] = points[ks[i]][0];
+            res[i][1] = points[ks[i]][1];
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
