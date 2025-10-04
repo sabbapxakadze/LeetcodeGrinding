@@ -4879,7 +4879,7 @@ public class Leetcode
     {
         if (nums == null)
             return 0;
-        
+
         int DFS(int i, int sum, int[] arr)
         {
             if (i == arr.Length)
@@ -5034,6 +5034,40 @@ public class Leetcode
         }
         Backtrack(new List<string>());
         return lists;
+    }
+    public bool Makesquare(int[] matchsticks)
+    {
+        if (matchsticks == null || matchsticks.Length == 0)
+            return false;
+        int sum = matchsticks.Sum();
+        if (sum % 4 != 0)
+            return false;
+        int groupSize = sum / 4;
+        Array.Sort(matchsticks);
+        Array.Reverse(matchsticks);
+        bool res = false;
+
+        void Backtrack(int[] lengths, int index)
+        {
+            if (res)
+                return;
+            if (index == matchsticks.Length)
+            {
+                res = (lengths[0] == groupSize && lengths[1] == groupSize &&
+                       lengths[2] == groupSize && lengths[3] == groupSize);
+            }
+            for (int j = 0; j < lengths.Length; j++)
+            {
+                if (lengths[j] < groupSize && lengths[j] + matchsticks[index] <= groupSize)
+                {
+                    lengths[j] += matchsticks[index];
+                    Backtrack(lengths, index + 1);
+                    lengths[j] -= matchsticks[index];
+                }
+            }
+        }
+        Backtrack(new int[4], 0);
+        return res;
     }
     static void Main(string[] args)
     {
