@@ -4997,6 +4997,44 @@ public class Leetcode
         Backtrack(new List<int>());
         return lists;
     }
+    public IList<IList<string>> Partition(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return new List<IList<string>>();
+        List<IList<string>> lists = new List<IList<string>>();
+        bool IsPalindrome(string a)
+        {
+            if (a.Length == 1)
+                return true;
+            int i = 0, j = a.Length - 1;
+            while (i <= j)
+            {
+                if (a[i] != a[j])
+                    return false;
+                i++; j--;
+            }
+            return true;
+        }
+        void Backtrack(List<string> current, int index = 0)
+        {
+            if (index == s.Length)
+            {
+                lists.Add(new List<string>(current));
+            }
+            for (int last = index; last < s.Length; last++)
+            {
+                string substring = s.Substring(index, last - index + 1);
+                if (IsPalindrome(substring))
+                {
+                    current.Add(substring);
+                    Backtrack(current, last + 1);
+                    current.RemoveAt(current.Count - 1);
+                }
+            }
+        }
+        Backtrack(new List<string>());
+        return lists;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
