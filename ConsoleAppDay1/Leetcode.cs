@@ -4963,6 +4963,40 @@ public class Leetcode
         Backtrack(new List<int>());
         return lists;
     }
+    public IList<IList<int>> PermuteUnique(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (int i in nums)
+        {
+            if (!d.ContainsKey(i))
+                d[i] = 0;
+            d[i]++;
+        }
+        void Backtrack(List<int> current)
+        {
+            if (current.Count == nums.Length)
+            {
+                lists.Add(new List<int>(current));
+                return;
+            }
+            foreach (var item in d)
+            {
+                if (item.Value > 0)
+                {
+                    current.Add(item.Key);
+                    d[item.Key]--;
+                    Backtrack(current);
+                    d[item.Key]++;
+                    current.RemoveAt(current.Count - 1);
+                }
+            }
+        }
+        Backtrack(new List<int>());
+        return lists;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
