@@ -4940,6 +4940,29 @@ public class Leetcode
         Backtrack(new List<int>());
         return lists;
     }
+    public IList<IList<int>> SubsetsWithDup(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>();
+        Array.Sort(nums);
+        List<IList<int>> lists = new List<IList<int>>();
+        void Backtrack(List<int> current, int index = 0)
+        {
+            lists.Add(new List<int>(current));
+
+            for (int i = index; i < nums.Length; i++)
+            {
+                if (i > index && nums[i] == nums[i - 1])
+                    continue;
+
+                current.Add(nums[i]);
+                Backtrack(current, index + 1);
+                current.RemoveAt(current.Count - 1);
+            }
+        }
+        Backtrack(new List<int>());
+        return lists;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
