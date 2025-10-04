@@ -4918,6 +4918,28 @@ public class Leetcode
         Recursion(0, new List<int>(), target);
         return res;
     }
+    public IList<IList<int>> Combine(int n, int k)
+    {
+        if (n <= 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        void Backtrack(List<int> current, int index = 1)
+        {
+            if (current.Count == k)
+            {
+                lists.Add(new List<int>(current));
+                return;
+            }
+            if (index > n)
+                return;
+            current.Add(index);
+            Backtrack(current, index + 1);
+            current.RemoveAt(current.Count - 1);
+            Backtrack(current, index + 1);
+        }
+        Backtrack(new List<int>());
+        return lists;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
