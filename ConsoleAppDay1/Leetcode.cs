@@ -5223,6 +5223,40 @@ public class Leetcode
         }
         return res;
     }
+    public IList<IList<int>> ThreeSum(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        Array.Sort(nums);
+        for (int i = 0; i < nums.Length - 2; i++)
+        {
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            int x = i + 1, y = nums.Length - 1;
+            while (x <= y)
+            {
+                int temp = nums[i] + nums[x] + nums[y];
+                if (temp == 0)
+                {
+                    lists.Add(new List<int> { nums[i], nums[x++], nums[y--] });
+                    while (x < y && nums[x] == nums[x - 1])
+                        x++;
+                    while (x < y && nums[y] == nums[y + 1])
+                        y--;
+                }
+                else if (temp > 0)
+                {
+                    y--;
+                }
+                else
+                {
+                    x++;
+                }
+            }
+        }
+        return lists;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
