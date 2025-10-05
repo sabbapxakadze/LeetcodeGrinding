@@ -5147,6 +5147,44 @@ public class Leetcode
         }
         return -1;
     }
+    public int NumIslands(char[][] grid)
+    {
+        if (grid == null)
+            return 0;
+        bool[][] boolArray = new bool[grid.Length][];
+        for (int i = 0; i < grid.Length; i++)
+            boolArray[i] = new bool[grid[0].Length];
+
+        for (int i = 0; i < grid.Length; i++)
+            for (int j = 0; j < grid[0].Length; j++)
+                boolArray[i][j] = false;
+
+        int res = 0;
+
+        void DFS(int r, int c)
+        {
+            if (r < 0 || c < 0 || r >= grid.Length || c >= grid[0].Length
+                || boolArray[r][c] || grid[r][c] != '1')
+                return;
+            boolArray[r][c] = true;
+            DFS(r, c + 1);
+            DFS(r, c - 1);
+            DFS(r + 1, c);
+            DFS(r - 1, c);
+        }
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (!boolArray[i][j] && grid[i][j] == '1')
+                {
+                    res++;
+                    DFS(i, j);
+                }
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
