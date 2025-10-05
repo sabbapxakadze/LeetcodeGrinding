@@ -5069,6 +5069,61 @@ public class Leetcode
         Backtrack(new int[4], 0);
         return res;
     }
+    public class TrieNode
+    {
+        public Dictionary<char, TrieNode> children =
+                                new Dictionary<char, TrieNode>();
+        public bool endOfWord = false;
+    }
+    public class Trie
+    {
+        TrieNode root;
+
+        public Trie()
+        {
+            root = new TrieNode();
+        }
+
+        public void Insert(string word)
+        {
+            TrieNode curr = root;
+            foreach (var c in word)
+            {
+                if (!curr.children.ContainsKey(c))
+                    curr.children[c] = new TrieNode();
+                curr = curr.children[c];
+            }
+            curr.endOfWord = true;
+        }
+
+        public bool Search(string word)
+        {
+            TrieNode curr = root;
+            foreach (char c in word)
+            {
+                if (!curr.children.ContainsKey(c))
+                {
+                    return false;
+                }
+                curr = curr.children[c];
+            }
+            return curr.endOfWord;
+        }
+
+        public bool StartsWith(string prefix)
+        {
+            TrieNode cur = root;
+            foreach (char c in prefix)
+            {
+                if (!cur.children.ContainsKey(c))
+                {
+                    return false;
+                }
+                cur = cur.children[c];
+            }
+            return true;
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
