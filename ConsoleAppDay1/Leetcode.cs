@@ -5185,6 +5185,44 @@ public class Leetcode
         }
         return res;
     }
+    public int MaxAreaOfIsland(int[][] grid)
+    {
+        if (grid == null)
+            return 0;
+        int res = 0;
+        bool[][] newArr = new bool[grid.Length][];
+        for (int i = 0; i < newArr.Length; i++)
+        {
+            newArr[i] = new bool[grid[0].Length];
+        }
+
+        int DFS(int r, int c)
+        {
+            if (r < 0 || c < 0 || r >= grid.Length || c >= grid[0].Length
+                || grid[r][c] == 0 || newArr[r][c])
+                return 0;
+
+            newArr[r][c] = true;
+            int area = 1;
+            area += DFS(r, c + 1);
+            area += DFS(r, c - 1);
+            area += DFS(r + 1, c);
+            area += DFS(r - 1, c);
+            return area;
+        }
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (!newArr[i][j] && grid[i][j] == 1)
+                {
+                    int area = DFS(i, j);
+                    res = Math.Max(res, area);
+                }
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
