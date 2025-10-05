@@ -5257,6 +5257,41 @@ public class Leetcode
         }
         return lists;
     }
+    public IList<IList<int>> FourSum(int[] nums, int target)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        Array.Sort(nums);
+        for (int i = 0; i < nums.Length - 3; i++)
+        {
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            for (int j = nums.Length - 1; j > i + 2; j--)
+            {
+                if (j < nums.Length - 1 && nums[j] == nums[j + 1])
+                    continue;
+                int x = i + 1, y = j - 1;
+                while (x < y)
+                {
+                    long res = (long)nums[i] + nums[x] + nums[y] + nums[j];
+                    if (res == target)
+                    {
+                        lists.Add(new List<int> { nums[i], nums[x++], nums[y--], nums[j] });
+                        while (x < y && nums[x] == nums[x - 1])
+                            x++;
+                        while (x < y && nums[y] == nums[y + 1])
+                            y--;
+                    }
+                    else if (res < target)
+                        x++;
+                    else
+                        y--;
+                }
+            }
+        }
+        return lists;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
