@@ -5124,6 +5124,29 @@ public class Leetcode
             return true;
         }
     }
+    public int FindJudge(int n, int[][] trust)
+    {
+        if (n <= 0 || trust == null)
+            return -1;
+        Dictionary<int, int> inD = new Dictionary<int, int>();
+        Dictionary<int, int> outD = new Dictionary<int, int>();
+        for (int i = 1; i <= n; i++)
+        {
+            inD[i] = 0;
+            outD[i] = 0;
+        }
+        foreach (int[] arr in trust)
+        {
+            inD[arr[1]]++;
+            outD[arr[0]]++;
+        }
+        for (int i = 1; i <= n; i++)
+        {
+            if (inD[i] == n - 1 && outD[i] == 0)
+                return i;
+        }
+        return -1;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
