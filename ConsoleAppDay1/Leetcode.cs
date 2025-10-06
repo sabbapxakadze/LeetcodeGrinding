@@ -5308,6 +5308,25 @@ public class Leetcode
         }
         return arr[n];
     }
+    public int Rob(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        int[] memo = new int[nums.Length];
+        Array.Fill(memo, -1);
+        int DFS(int[] arr, int i)
+        {
+            if (i >= arr.Length)
+                return 0;
+            if (memo[i] != -1)
+                return memo[i];
+
+            memo[i] =  Math.Max(arr[i] + DFS(arr, i + 2), DFS(arr, i + 1));
+            return memo[i];
+        }
+        return DFS(nums, 0);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
