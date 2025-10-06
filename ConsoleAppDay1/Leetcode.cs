@@ -5327,6 +5327,33 @@ public class Leetcode
         }
         return DFS(nums, 0);
     }
+    public int RobII(int[] nums)
+    {
+        if (nums.Length == 1)
+            return nums[0];
+        int[] memo1 = new int[nums.Length];
+        int[] memo2 = new int[nums.Length];
+        Array.Fill(memo1, -1);
+        Array.Fill(memo2, -1);
+        int DFS(int[] arr, int i, int[] memo)
+        {
+            if (i >= arr.Length)
+                return 0;
+            if (memo[i] != -1)
+                return memo[i];
+
+            memo[i] = Math.Max(arr[i] + DFS(arr, i + 2, memo), DFS(arr, i + 1, memo));
+            return memo[i];
+        }
+        int[] sub1 = new int[nums.Length - 1];
+        int[] sub2 = new int[nums.Length - 1];
+        for (int i = 0; i < nums.Length - 1; i++)
+        {
+            sub1[i] = nums[i];
+            sub2[i] = nums[i + 1];
+        }
+        return Math.Max(DFS(sub1, 0, memo1), DFS(sub2, 0, memo2));
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
