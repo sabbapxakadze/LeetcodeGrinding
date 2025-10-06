@@ -1243,37 +1243,6 @@ public class Leetcode
         }
         return (int)c;
     }
-    public int LongestPalindrome(string s)
-    {
-        if (string.IsNullOrEmpty(s))
-            return 0;
-        if (s.Length == 1)
-            return 1;
-
-        Dictionary<char, int> d = new Dictionary<char, int>();
-        foreach (char c in s)
-        {
-            if (d.ContainsKey(c))
-                d[c]++;
-            else
-                d[c] = 1;
-        }
-        int res = 0;
-
-        bool odd = false;
-        foreach (var x in d)
-        {
-            if (d[x.Key] % 2 == 1)
-            {
-                odd = true;
-                res += d[x.Key] - 1;
-            }
-            else
-                res += d[x.Key];
-        }
-        return odd ? res + 1 : res;
-    }
-
     public int ThirdMax(int[] nums)
     {
         if (nums == null || nums.Length == 0)
@@ -5353,6 +5322,34 @@ public class Leetcode
             sub2[i] = nums[i + 1];
         }
         return Math.Max(DFS(sub1, 0, memo1), DFS(sub2, 0, memo2));
+    }
+    public string LongestPalindrome(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return null;
+
+        string longest = "";
+        for (int i = 0; i < s.Length; i++)
+        {
+            int l = i, r = i;
+            while (l >= 0 && r < s.Length && s[l] == s[r])
+            {
+                if (r - l + 1 > longest.Length)
+                    longest = s.Substring(l, r - l + 1);
+                l--;
+                r++;
+            }
+            l = i;
+            r = i + 1;
+            while (l >= 0 && r < s.Length && s[l] == s[r])
+            {
+                if (r - l + 1 > longest.Length)
+                    longest = s.Substring(l, r - l + 1);
+                l--;
+                r++;
+            }
+        }
+        return longest;
     }
     static void Main(string[] args)
     {
