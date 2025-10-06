@@ -5377,6 +5377,30 @@ public class Leetcode
         }
         return count;
     }
+    public int UniquePaths(int m, int n)
+    {
+        if (m <= 0 || n <= 0)
+            return 0;
+        int[,] arr = new int[m, n];
+        int x = 0;
+        while (x < arr.GetLength(0))
+        {
+            arr[x++, 0] = 1;
+        }
+        x = 0;
+        while (x < arr.GetLength(1))
+        {
+            arr[0, x++] = 1;
+        }
+        for (int i = 1; i < arr.GetLength(0); i++)
+        {
+            for (int j = 1; j < arr.GetLength(1); j++)
+            {
+                arr[i, j] = arr[i, j - 1] + arr[i - 1, j];
+            }
+        }
+        return arr[m - 1, n - 1];
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
