@@ -5351,6 +5351,32 @@ public class Leetcode
         }
         return longest;
     }
+    public int CountSubstrings(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+
+        int count = 0;
+        for (int i = 0; i < s.Length; i++)
+        {
+            int l = i, r = i;
+            while (l >= 0 && r < s.Length && s[l] == s[r])
+            {
+                count++;
+                l--;
+                r++;
+            }
+            l = i;
+            r = i + 1;
+            while (l >= 0 && r < s.Length && s[l] == s[r])
+            {
+                count++;
+                l--;
+                r++;
+            }
+        }
+        return count;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
