@@ -5401,6 +5401,43 @@ public class Leetcode
         }
         return arr[m - 1, n - 1];
     }
+    public int UniquePathsWithObstacles(int[][] obstacleGrid)
+    {
+        if (obstacleGrid == null)
+            return 0;
+        if (obstacleGrid[obstacleGrid.Length - 1][obstacleGrid[0].Length - 1] == 1)
+            return 0;
+
+        int x = 0;
+        while (x < obstacleGrid.Length)
+        {
+            if (obstacleGrid[x][0] != 1)
+                obstacleGrid[x++][0] = -1;
+            else
+                break;
+        }
+        x = 0;
+        while (x < obstacleGrid[0].Length)
+        {
+            if (obstacleGrid[0][x] != 1)
+                obstacleGrid[0][x++] = -1;
+            else
+                break;
+        }
+        for (int i = 1; i < obstacleGrid.Length; i++)
+        {
+            for (int j = 1; j < obstacleGrid[0].Length; j++)
+            {
+                if (obstacleGrid[i][j] != 1)
+                {
+                    int r = obstacleGrid[i - 1][j] != 1 ? obstacleGrid[i - 1][j] : 0;
+                    int c = obstacleGrid[i][j - 1] != 1 ? obstacleGrid[i][j - 1] : 0;
+                    obstacleGrid[i][j] = r + c;
+                }
+            }
+        }
+        return -1 * obstacleGrid[obstacleGrid.Length - 1][obstacleGrid[0].Length - 1];
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
