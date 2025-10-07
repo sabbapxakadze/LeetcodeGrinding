@@ -5438,6 +5438,25 @@ public class Leetcode
         }
         return -1 * obstacleGrid[obstacleGrid.Length - 1][obstacleGrid[0].Length - 1];
     }
+    public int MinPathSum(int[][] grid)
+    {
+        if (grid == null)
+            return 0;
+        int MinPath(int i, int j, int?[,] memo)
+        {
+            if (i == grid.Length || j == grid[0].Length)
+                return int.MaxValue;
+            if (memo[i,j].HasValue)
+                return memo[i, j].Value;
+            if (i == grid.Length - 1 && j == grid[0].Length - 1)
+                return grid[i][j];
+            int res = grid[i][j] + Math.Min(MinPath(i + 1, j, memo), MinPath(i, j + 1, memo));
+            memo[i, j] = res;
+            return res;
+        }
+        int?[,] memo = new int?[grid.Length, grid[0].Length];
+        return MinPath(0, 0, memo);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
