@@ -5500,6 +5500,34 @@ public class Leetcode
         }
         return true;
     }
+    public int LongestConsecutive(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        HashSet<int> s = new HashSet<int>(nums);
+        int max = 1;
+        foreach (int n in nums)
+        {
+            int temp = 1;
+            int v = n + 1;
+            int b = n - 1;
+            while (s.Contains(v))
+            {
+                s.Remove(v);
+                v++;
+                temp++;
+            }
+            while (s.Contains(b))
+            {
+                s.Remove(b);
+                b--;
+                temp++;
+            }
+            max = Math.Max(max, temp);
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
