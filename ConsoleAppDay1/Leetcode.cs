@@ -5528,6 +5528,18 @@ public class Leetcode
         }
         return max;
     }
+    public int MaxProfit(int[] prices)
+    {
+        if (prices == null || prices.Length <= 1)
+            return 0;
+        int prof = 0;
+        for (int i = 1; i < prices.Length; i++)
+        {
+            if (prices[i] > prices[i - 1])
+                prof += prices[i] - prices[i - 1];
+        }
+        return prof;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
