@@ -5291,7 +5291,7 @@ public class Leetcode
             if (memo[i] != -1)
                 return memo[i];
 
-            memo[i] =  Math.Max(arr[i] + DFS(arr, i + 2), DFS(arr, i + 1));
+            memo[i] = Math.Max(arr[i] + DFS(arr, i + 2), DFS(arr, i + 1));
             return memo[i];
         }
         return DFS(nums, 0);
@@ -5446,7 +5446,7 @@ public class Leetcode
         {
             if (i == grid.Length || j == grid[0].Length)
                 return int.MaxValue;
-            if (memo[i,j].HasValue)
+            if (memo[i, j].HasValue)
                 return memo[i, j].Value;
             if (i == grid.Length - 1 && j == grid[0].Length - 1)
                 return grid[i][j];
@@ -5593,6 +5593,43 @@ public class Leetcode
             }
         }
         return res;
+    }
+    public IList<int> FindClosestElements(int[] arr, int k, int x)
+    {
+        if (arr == null || arr.Length == 0)
+            return new List<int>();
+
+        int closest = int.MaxValue;
+        int closestIndex = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            int temp = Math.Abs(x - arr[i]);
+            if (closest > temp)
+            {
+                closestIndex = i;
+                closest = temp;
+            }
+        }
+
+        int left = closestIndex;
+        int right = closestIndex;
+        while (right - left + 1 < k)
+        {
+            if (left == 0)
+                right++;
+            else if (right == arr.Length - 1)
+                left--;
+            else if (Math.Abs(x - arr[left]) <= Math.Abs(x - arr[right]))
+                left--;
+            else
+                right++;
+        }
+        List<int> list = new List<int>();
+        while (left <= right)
+        {
+            list.Add(arr[left++]);
+        }
+        return list;
     }
     static void Main(string[] args)
     {
