@@ -5553,6 +5553,24 @@ public class Leetcode
         }
         return d.Where(x => x.Value >= nums.Length / 3).Select(x => x.Key).ToList();
     }
+    public int SubarraySum(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        int currentSum = 0, res = 0;
+        Dictionary<int, int> pref = new Dictionary<int, int>();
+        pref[0] = 1;
+        foreach (int i in nums)
+        {
+            currentSum += i;
+            int difference = currentSum - k;
+            if (pref.ContainsKey(difference))
+                res += pref[difference];
+            pref[currentSum] = 1 + (pref.ContainsKey(currentSum) ? pref[currentSum] : 0);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
