@@ -5540,6 +5540,19 @@ public class Leetcode
         }
         return prof;
     }
+    public IList<int> MajorityElement(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<int>();
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (int i in nums)
+        {
+            if (!d.ContainsKey(i))
+                d[i] = 0;
+            d[i]++;
+        }
+        return d.Where(x => x.Value >= nums.Length / 3).Select(x => x.Key).ToList();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
