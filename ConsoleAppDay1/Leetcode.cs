@@ -5571,6 +5571,29 @@ public class Leetcode
         }
         return res;
     }
+    public int NumRescueBoats(int[] people, int limit)
+    {
+        if (people == null || people.Length == 0)
+            return 0;
+        Array.Sort(people);
+        int i = 0, j = people.Length - 1;
+        int res = 0;
+        while (i <= j)
+        {
+            if (people[i] + people[j] <= limit)
+            {
+                res++;
+                i++;
+                j--;
+            }
+            else
+            {
+                res++;
+                j--;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
