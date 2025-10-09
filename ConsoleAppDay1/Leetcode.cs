@@ -5694,6 +5694,19 @@ public class Leetcode
         }
         return nums.Length + 1;
     }
+    public int MaxSubArray(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int currentSum = nums[0];
+        int max = currentSum;
+        for (int i = 1; i < nums.Length; i++)
+        {
+            currentSum = Math.Max(nums[i], currentSum + nums[i]);
+            max = Math.Max(max, currentSum);
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
