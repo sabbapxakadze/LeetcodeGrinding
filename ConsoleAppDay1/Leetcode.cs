@@ -5631,6 +5631,23 @@ public class Leetcode
         }
         return list;
     }
+    public int[] DailyTemperatures(int[] temperatures)
+    {
+        if (temperatures == null || temperatures.Length == 0)
+            return Array.Empty<int>();
+        int[] arr = new int[temperatures.Length];
+        Stack<int> monoStack = new Stack<int>();
+        for (int i = 0; i < temperatures.Length; i++)
+        {
+            while (monoStack.Count > 0 && temperatures[i] > temperatures[monoStack.Peek()])
+            {
+                int prevIndex = monoStack.Pop();
+                arr[prevIndex] = i - prevIndex; 
+            }
+            monoStack.Push(i);
+        }
+        return arr;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
