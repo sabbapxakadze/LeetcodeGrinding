@@ -5648,6 +5648,25 @@ public class Leetcode
         }
         return arr;
     }
+    public class StockSpanner
+    {
+        Stack<(int price, int span)> s;
+        public StockSpanner()
+        {
+            s = new Stack<(int price, int span)>();
+        }
+
+        public int Next(int price)
+        {
+            int span = 1;
+            while (s.Count > 0 && price >= s.Peek().price)
+            {
+                span += s.Pop().span;
+            }
+            s.Push((price, span));
+            return span;
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
