@@ -5667,6 +5667,33 @@ public class Leetcode
             return span;
         }
     }
+    public int FirstMissingPositive(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+
+        int i = 0;
+        while (i < nums.Length)
+        { 
+            int cIndex = nums[i] - 1;
+            if (nums[i] > 0 && nums[i] <= nums.Length && nums[i] != nums[cIndex])
+            {
+                int temp = nums[i];
+                nums[i] = nums[cIndex];
+                nums[cIndex] = temp;
+            }
+            else
+            {
+                i++;
+            }
+        }
+        for (int j = 0; j < nums.Length; j++)
+        {
+            if (nums[j] != j + 1)
+                return j + 1;
+        }
+        return nums.Length + 1;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
