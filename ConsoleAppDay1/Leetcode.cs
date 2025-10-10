@@ -5818,6 +5818,26 @@ public class Leetcode
         }
         return head;
     }
+    public void Rotate(int[][] matrix)
+    {
+        if (matrix == null)
+            return;
+
+        int n = matrix.Length;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            Array.Reverse(matrix[i]);
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
