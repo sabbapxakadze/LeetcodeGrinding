@@ -5796,6 +5796,28 @@ public class Leetcode
         }
         return res;
     }
+    public ListNode InsertGreatestCommonDivisors(ListNode head)
+    {
+        if (head == null)
+            return null;
+
+        int GCD(int x, int y)
+        {
+            if (y == 0)
+                return x;
+            return GCD(y, x % y);
+        }
+        ListNode temp = head;
+        while (temp.next != null)
+        {
+            int gcd = GCD(temp.val, temp.next.val);
+            ListNode G = new ListNode(gcd);
+            G.next = temp.next;
+            temp.next = G;
+            temp = G.next;
+        }
+        return head;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
