@@ -5742,6 +5742,36 @@ public class Leetcode
         }
         return result.ToArray();
     }
+    public int[][] Merge(int[][] intervals)
+    {
+        if (intervals == null)
+            return Array.Empty<int[]>();
+        if (intervals.Length == 1)
+            return intervals;
+        List<int[]> l = new List<int[]>();
+        Array.Sort(intervals, (a, b) => a[0].CompareTo(b[0]));
+
+        int prevMin = intervals[0][0];
+        int prevMax = intervals[0][1];
+        for (int i = 1; i < intervals.Length; i++)
+        {
+            int currMin = intervals[i][0];
+            int currMax = intervals[i][1];
+            if (currMin > prevMax)
+            {
+                l.Add(new int[] { prevMin, prevMax });
+                prevMin = currMin;
+                prevMax = currMax;
+            }
+            else
+            {
+                prevMin = Math.Min(prevMin, currMin);
+                prevMax = Math.Max(prevMax, currMax);
+            }
+        }
+        l.Add(new int[] { prevMin, prevMax });
+        return l.ToArray();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
