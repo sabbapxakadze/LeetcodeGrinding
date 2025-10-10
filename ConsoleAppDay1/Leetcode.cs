@@ -5772,6 +5772,30 @@ public class Leetcode
         l.Add(new int[] { prevMin, prevMax });
         return l.ToArray();
     }
+    public int EraseOverlapIntervals(int[][] intervals)
+    {
+        if (intervals == null || intervals.Length <= 1)
+            return 0;
+        Array.Sort(intervals, (a, b) => a[0].CompareTo(b[0]));
+        int prevMax = intervals[0][1];
+        int res = 0;
+        for (int i = 1; i < intervals.Length; i++)
+        {
+            int currMin = intervals[i][0];
+            int currMax = intervals[i][1];
+            if (currMin >= prevMax)
+            {
+                prevMax = currMax;
+                continue;
+            }
+            else
+            {
+                res++;
+                prevMax = Math.Min(prevMax, currMax);
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
