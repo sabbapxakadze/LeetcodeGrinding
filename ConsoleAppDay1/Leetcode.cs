@@ -5642,7 +5642,7 @@ public class Leetcode
             while (monoStack.Count > 0 && temperatures[i] > temperatures[monoStack.Peek()])
             {
                 int prevIndex = monoStack.Pop();
-                arr[prevIndex] = i - prevIndex; 
+                arr[prevIndex] = i - prevIndex;
             }
             monoStack.Push(i);
         }
@@ -5674,7 +5674,7 @@ public class Leetcode
 
         int i = 0;
         while (i < nums.Length)
-        { 
+        {
             int cIndex = nums[i] - 1;
             if (nums[i] > 0 && nums[i] <= nums.Length && nums[i] != nums[cIndex])
             {
@@ -5892,6 +5892,54 @@ public class Leetcode
                 j = mid - 1;
         }
         return nums[i];
+    }
+    public int[] SearchRange(int[] nums, int target)
+    {
+        if (nums == null || nums.Length == 0)
+            return new int[] { -1, -1 };
+
+        int i = 0, j = nums.Length - 1;
+
+        int first = -1, last = 0;
+
+        while (i <= j)
+        {
+            int mid = (i + j) / 2;
+            if (nums[mid] < target)
+            {
+                i = mid + 1;
+            }
+            else if (nums[mid] > target)
+            {
+                j = mid - 1;
+            }
+            else
+            {
+                first = mid;
+                j--;
+            }
+        }
+        if (first == -1)
+            return new int[] { -1, -1 };
+        i = 0; j = nums.Length - 1;
+        while (i <= j)
+        {
+            int mid = (i + j) / 2;
+            if (nums[mid] < target)
+            {
+                i = mid + 1;
+            }
+            else if (nums[mid] > target)
+            {
+                j = mid - 1;
+            }
+            else
+            {
+                last = mid;
+                i++;
+            }
+        }
+        return new int[] { first, last };
     }
     static void Main(string[] args)
     {
