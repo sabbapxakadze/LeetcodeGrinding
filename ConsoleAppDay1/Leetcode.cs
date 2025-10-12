@@ -5941,6 +5941,16 @@ public class Leetcode
         }
         return new int[] { first, last };
     }
+    public int GetSum(int a, int b)
+    {
+        for (int i = 0; i < 32; i++)
+        {
+            int carry = (a & b) << 1;
+            a ^= b;
+            b = carry;
+        }
+        return a;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
