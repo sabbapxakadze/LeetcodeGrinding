@@ -5951,6 +5951,35 @@ public class Leetcode
         }
         return a;
     }
+    public int CarFleet(int target, int[] position, int[] speed)
+    {
+        if (position == null || speed == null)
+            return 0;
+        if (position.Length == 1)
+            return 1;
+
+        Dictionary<int, int> d = new Dictionary<int, int>(); // key-pos val-speed
+        for (int i = 0; i < position.Length; i++)
+        {
+            d[position[i]] = speed[i];
+        }
+        position = d.OrderBy(x => x.Key).Select(x => x.Key).ToArray();
+        speed = d.OrderBy(x => x.Key).Select(x => x.Value).ToArray();
+
+        int[] steps = new int[position.Length];
+        for (int i = 0; i < steps.Length; i++)
+        {
+            steps[i] = (target - position[i] + speed[i] - 1) / speed[i];
+        }
+        Stack<double> mono = new Stack<double>();
+        for (int i = steps.Length - 1; i >= 0; i--)
+        {
+            double time = (double)(target - position[i]) / speed[i];
+            if (mono.Count == 0 || mono.Peek() < time)
+                mono.Push(time);
+        }
+        return mono.Count;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
