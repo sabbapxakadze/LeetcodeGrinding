@@ -5980,6 +5980,43 @@ public class Leetcode
         }
         return mono.Count;
     }
+    public string SimplifyPath(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return null;
+
+        Stack<string> s = new Stack<string>();
+        int i = 0;
+
+        while (i < path.Length)
+        {
+            while (i < path.Length && path[i] == '/')
+            {
+                i++;
+            }
+            string temp = "";
+            while (i < path.Length && path[i] != '/')
+            {
+                temp += path[i++];
+            }
+
+            if (temp == "." || temp == "")
+            {
+                continue;
+            }
+            else if (temp == "..")
+            {
+                if (s.Count != 0)
+                    s.Pop();
+            }
+            else
+                s.Push(temp);
+        }
+        if (s.Count == 0)
+            return "/";
+        string[] dirs = s.Reverse().ToArray();
+        return "/" + string.Join("/", dirs);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
