@@ -6177,6 +6177,97 @@ public class Leetcode
             return currSize == k;
         }
     }
+    public class QNode
+    {
+        public bool val;
+        public bool isLeaf;
+        public QNode topLeft;
+        public QNode topRight;
+        public QNode bottomLeft;
+        public QNode bottomRight;
+
+        public QNode()
+        {
+            val = false;
+            isLeaf = false;
+            topLeft = null;
+            topRight = null;
+            bottomLeft = null;
+            bottomRight = null;
+        }
+
+        public QNode(bool _val, bool _isLeaf)
+        {
+            val = _val;
+            isLeaf = _isLeaf;
+            topLeft = null;
+            topRight = null;
+            bottomLeft = null;
+            bottomRight = null;
+        }
+
+        public QNode(bool _val, bool _isLeaf, QNode _topLeft, QNode _topRight, QNode _bottomLeft, QNode _bottomRight)
+        {
+            val = _val;
+            isLeaf = _isLeaf;
+            topLeft = _topLeft;
+            topRight = _topRight;
+            bottomLeft = _bottomLeft;
+            bottomRight = _bottomRight;
+        }
+    }
+    public QNode Construct(int[][] grid)
+    {
+        int first = grid[0][0];
+        bool allSame = true;
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (!allSame)
+                    break;
+                if (grid[i][j] != first)
+                {
+                    allSame = false;
+                    break;
+                }
+            }
+        }
+        if (allSame)
+            return new QNode(first == 1, true);
+
+        QNode res = new QNode();
+        int[][] topL = new int[grid.Length / 2][];
+        int[][] topR = new int[grid.Length / 2][];
+        int[][] bottomL = new int[grid.Length / 2][];
+        int[][] bottomR = new int[grid.Length / 2][];
+        for (int i = 0; i < topL.Length; i++)
+        {
+            topL[i] = new int[grid.Length / 2];
+            topR[i] = new int[grid.Length / 2];
+            bottomL[i] = new int[grid.Length / 2];
+            bottomR[i] = new int[grid.Length / 2];
+        }
+        for (int i = 0; i < topL.Length; i++)
+        {
+            for (int j = 0; j < topL[0].Length; j++)
+            {
+                topL[i][j] = grid[i][j];
+                topR[i][j] = grid[i][j + (topL.Length)];
+                bottomL[i][j] = grid[i + (topL.Length)][j];
+                bottomR[i][j] = grid[i + (topL.Length)][j + (topL.Length)];
+            }
+        }
+
+        res.isLeaf = false;
+        res.val = false;
+
+        res.topLeft = Construct(topL);
+        res.topRight = Construct(topR);
+        res.bottomLeft = Construct(bottomL);
+        res.bottomRight = Construct(bottomR);
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
