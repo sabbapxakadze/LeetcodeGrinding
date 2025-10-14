@@ -6105,6 +6105,78 @@ public class Leetcode
         }
         return res;
     }
+    public class MyCircularQueue
+    {
+        int k;
+        int currSize;
+        ListNode last;
+        public MyCircularQueue(int k)
+        {
+            this.k = k;
+            currSize = 0;
+            last = null;
+        }
+
+        public bool EnQueue(int value)
+        {
+            if (currSize == k)
+                return false;
+            ListNode node = new ListNode(value);
+            if (currSize == 0)
+            {
+                last = node;
+                last.next = last;
+            }
+            else
+            {
+                node.next = last.next;
+                last.next = node;
+                last = node;
+            }
+            currSize++;
+            return true;
+        }
+
+        public bool DeQueue()
+        {
+            if (currSize == 0)
+                return false;
+            else if (currSize == 1)
+            {
+                last = null;
+            }
+            else
+            {
+                last.next = last.next.next;
+            }
+            currSize--;
+            return true;
+        }
+
+        public int Front()
+        {
+            if (currSize == 0)
+                return -1;
+            return last.next.val;
+        }
+
+        public int Rear()
+        {
+            if (currSize == 0)
+                return -1;
+            return last.val;
+        }
+
+        public bool IsEmpty()
+        {
+            return currSize == 0;
+        }
+
+        public bool IsFull()
+        {
+            return currSize == k;
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
