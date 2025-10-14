@@ -6055,7 +6055,7 @@ public class Leetcode
         Dictionary<char, int> windowD = new Dictionary<char, int>();
         int have = 0, need = tD.Count;
         int resultLength = s.Length + 1, left = 0;
-        int[] indexes = new int[2]; 
+        int[] indexes = new int[2];
         for (int r = 0; r < s.Length; r++)
         {
             if (!windowD.ContainsKey(s[r]))
@@ -6083,6 +6083,27 @@ public class Leetcode
             }
         }
         return resultLength == s.Length + 1 ? "" : s.Substring(indexes[0], resultLength);
+    }
+    public ListNode ReverseBetween(ListNode head, int left, int right)
+    {
+        if (head == null || left > right)
+            return null;
+        List<int> l = new List<int>();
+        while (head != null)
+        {
+            l.Add(head.val);
+            head = head.next;
+        }
+        l.Reverse(left - 1, right - left + 1);
+
+        ListNode res = new ListNode(l[0]);
+        ListNode temp = res;
+        for (int i = 1; i < l.Count; i++)
+        {
+            temp.next = new ListNode(l[i]);
+            temp = temp.next;
+        }
+        return res;
     }
     static void Main(string[] args)
     {
