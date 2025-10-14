@@ -6268,6 +6268,49 @@ public class Leetcode
         res.bottomRight = Construct(bottomR);
         return res;
     }
+    public class GNode
+    {
+        public int val;
+        public IList<GNode> neighbors;
+
+        public GNode()
+        {
+            val = 0;
+            neighbors = new List<GNode>();
+        }
+
+        public GNode(int _val)
+        {
+            val = _val;
+            neighbors = new List<GNode>();
+        }
+
+        public GNode(int _val, List<GNode> _neighbors)
+        {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+    public GNode CloneGraph(GNode node)
+    {
+        if (node == null)
+            return null;
+
+        Dictionary<GNode, GNode> d = new Dictionary<GNode, GNode>();
+        GNode Dfs(GNode root)
+        {
+            if (d.ContainsKey(root))
+                return d[root];
+
+            d[root] = new GNode(root.val);
+            for (int i = 0; i < root.neighbors.Count; i++)
+            {
+                d[root].neighbors.Add(Dfs(root.neighbors[i]));
+            }
+            return d[root];
+        }
+        return Dfs(node);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
