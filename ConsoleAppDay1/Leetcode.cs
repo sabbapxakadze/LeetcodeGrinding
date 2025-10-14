@@ -6040,6 +6040,50 @@ public class Leetcode
         }
         return 0;
     }
+    public string MinWindow(string s, string t)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t))
+            return null;
+        Dictionary<char, int> tD = new Dictionary<char, int>();
+        foreach (var c in t)
+        {
+            if (!tD.ContainsKey(c))
+                tD[c] = 0;
+            tD[c]++;
+        }
+
+        Dictionary<char, int> windowD = new Dictionary<char, int>();
+        int have = 0, need = tD.Count;
+        int resultLength = s.Length + 1, left = 0;
+        int[] indexes = new int[2]; 
+        for (int r = 0; r < s.Length; r++)
+        {
+            if (!windowD.ContainsKey(s[r]))
+                windowD[s[r]] = 0;
+            windowD[s[r]]++;
+
+            if (tD.ContainsKey(s[r]) && windowD[s[r]] == tD[s[r]])
+            {
+                have++;
+            }
+            while (have == need)
+            {
+                if (resultLength > r - left + 1)
+                {
+                    resultLength = r - left + 1;
+                    indexes[0] = left;
+                    indexes[1] = r;
+                }
+
+                char leftC = s[left];
+                windowD[leftC]--;
+                if (tD.ContainsKey(leftC) && tD[leftC] > windowD[leftC])
+                    have--;
+                left++;
+            }
+        }
+        return resultLength == s.Length + 1 ? "" : s.Substring(indexes[0], resultLength);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
