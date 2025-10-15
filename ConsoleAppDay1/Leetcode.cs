@@ -6335,6 +6335,48 @@ public class Leetcode
         }
         return string.Join("", rows);
     }
+    public int ShipWithinDays(int[] weights, int days)
+    {
+        if (weights == null || days < 0)
+            return 0;
+
+        bool CanShip(int[] ws, int maxWeight)
+        {
+            int count = 1;
+            int i = 0;
+            int temp = 0;
+            while (i < ws.Length)
+            {
+                if (temp + ws[i] <= maxWeight)
+                {
+                    temp += ws[i++];
+                }
+                else
+                {
+                    if (ws[i] > maxWeight)
+                        return false;
+                    count++;
+                    temp = 0;
+                }
+            }
+            return count <= days;
+        }
+        int i = weights.Max(), j = weights.Sum();
+        while (i <= j)
+        {
+            int mid = (i + j) / 2;
+            bool res = CanShip(weights, mid);
+            if (res)
+            {
+                j = mid - 1;
+            }
+            else
+            {
+                i = mid + 1;
+            }
+        }
+        return i;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
