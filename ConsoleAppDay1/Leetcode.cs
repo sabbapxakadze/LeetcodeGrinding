@@ -6377,6 +6377,42 @@ public class Leetcode
         }
         return i;
     }
+    public int SearchRotated(int[] nums, int target)
+    {
+        if (nums == null || nums.Length == 0)
+            return -1;
+        int i = 0, j = nums.Length - 1;
+        while (i < j)
+        {
+            int mid = (i + j) / 2;
+            if (nums[mid] > nums[j])
+                i = mid + 1;
+            else
+                j = mid;
+        }
+        int BinarySearch(int i, int j)
+        {
+            while (i <= j)
+            {
+                int mid = (i + j) / 2;
+                if (nums[mid] > target)
+                {
+                    j = mid - 1;
+                }
+                else if (nums[mid] < target)
+                {
+                    i = mid + 1;
+                }
+                else
+                    return mid;
+            }
+            return -1;
+        }
+        if (target >= nums[i] && target <= nums[nums.Length - 1])
+            return BinarySearch(i, nums.Length - 1);
+        else
+            return BinarySearch(0, i - 1);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
