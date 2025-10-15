@@ -6413,6 +6413,21 @@ public class Leetcode
         else
             return BinarySearch(0, i - 1);
     }
+    public TreeNode RemoveLeafNodes(TreeNode root, int target)
+    {
+        if (root == null)
+            return null;
+
+        root.left = RemoveLeafNodes(root.left, target);
+        root.right = RemoveLeafNodes(root.right, target);
+
+        if (root.left == null && root.right == null)
+        {
+            return root.val == target ? null : root;
+        }
+
+        return root;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
