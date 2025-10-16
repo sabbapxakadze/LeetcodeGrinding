@@ -6488,6 +6488,73 @@ public class Leetcode
             }
         }
     }
+    public class Twitter
+    {
+        private class User
+        {
+            public int Id;
+            public HashSet<int> Followings;
+            public List<(int TweetId, int Time)> Tweets;
+            public User(int id)
+            {
+                Id = id;
+                Followings = new HashSet<int>();
+                Tweets = new List<(int, int)>();
+            }
+        }
+        private Dictionary<int, User> users;
+        private int globalTime;
+        public Twitter()
+        {
+            users = new Dictionary<int, User>();
+            globalTime = 0;
+        }
+        private User GetOrCreateUser(int userId)
+        {
+            if (!users.ContainsKey(userId))
+                users[userId] = new User(userId);
+            return users[userId];
+        }
+        public void PostTweet(int userId, int tweetId)
+        {
+            var user = GetOrCreateUser(userId);
+            user.Tweets.Add((tweetId, globalTime++));
+        }
+        public IList<int> GetNewsFeed(int userId)
+        {
+            if (!users.ContainsKey(userId))
+                return new List<int>();
+
+            var user = users[userId];
+            var feed = new List<(int tweetId, int time)>();
+
+            feed.AddRange(user.Tweets);
+
+            foreach (var fid in user.Followings)
+            {
+                if (users.ContainsKey(fid))
+                    feed.AddRange(users[fid].Tweets);
+            }
+            return feed
+                .OrderByDescending(t => t.time)
+                .Take(10)
+                .Select(t => t.tweetId)
+                .ToList();
+        }
+        public void Follow(int followerId, int followeeId)
+        {
+            if (followerId == followeeId) return;
+            var follower = GetOrCreateUser(followerId);
+            GetOrCreateUser(followeeId);
+            follower.Followings.Add(followeeId);
+        }
+        public void Unfollow(int followerId, int followeeId)
+        {
+            if (followerId == followeeId) return;
+            if (!users.ContainsKey(followerId)) return;
+            users[followerId].Followings.Remove(followeeId);
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
