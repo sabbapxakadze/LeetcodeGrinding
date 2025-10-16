@@ -6428,6 +6428,39 @@ public class Leetcode
 
         return root;
     }
+    public bool CanPartitionKSubsets(int[] nums, int k)
+    {
+        if (nums == null || k <= 0)
+            return false;
+
+        int total = nums.Sum(), target = total / k;
+        if (total % k != 0)
+            return false;
+        bool[] used = new bool[nums.Length];
+        Array.Sort(nums);
+        Array.Reverse(nums);
+        bool Backtrack(int index, int kLeft, int thisSum)
+        {
+            if (kLeft == 0)
+                return true;
+            if (thisSum == target)
+                return Backtrack(0, kLeft - 1, 0);
+
+            for (int i = index; i < nums.Length; i++)
+            {
+                if (used[i] || nums[i] + thisSum > target)
+                    continue;
+                used[i] = true;
+                bool res = Backtrack(i + 1, kLeft, thisSum + nums[i]);
+                if (res)
+                    return true;
+                used[i] = false;
+                if (thisSum == 0) break;
+            }
+            return false;
+        }
+        return Backtrack(0, k, 0);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
