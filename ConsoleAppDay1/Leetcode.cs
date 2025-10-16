@@ -6461,6 +6461,33 @@ public class Leetcode
         }
         return Backtrack(0, k, 0);
     }
+    public void SetZeroes(int[][] matrix)
+    {
+        if (matrix == null)
+            return;
+        int r = matrix.Length, c = matrix[0].Length;
+        bool[] rows = new bool[r];
+        bool[] cols = new bool[c];
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (matrix[i][j] == 0)
+                {
+                    rows[i] = true;
+                    cols[j] = true;
+                }
+            }
+        }
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (rows[i] || cols[j])
+                    matrix[i][j] = 0;
+            }
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
