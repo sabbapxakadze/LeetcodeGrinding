@@ -6555,6 +6555,51 @@ public class Leetcode
             users[followerId].Followings.Remove(followeeId);
         }
     }
+    public int OrangesRotting(int[][] grid)
+    {
+        if (grid == null)
+            return 0;
+        Queue<int[]> q = new Queue<int[]>();
+        int freshOranges = 0, time = 0;
+        int[][] dirs = new int[4][];
+        dirs[0] = new int[2] {0, -1};
+        dirs[1] = new int[2] { 0, 1 };
+        dirs[2] = new int[2] { -1, 0 };
+        dirs[3] = new int[2] { 1, 0 };
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (grid[i][j] == 1)
+                    freshOranges++;
+                if (grid[i][j] == 2)
+                    q.Enqueue(new int[2] {i, j});
+            }
+        }
+        while (q.Count > 0 && freshOranges > 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                int r = q.Peek()[0];
+                int c = q.Peek()[1];
+                q.Dequeue();
+                foreach (var dir in dirs)
+                {
+                    int nr = r + dir[0];
+                    int nc = c + dir[1];
+
+                    if (nr < 0 || nc < 0 || nr >= grid.Length || nc >= grid[0].Length || grid[nr][nc] != 1)
+                        continue;
+                    grid[nr][nc] = 2;
+                    freshOranges--;
+                    q.Enqueue(new int[] { nr, nc });
+                }
+            }
+            time++;
+        }
+        return freshOranges == 0 ? time : -1;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
