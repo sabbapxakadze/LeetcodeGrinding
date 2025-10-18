@@ -6600,6 +6600,36 @@ public class Leetcode
         }
         return freshOranges == 0 ? time : -1;
     }
+    public TreeNode BuildTree(int[] preorder, int[] inorder)
+    {
+        if (preorder == null || inorder == null || preorder.Length == 0 || inorder.Length == 0)
+            return null;
+        TreeNode root = new TreeNode(preorder[0]);
+
+        int indexOfRoot = -1;
+        for (int i = 0; i < inorder.Length; i++)
+        {
+            if (inorder[i] == preorder[0])
+            {
+                indexOfRoot = i;
+                break;
+            }
+        }
+        if (indexOfRoot == -1)
+            return null;
+
+        var leftInorder = inorder.Take(indexOfRoot).ToArray();
+        var rightInorder = inorder.Skip(indexOfRoot + 1).ToArray();
+        
+        int leftCount = leftInorder.Length;
+        if (1 + leftCount > preorder.Length) leftCount = preorder.Length - 1;
+
+        var leftPreorder = preorder.Skip(1).Take(leftCount).ToArray();
+        var rightPreorder = preorder.Skip(1 + leftCount).ToArray();
+        root.left = BuildTree(leftPreorder, leftInorder);
+        root.right = BuildTree(rightPreorder, rightInorder);
+        return root;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
