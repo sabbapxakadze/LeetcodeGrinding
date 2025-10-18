@@ -6562,7 +6562,7 @@ public class Leetcode
         Queue<int[]> q = new Queue<int[]>();
         int freshOranges = 0, time = 0;
         int[][] dirs = new int[4][];
-        dirs[0] = new int[2] {0, -1};
+        dirs[0] = new int[2] { 0, -1 };
         dirs[1] = new int[2] { 0, 1 };
         dirs[2] = new int[2] { -1, 0 };
         dirs[3] = new int[2] { 1, 0 };
@@ -6573,7 +6573,7 @@ public class Leetcode
                 if (grid[i][j] == 1)
                     freshOranges++;
                 if (grid[i][j] == 2)
-                    q.Enqueue(new int[2] {i, j});
+                    q.Enqueue(new int[2] { i, j });
             }
         }
         while (q.Count > 0 && freshOranges > 0)
@@ -6620,7 +6620,7 @@ public class Leetcode
 
         var leftInorder = inorder.Take(indexOfRoot).ToArray();
         var rightInorder = inorder.Skip(indexOfRoot + 1).ToArray();
-        
+
         int leftCount = leftInorder.Length;
         if (1 + leftCount > preorder.Length) leftCount = preorder.Length - 1;
 
@@ -6655,6 +6655,56 @@ public class Leetcode
         root.left = BstFromPreorder(left);
         root.right = BstFromPreorder(right);
         return root;
+    }
+    public void Solve(char[][] board)
+    {
+        if (board == null)
+            return;
+        int regionCount = 0;
+        int[][] dirs = new int[4][];
+        dirs[0] = new int[] { 0, 1 };
+        dirs[1] = new int[] { 1, 0 };
+        dirs[2] = new int[] { 0, -1 };
+        dirs[3] = new int[] { -1, 0 };
+
+        int r = board.Length, c = board[0].Length;
+        bool isOnSide(int v, int b)
+        {
+            if (v == 0 || v == r - 1)
+                return true;
+            if (b == 0 || b == c - 1)
+                return true;
+            return false;
+        }
+        void MarkAsTemp(int x, int y)
+        {
+            if (x < 0 || x >= r || y < 0 || y >= c || board[x][y] != 'O')
+                return;
+            board[x][y] = 'T';
+            foreach (var dir in dirs)
+            {
+
+                MarkAsTemp(dir[0] + x, dir[1] + y);
+            }
+        }
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (isOnSide(i, j) && board[i][j] == 'O')
+                    MarkAsTemp(i, j);
+            }
+        }
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (board[i][j] == 'O')
+                    board[i][j] = 'X';
+                else if (board[i][j] == 'T')
+                    board[i][j] = 'O';
+            }
+        }
     }
     static void Main(string[] args)
     {
