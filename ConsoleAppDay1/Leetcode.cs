@@ -6630,6 +6630,32 @@ public class Leetcode
         root.right = BuildTree(rightPreorder, rightInorder);
         return root;
     }
+    public TreeNode BstFromPreorder(int[] preorder)
+    {
+        if (preorder == null || preorder.Length == 0)
+            return null;
+        TreeNode root = new TreeNode(preorder[0]);
+        int indexOfGreaterThanRoot = -1;
+        for (int i = 1; i < preorder.Length; i++)
+        {
+            if (preorder[i] > preorder[0])
+            {
+                indexOfGreaterThanRoot = i;
+                break;
+            }
+        }
+        if (indexOfGreaterThanRoot == -1)
+        {
+            var leftV = preorder.Skip(1).ToArray();
+            root.left = BstFromPreorder(leftV);
+            return root;
+        }
+        var left = preorder.Skip(1).Take(indexOfGreaterThanRoot - 1).ToArray();
+        var right = preorder.Skip(indexOfGreaterThanRoot).ToArray();
+        root.left = BstFromPreorder(left);
+        root.right = BstFromPreorder(right);
+        return root;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
