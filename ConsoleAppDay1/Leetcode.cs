@@ -6706,6 +6706,30 @@ public class Leetcode
             }
         }
     }
+    public int Trap(int[] height)
+    {
+        if (height == null || height.Length == 0)
+            return 0;
+        int sum = 0;
+        int i = 0, j = height.Length - 1;
+        int maxL = height[i], maxR = height[j];
+        while (i < j)
+        {
+            if (maxL <= maxR)
+            {
+                i++;
+                maxL = Math.Max(maxL, height[i]);
+                sum += maxL - height[i];
+            }
+            else
+            {
+                j--;
+                maxR = Math.Max(maxR, height[j]);
+                sum += maxR - height[j];
+            }
+        }
+        return sum;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
