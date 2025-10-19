@@ -6730,6 +6730,21 @@ public class Leetcode
         }
         return sum;
     }
+    public string Tree2str(TreeNode root)
+    {
+        if (root == null)
+            return "";
+        string r = $"{root.val}";
+        string left = Tree2str(root.left);
+        string right = Tree2str(root.right);
+        if (left == "" && right == "")
+            return r;
+        if (left == "")
+            return $"{r}()({right})";
+        if (right == "")
+            return $"{r}({left})";
+        return $"{r}({left})({right})";
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
