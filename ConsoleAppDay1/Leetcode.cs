@@ -6745,6 +6745,17 @@ public class Leetcode
             return $"{r}({left})";
         return $"{r}({left})({right})";
     }
+    public int[] SortedSquares(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return Array.Empty<int>();
+        List<int> l = new List<int>();
+        foreach (var num in nums)
+        {
+            l.Add(num*num);
+        }
+        return l.Order().ToArray();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
