@@ -6835,6 +6835,51 @@ public class Leetcode
         }
         return true;
     }
+    public class TimeMap
+    {
+        Dictionary<string, SortedList<int, string>> map;
+        public TimeMap()
+        {
+            map = new Dictionary<string, SortedList<int, string>>();
+        }
+        public void Set(string key, string value, int timestamp)
+        {
+            if (!map.ContainsKey(key))
+            {
+                map[key] = new SortedList<int, string>();
+            }
+            if (!map[key].ContainsKey(timestamp))
+            {
+                map[key][timestamp] = value;
+            }
+        }
+
+        public string Get(string key, int timestamp)
+        {
+            if (!map.ContainsKey(key))
+                return "";
+            var dMap = map[key];
+            var keys = dMap.Keys;
+            if (dMap.ContainsKey(timestamp))
+                return dMap[timestamp];
+            int i = 0, j = dMap.Count - 1;
+            string res = "";
+            while (i <= j)
+            {
+                int mid = (i + j) / 2;
+                if (keys[mid] <= timestamp)
+                {
+                    res = dMap[keys[mid]];
+                    i = mid + 1;
+                }
+                else
+                {
+                    j = mid - 1;
+                }
+            }
+            return res;
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
