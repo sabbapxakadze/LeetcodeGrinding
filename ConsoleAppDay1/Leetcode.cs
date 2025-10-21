@@ -6756,6 +6756,47 @@ public class Leetcode
         }
         return l.Order().ToArray();
     }
+    public int OpenLock(string[] deadends, string target)
+    {
+        if (deadends == null || string.IsNullOrEmpty(target))
+            return -1;
+        if (deadends.Contains("0000"))
+            return -1;
+        Queue<(string, int)> q = new Queue<(string, int)>();
+        q.Enqueue(("0000", 0));
+        HashSet<string> visited = new HashSet<string>(deadends);
+        while (q.Count != 0)
+        {
+            var it = q.Dequeue();
+            if (it.Item1 == target)
+                return it.Item2;
+            foreach(var item in Children(it.Item1))
+            {
+                if (!visited.Contains(item))
+                {
+                    visited.Add(item);
+                    q.Enqueue((item, it.Item2 + 1));
+                }
+                
+            }
+        }
+        return -1;
+        List<string> Children(string lockStr)
+        {
+            var res = new List<string>();
+            for (int i = 0; i < 4; i++)
+            {
+                int digit = lockStr[i] - '0';
+                string up = lockStr.Substring(0, i) + 
+                    ((digit + 1) % 10) + lockStr.Substring(i + 1);
+                string down = lockStr.Substring(0, i) + 
+                    ((digit + 9) % 10) + lockStr.Substring(i + 1);
+                res.Add(up);
+                res.Add(down);
+            }
+            return res;
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
