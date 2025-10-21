@@ -6797,6 +6797,44 @@ public class Leetcode
             return res;
         }
     }
+    public bool CanFinish(int numCourses, int[][] prerequisites)
+    {
+        if (numCourses <= 0 || prerequisites == null)
+            return false;
+        Dictionary<int, List<int>> adjMap = new Dictionary<int, List<int>>();
+        for (int i = 0; i < numCourses; i++)
+        {
+            adjMap[i] = new List<int>();
+        }
+        foreach (var item in prerequisites)
+        {
+            adjMap[item[1]].Add(item[0]);
+        }
+        HashSet<int> visited = new HashSet<int>();
+        bool Dfs(int curr)
+        {
+            if (visited.Contains(curr))
+                return false;
+            if (adjMap[curr].Count == 0)
+                return true;
+
+            visited.Add(curr);
+            foreach (var item in adjMap[curr])
+            {
+                if (!Dfs(item))
+                    return false;
+            }
+            visited.Remove(curr);
+            adjMap[curr] = new List<int>();
+            return true;
+        }
+        for (int i = 0; i < numCourses; i++)
+        {
+            if (!Dfs(i))
+                return false;
+        }
+        return true;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
