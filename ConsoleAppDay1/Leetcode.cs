@@ -6880,6 +6880,38 @@ public class Leetcode
             return res;
         }
     }
+    public int[] FindRedundantConnection(int[][] edges)
+    { 
+        int[] parent = new int[edges.Length + 1];
+        for (int i = 0; i < parent.Length; i++)
+        {
+            parent[i] = i;
+        }
+        int FindRoot(int x)
+        {
+            if (parent[x] != x)
+                return FindRoot(parent[x]);
+            return x;
+        }
+        bool Union(int x, int y)
+        {
+            if (FindRoot(x) == FindRoot(y))
+                return false;
+            parent[FindRoot(y)] = FindRoot(x);
+            return true;
+        }
+        int[] res = new int[2];
+        foreach (var item in edges)
+        {
+            bool temp = Union(item[0], item[1]);
+            if (!temp)
+            {
+                res[0] = item[0];
+                res[1] = item[1];
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
