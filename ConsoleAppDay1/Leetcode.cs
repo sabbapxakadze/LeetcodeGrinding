@@ -6912,6 +6912,52 @@ public class Leetcode
         }
         return res;
     }
+    public class UnionFind
+    {
+        private int[] parent;
+        private int[] rank;
+
+        public UnionFind(int n)
+        {
+            parent = new int[n];
+            rank = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                parent[i] = i;
+                rank[i] = 1;
+            }
+        }
+
+        public int Find(int x)
+        {
+            if (x != parent[x])
+            {
+                parent[x] = Find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        public bool Union(int x, int y)
+        {
+            int rootX = Find(x);
+            int rootY = Find(y);
+
+            if (rootX == rootY) return false;
+
+            if (rank[rootX] > rank[rootY])
+            {
+                parent[rootY] = rootX;
+                rank[rootX] += rank[rootY];
+            }
+            else
+            {
+                parent[rootX] = rootY;
+                rank[rootY] += rank[rootX];
+            }
+
+            return true;
+        }
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
