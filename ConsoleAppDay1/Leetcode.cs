@@ -6915,48 +6915,72 @@ public class Leetcode
     public class UnionFind
     {
         private int[] parent;
-        private int[] rank;
-
         public UnionFind(int n)
         {
             parent = new int[n];
-            rank = new int[n];
             for (int i = 0; i < n; i++)
             {
                 parent[i] = i;
-                rank[i] = 1;
             }
         }
-
         public int Find(int x)
         {
-            if (x != parent[x])
-            {
-                parent[x] = Find(parent[x]);
-            }
-            return parent[x];
+            if (parent[x] != x)
+                return Find(parent[x]);
+            return x;
         }
-
         public bool Union(int x, int y)
         {
-            int rootX = Find(x);
-            int rootY = Find(y);
-
-            if (rootX == rootY) return false;
-
-            if (rank[rootX] > rank[rootY])
-            {
-                parent[rootY] = rootX;
-                rank[rootX] += rank[rootY];
-            }
-            else
-            {
-                parent[rootX] = rootY;
-                rank[rootY] += rank[rootX];
-            }
-
+            if (Find(x) == Find(y))
+                return false;
+            parent[Find(y)] = Find(x);
             return true;
         }
+    }
+    public IList<IList<string>> AccountsMerge(IList<IList<string>> accounts)
+    {
+        if (accounts == null)
+            return new List<IList<string>>();
+        UnionFind uf = new UnionFind(accounts.Count);
+        Dictionary<string, int> emailToAcc = new Dictionary<string, int>();
+
+        for (int i = 0; i < accounts.Count; i++)
+        {
+            for (int j = 1; j < accounts[i].Count; j++)
+            {
+                string email = accounts[i][j];
+                if (emailToAcc.ContainsKey(email))
+                {
+                    uf.Union(i, emailToAcc[email]);
+                }
+                else
+                {
+                    emailToAcc[email] = i;
+                }
+            }
+        }
+        Dictionary<int, List<string>> emailGroup = new Dictionary<int, List<string>>();
+        foreach (var kvp in emailToAcc)
+        {
+            string email = kvp.Key;
+            int leader = uf.Find(kvp.Value);
+            if (!emailGroup.ContainsKey(leader))
+            {
+                emailGroup[leader] = new List<string>();
+            }
+            emailGroup[leader].Add(email);
+        }
+        List<IList<string>> res = new List<IList<string>>();
+        foreach (var x in emailGroup)
+        {
+            int accId = x.Key;
+            List<string> emails = x.Value;
+            emails.Sort(StringComparer.Ordinal);
+            List<string> merged = new List<string> { accounts[accId][0] };
+            merged.AddRange(emails);
+            res.Add(merged);
+        }
+        return res;
     }
     static void Main(string[] args)
     {
