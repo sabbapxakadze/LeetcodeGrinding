@@ -7020,6 +7020,26 @@ public class Leetcode
         memo[index] = count;
         return memo[index];
     }
+    public int CoinChange(int[] coins, int amount, Dictionary<int, int>? memo = null)
+    {
+        memo ??= new Dictionary<int, int>();
+        if (coins == null || coins.Length == 0 || amount < 0)
+            return -1;
+        if (amount == 0)
+            return 0;
+        if (memo.ContainsKey(amount))
+            return memo[amount];
+
+        int min = int.MaxValue;
+        for (int i = 0; i < coins.Length; i++)
+        {
+            int coin = CoinChange(coins, amount - coins[i], memo);
+            if (coin >= 0 && coin < min)
+                min = coin + 1;
+        }
+        memo[amount] = (min == int.MaxValue) ? -1 : min;
+        return memo[amount];
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
