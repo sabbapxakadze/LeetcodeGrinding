@@ -6999,9 +6999,31 @@ public class Leetcode
         }
         return max < 0 ? max : Math.Max(max, total - min);
     }
+    public int NumDecodings(string s, int index = 0, Dictionary<int, int>? memo = null)
+    {
+        memo ??= new Dictionary<int, int>();
+
+        if (index == s.Length)
+            return 1;
+        if (s[index] == '0')
+            return 0;
+        if (memo.ContainsKey(index))
+            return memo[index];
+
+        int count = NumDecodings(s, index + 1, memo);
+        if (index + 1 < s.Length)
+        {
+            int ft = int.Parse(s.Substring(index, 2));
+            if (ft >= 10 && ft <= 26)
+                count += NumDecodings(s, index + 2, memo);
+        }
+        memo[index] = count;
+        return memo[index];
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
-        Console.WriteLine();
+        string x = "asdb";
+        Console.WriteLine(x.Substring(1));
     }
 }
