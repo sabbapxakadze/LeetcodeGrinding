@@ -6982,6 +6982,23 @@ public class Leetcode
         }
         return res;
     }
+    public int MaxSubarraySumCircular(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int total = 0;
+        int currMin = 0, currMax = 0;
+        int min = nums[0], max = nums[0];
+        foreach (int i in nums)
+        {
+            total += i;
+            currMin = Math.Min(i, currMin + i);
+            currMax = Math.Max(i, currMax + i);
+            min = Math.Min(min, currMin);
+            max = Math.Max(max, currMax);
+        }
+        return max < 0 ? max : Math.Max(max, total - min);
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
