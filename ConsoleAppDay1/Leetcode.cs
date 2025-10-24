@@ -7040,6 +7040,44 @@ public class Leetcode
         memo[amount] = (min == int.MaxValue) ? -1 : min;
         return memo[amount];
     }
+    public int[] FindOrder(int numCourses, int[][] prerequisites)
+    {
+        if (prerequisites == null || numCourses <= 0)
+            return Array.Empty<int>();
+        var adjList = new Dictionary<int, List<int>>();
+        var indegrees = new int[numCourses];
+        // key-prerequisite, value-what gets unlocked
+        for (int i = 0; i < numCourses; i++)
+        {
+            adjList[i] = new List<int>();
+        }
+        foreach(var item in prerequisites)
+        {
+            int val = item[0];
+            int key = item[1];
+            adjList[key].Add(val);
+            indegrees[val]++;
+        }
+        Queue<int> q = new Queue<int>();
+        for (int i = 0; i < numCourses; i++)
+        {
+            if (indegrees[i] == 0)
+                q.Enqueue(i);
+        }
+        List<int> ord = new List<int>();
+        while (q.Count > 0)
+        {
+            int temp = q.Dequeue();
+            ord.Add(temp);
+            foreach (var depended in adjList[temp])
+            {
+                indegrees[depended]--;
+                if (indegrees[depended] == 0)
+                    q.Enqueue(depended);
+            }
+        }
+        return ord.Count == numCourses ? ord.ToArray() : Array.Empty<int>();
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
