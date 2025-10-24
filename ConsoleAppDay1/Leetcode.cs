@@ -7051,7 +7051,7 @@ public class Leetcode
         {
             adjList[i] = new List<int>();
         }
-        foreach(var item in prerequisites)
+        foreach (var item in prerequisites)
         {
             int val = item[0];
             int key = item[1];
