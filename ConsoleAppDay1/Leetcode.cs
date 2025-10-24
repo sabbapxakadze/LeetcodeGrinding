@@ -6752,7 +6752,7 @@ public class Leetcode
         List<int> l = new List<int>();
         foreach (var num in nums)
         {
-            l.Add(num*num);
+            l.Add(num * num);
         }
         return l.Order().ToArray();
     }
@@ -6770,14 +6770,14 @@ public class Leetcode
             var it = q.Dequeue();
             if (it.Item1 == target)
                 return it.Item2;
-            foreach(var item in Children(it.Item1))
+            foreach (var item in Children(it.Item1))
             {
                 if (!visited.Contains(item))
                 {
                     visited.Add(item);
                     q.Enqueue((item, it.Item2 + 1));
                 }
-                
+
             }
         }
         return -1;
@@ -6787,9 +6787,9 @@ public class Leetcode
             for (int i = 0; i < 4; i++)
             {
                 int digit = lockStr[i] - '0';
-                string up = lockStr.Substring(0, i) + 
+                string up = lockStr.Substring(0, i) +
                     ((digit + 1) % 10) + lockStr.Substring(i + 1);
-                string down = lockStr.Substring(0, i) + 
+                string down = lockStr.Substring(0, i) +
                     ((digit + 9) % 10) + lockStr.Substring(i + 1);
                 res.Add(up);
                 res.Add(down);
@@ -6881,7 +6881,7 @@ public class Leetcode
         }
     }
     public int[] FindRedundantConnection(int[][] edges)
-    { 
+    {
         int[] parent = new int[edges.Length + 1];
         for (int i = 0; i < parent.Length; i++)
         {
@@ -7077,6 +7077,50 @@ public class Leetcode
             }
         }
         return ord.Count == numCourses ? ord.ToArray() : Array.Empty<int>();
+    }
+    public IList<bool> CheckIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries)
+    {
+        if (prerequisites == null || queries == null)
+            return new List<bool>();
+        var adjList = new Dictionary<int, List<int>>();
+        for (int i = 0; i < numCourses; i++)
+            adjList[i] = new List<int>();
+        foreach (var item in prerequisites)
+        {
+            var key = item[0];
+            var val = item[1];
+            adjList[key].Add(val);
+        }
+        bool Bfs(int curr, int toReach)
+        {
+            HashSet<int> set = new HashSet<int>();
+            Queue<int> q = new Queue<int>();
+            set.Add(curr);
+            q.Enqueue(curr);
+            while (q.Count > 0)
+            {
+                var c = q.Dequeue();
+                if (c == toReach)
+                    return true;
+                foreach (var neighbour in adjList[c])
+                {
+                    if (!set.Contains(neighbour))
+                    {
+                        set.Add(neighbour);
+                        q.Enqueue(neighbour);
+                    }
+                }
+            }
+            return false;
+        }
+        List<bool> bools = new List<bool>();
+        foreach (var item in queries)
+        {
+            int pre = item[0];
+            int reach = item[1];
+            bools.Add(Bfs(pre, reach));
+        }
+        return bools;
     }
     static void Main(string[] args)
     {
