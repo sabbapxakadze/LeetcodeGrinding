@@ -7162,8 +7162,30 @@ public class Leetcode
             smalles = smalles.CompareTo(pref) < 0 ? smalles : pref;
             smalles = smalles.CompareTo(suf) < 0 ? smalles : suf;
         }
-
         return smalles;
+    }
+    public string MaxSumOfSquares(int num, int sum)
+    {
+        if (num < 0 || sum < 0)
+            return "";
+        if (sum > num * 9)
+            return "";
+        double score = 0;
+        StringBuilder s = new StringBuilder();
+
+        while (num != 0)
+        {
+            int big = 9;
+            while (big > sum)
+            {
+                big--;
+            }
+            sum -= big;
+            score += big * big;
+            num--;
+            s.Append(big);
+        }
+        return s.ToString();
     }
     static void Main(string[] args)
     {
