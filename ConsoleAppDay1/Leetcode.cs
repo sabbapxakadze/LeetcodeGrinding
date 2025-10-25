@@ -7147,6 +7147,24 @@ public class Leetcode
             return root;
         return null;
     }
+    public string LexSmallest(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return null;
+
+        string smalles = s;
+        for (int i = 0; i < s.Length; i++)
+        {
+            string pref = new string(s.Substring(0, i).Reverse().ToArray()) + s.Substring(i);
+
+            string suf = s.Substring(0, s.Length - i) + new string(s.Substring(s.Length - i).Reverse().ToArray());
+
+            smalles = smalles.CompareTo(pref) < 0 ? smalles : pref;
+            smalles = smalles.CompareTo(suf) < 0 ? smalles : suf;
+        }
+
+        return smalles;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
