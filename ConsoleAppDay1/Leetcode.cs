@@ -7122,6 +7122,31 @@ public class Leetcode
         }
         return bools;
     }
+    public TreeNode LowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q)
+    {
+        if (root == null)
+            return null;
+        bool Contains(TreeNode node, int target)
+        {
+            if (node == null)
+                return false;
+            if (node.val == target)
+                return true;
+            return Contains(node.left, target) || Contains(node.right, target);
+        }
+        if (root == p && Contains(p, q.val))
+            return p;
+        if (root == q && Contains(q, p.val))
+            return q;
+
+        if (Contains(root.left, p.val) && Contains(root.left, q.val))
+            return LowestCommonAncestor1(root.left, p, q);
+        else if (Contains(root.right, p.val) && Contains(root.right, q.val))
+            return LowestCommonAncestor1(root.right, p, q);
+        else if (Contains(root, p.val) && Contains(root, q.val))
+            return root;
+        return null;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
