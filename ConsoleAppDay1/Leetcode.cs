@@ -7187,6 +7187,26 @@ public class Leetcode
         }
         return s.ToString();
     }
+    public long MaxAlternatingSum(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        for (int x = 0; x < nums.Length; x++)
+        {
+            if (nums[x] < 0) nums[x] = -1 * nums[x];
+        }   
+        Array.Sort(nums);
+        int i = 0, j = nums.Length - 1;
+        long sum = 0;
+        while (i <= j)
+        {
+            if (i != j)
+                sum += (nums[j] * nums[j--]) - (nums[i] * nums[i++]);
+            else
+                sum += nums[j] * nums[j--];
+        }
+        return sum;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
