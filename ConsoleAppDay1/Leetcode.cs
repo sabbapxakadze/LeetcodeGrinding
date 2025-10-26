@@ -7257,6 +7257,21 @@ public class Leetcode
         }
         return res;
     }
+    public int MaxProduct(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int max = nums.Max();
+        int currMax = 1, currMin = 1;
+        foreach (var item in nums)
+        {
+            int temp = currMax * item;
+            currMax = Math.Max(Math.Max(currMax * item, item), currMin * item);
+            currMin = Math.Min(Math.Min(temp, item), currMin * item);
+            max = Math.Max(max, currMax);
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
