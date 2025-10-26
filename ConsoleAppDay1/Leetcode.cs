@@ -7207,6 +7207,56 @@ public class Leetcode
         }
         return sum;
     }
+    public double[] CalcEquation(IList<IList<string>> equations, double[] values, IList<IList<string>> queries)
+    {
+        if (equations == null || values == null || queries == null)
+            return Array.Empty<double>();
+        Dictionary<string, List<(string den, double val)>> adjList 
+            = new Dictionary<string, List<(string den, double x)>>();
+        for (int i = 0; i < equations.Count; i++)
+        {
+            string en = equations[i][0];
+            string de = equations[i][1];
+            double value = values[i];
+            if (!adjList.ContainsKey(en))
+            {
+                adjList[en] = new List<(string, double)>();
+            }
+            adjList[en].Add((de, value));
+            if (!adjList.ContainsKey(de))
+            {
+                adjList[de] = new List<(string, double)>();
+            }
+            adjList[de].Add((en, 1 / value)); // constructed adjacencyList with bi-directions.
+        }
+        double Dfs(string source, string targ, HashSet<string> visited)
+        {
+            if (!adjList.ContainsKey(source) || !adjList.ContainsKey(targ))
+                return -1;
+            if (source == targ)
+                return 1;
+            visited.Add(source);
+            foreach (var (denum, weight) in adjList[source])
+            {
+                if (!visited.Contains(denum))
+                {
+                    double res = Dfs(denum, targ, visited);
+                    if (res != -1)
+                        return weight * res;
+                }
+            }
+            return -1;
+        }
+        double[] res = new double[queries.Count];
+        for (int i = 0; i < queries.Count; i++)
+        {
+            string e = queries[i][0];
+            string d = queries[i][1];
+            HashSet<string> vis = new HashSet<string>();
+            res[i] = Dfs(e, d, vis);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Dictionary<int, int> d = new Dictionary<int, int>();
