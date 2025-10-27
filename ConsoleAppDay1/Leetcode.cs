@@ -7313,6 +7313,31 @@ public class Leetcode
         }
         return tab.Max();
     }
+    public IList<IList<int>> CombinationSum3(int k, int n)
+    {
+        if (k < 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        void Recursion(int curr, int targ, List<int> currentList)
+        {
+            if (currentList.Count == k && targ == 0)
+            {
+                lists.Add(new List<int>(currentList));
+                return;
+            }
+            if (curr > targ)
+                return;
+
+            for (int i = curr + 1; i < 10; i++)
+            {
+                currentList.Add(i);
+                Recursion(i + 1, targ - i, currentList);
+                currentList.RemoveAt(currentList.Count - 1);
+            }
+        }
+        Recursion(1, n, new List<int>());
+        return lists;
+    }
     static void Main(string[] args)
     {
         string l = "leetcodedsaadsadsadsadsads";
