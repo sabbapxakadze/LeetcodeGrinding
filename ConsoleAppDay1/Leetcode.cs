@@ -7338,6 +7338,21 @@ public class Leetcode
         Recursion(1, n, new List<int>());
         return lists;
     }
+    public int CombinationSum4(int[] nums, int target)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        for (int i = 1; i < dp.Length; i++)
+        {
+            foreach (var n in nums)
+            {
+                dp[i] += i - n < 0 ? 0 : dp[i - n];
+            }
+        }
+        return dp[target];
+    }
     static void Main(string[] args)
     {
         string l = "leetcodedsaadsadsadsadsads";
