@@ -7288,12 +7288,30 @@ public class Leetcode
                 {
                     memo[s] = true;
                     return true;
-                }
-                    
+                }  
             }
         }
         memo[s] = false;
         return memo[s];
+    }
+    public int LengthOfLIS(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int[] tab = new int[nums.Length];
+        for (int i = nums.Length - 1; i >= 0; i--)
+        {
+            int j = i + 1;
+            int res = 1;
+            while (j != nums.Length)
+            {
+                if (nums[i] < nums[j])
+                    res = Math.Max(res, tab[j] + 1);
+                j++;
+            }
+            tab[i] = res;
+        }
+        return tab.Max();
     }
     static void Main(string[] args)
     {
