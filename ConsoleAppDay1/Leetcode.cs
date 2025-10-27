@@ -7272,10 +7272,33 @@ public class Leetcode
         }
         return max;
     }
+    public static bool WordBreak(string s, IList<string> wordDict, Dictionary<string, bool>? memo = null)
+    {
+        memo ??= new Dictionary<string, bool>();
+        if (string.IsNullOrEmpty(s))
+            return true;
+        if (memo.ContainsKey(s))
+            return memo[s];
+        foreach (var str in wordDict)
+        {
+            if (s.StartsWith(str))
+            {
+                bool res = WordBreak(s.Substring(str.Length), wordDict, memo);
+                if (res)
+                {
+                    memo[s] = true;
+                    return true;
+                }
+                    
+            }
+        }
+        memo[s] = false;
+        return memo[s];
+    }
     static void Main(string[] args)
     {
-        Dictionary<int, int> d = new Dictionary<int, int>();
-        string x = "asdb";
-        Console.WriteLine(x.Substring(1));
+        string l = "leetcodedsaadsadsadsadsads";
+        List<string> lis = new List<string> { "le", "e", "etcodedsaadsadsadsadsads", "leet", "code" };
+        Console.WriteLine(WordBreak(l, lis));
     }
 }
