@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7353,10 +7354,27 @@ public class Leetcode
         }
         return dp[target];
     }
+    public int NumSquares(int n)
+    {
+        if (n < 0)
+            return -1;
+        int[] dp = new int[n + 1];
+        Array.Fill(dp, n + 1);
+        dp[0] = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j * j <= i; j++)
+            {
+                int sq = j * j;
+                if (i - sq < 0)
+                    break;
+                dp[i] = Math.Min(dp[i], 1 + dp[i - sq]);
+            }
+        }
+        return dp[n];
+    }
     static void Main(string[] args)
     {
-        string l = "leetcodedsaadsadsadsadsads";
-        List<string> lis = new List<string> { "le", "e", "etcodedsaadsadsadsadsads", "leet", "code" };
-        Console.WriteLine(WordBreak(l, lis));
+        Console.WriteLine();
     }
 }
