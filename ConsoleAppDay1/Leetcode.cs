@@ -7384,6 +7384,37 @@ public class Leetcode
         }
         return num - 1;
     }
+    public int LastStoneWeightII(int[] stones)
+    {
+        if (stones == null || stones.Length == 0)
+            return -1;
+        int sum = stones.Sum();
+        int targ = (sum + 1) / 2;
+
+        int[][] dp = new int[stones.Length][];
+        for (int i = 0; i < dp.Length; i++)
+        {
+            dp[i] = new int[targ + 1];
+            for (int j = 0; j < dp[i].Length; j++)
+            {
+                dp[i][j] = -1;
+            }
+        }
+        int Dfs(int i, int total)
+        {
+            if (total >= targ || i == stones.Length)
+            {
+                return Math.Abs(total - (sum - total));
+            }
+            if (dp[i][total] != -1)
+            {
+                return dp[i][total];
+            }
+            dp[i][total] = Math.Min(Dfs(i + 1, total), Dfs(i + 1, total + stones[i]));
+            return dp[i][total];
+        }
+        return Dfs(0, 0);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
