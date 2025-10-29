@@ -7373,6 +7373,17 @@ public class Leetcode
         }
         return dp[n];
     }
+    public int SmallestNumber(int n)
+    {
+        if (n <= 0)
+            return 0;
+        int num = 1;
+        while (num <= n)
+        {
+            num *= 2;
+        }
+        return num - 1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
