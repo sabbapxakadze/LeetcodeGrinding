@@ -7431,6 +7431,30 @@ public class Leetcode
         }
         return tabul[amount];
     }
+    public int FindTargetSumWays(int[] nums, int target)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        Dictionary<(int, int), int> memo = new Dictionary<(int, int), int>();
+
+        int Dfs(int index, int targ)
+        {
+            if (memo.ContainsKey((index, targ)))
+            {
+                return memo[(index, targ)];
+            }
+            if (index == nums.Length)
+            {
+                return targ == 0 ? 1 : 0;
+            }
+
+            int add = Dfs(index + 1, targ - nums[index]);
+            int sub = Dfs(index + 1, targ + nums[index]);
+            memo[(index, targ)] = add + sub;
+            return memo[(index, targ)];
+        }
+        return Dfs(0, target);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
