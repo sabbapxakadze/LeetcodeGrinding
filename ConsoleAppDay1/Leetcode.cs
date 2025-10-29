@@ -7415,6 +7415,22 @@ public class Leetcode
         }
         return Dfs(0, 0);
     }
+    public int Change(int amount, int[] coins)
+    {
+        if (amount < 0 || coins == null)
+            return -1;
+
+        int[] tabul = new int[amount + 1];
+        tabul[0] = 1;
+        foreach (var coin in coins)
+        {
+            for (int i = coin; i <= amount; i++)
+            {
+                tabul[i] += tabul[i - coin];
+            }
+        }
+        return tabul[amount];
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
