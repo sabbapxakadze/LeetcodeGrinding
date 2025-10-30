@@ -7455,6 +7455,34 @@ public class Leetcode
         }
         return Dfs(0, target);
     }
+    public bool IsInterleave(string s1, string s2, string s3)
+    {
+        if (s1.Length + s2.Length != s3.Length)
+            return false;
+        bool?[,] dp = new bool?[s1.Length + 1, s2.Length + 1];
+        dp[s1.Length, s2.Length] = true;
+        bool canForm(int i, int j)
+        {
+            if (i + j == s3.Length)
+            {
+                return i == s1.Length && j == s2.Length;
+            }
+            if (dp[i, j].HasValue)
+                return dp[i, j].Value;
+            bool res = false;
+            if (i < s1.Length && s1[i] == s3[i + j])
+            {
+                res = canForm(i + 1, j);
+            }
+            if (!res && j < s2.Length && s2[j] == s3[i + j])
+            {
+                res = canForm(i, j + 1);
+            }
+            dp[i, j] = res;
+            return res;
+        }
+        return canForm(0, 0);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
