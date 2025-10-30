@@ -7483,6 +7483,27 @@ public class Leetcode
         }
         return canForm(0, 0);
     }
+    public bool StoneGame(int[] piles)
+    {
+        if (piles == null || piles.Length == 0)
+            return false;
+        Dictionary<(int, int), int> memo = new Dictionary<(int, int), int>();
+        int Dfs(int l, int r)
+        {
+            if (l > r)
+                return 0;
+            if (memo.ContainsKey((l, r)))
+                return memo[(l, r)];
+
+            bool even = (r - l) % 2 == 0;
+            int left = even ? piles[l] : 0;
+            int right = even ? piles[r] : 0;
+            memo[(l, r)] = Math.Max(Dfs(l + 1, r) + left, Dfs(l, r - 1) + right);
+            return memo[(l, r)];
+        }
+        int sum = piles.Sum();
+        return Dfs(0, piles.Length - 1) > sum / 2;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
