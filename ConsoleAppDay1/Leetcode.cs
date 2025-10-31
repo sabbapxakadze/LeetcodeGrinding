@@ -7550,6 +7550,35 @@ public class Leetcode
             + PathSumIII(root.left, targetSum)
             + PathSumIII(root.right, targetSum);
     }
+    public int ThreeSumClosest(int[] nums, int target)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        Array.Sort(nums);
+        int sum = nums[0] + nums[1] + nums[2];
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int l = i + 1, r = nums.Length - 1;
+            while (l < r)
+            {
+                int temp = nums[i] + nums[l] + nums[r];
+                if (temp == target)
+                    return target;
+                else if (temp > target)
+                {
+                    r--;
+                }
+                else
+                {
+                    l++;
+                }
+                if (Math.Abs(target - temp) < Math.Abs(target - sum))
+                    sum = temp;
+            }
+        }
+        return sum;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
