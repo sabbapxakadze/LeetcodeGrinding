@@ -7504,6 +7504,33 @@ public class Leetcode
         int sum = piles.Sum();
         return Dfs(0, piles.Length - 1) > sum / 2;
     }
+    public int MaxTurbulenceSize(int[] arr)
+    {
+        if (arr == null || arr.Length == 0)
+            return 0;
+        int res = 0, count = 0;
+        int sign = -1;
+        for (int i = 0; i < arr.Length - 1; i++)
+        {
+            if (arr[i] > arr[i + 1])
+            {
+                count = (sign == 0) ? count + 1 : 1;
+                sign = 1;
+            }
+            else if (arr[i] < arr[i + 1])
+            {
+                count = (sign == 1) ? count + 1 : 1;
+                sign = 0;
+            }
+            else
+            {
+                count = 0;
+                sign = -1;
+            }
+            res = Math.Max(res, count);
+        }
+        return res + 1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
