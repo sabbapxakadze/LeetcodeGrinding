@@ -7531,6 +7531,25 @@ public class Leetcode
         }
         return res + 1;
     }
+    public int PathSumIII(TreeNode root, int targetSum)
+    {
+        if (root == null)
+            return 0;
+        int count = 0;
+        int Dfs(TreeNode node, long sum)
+        {
+            if (node == null)
+                return 0;
+
+            int count = (node.val == sum) ? 1 : 0;
+            count += Dfs(node.left, sum - node.val);
+            count += Dfs(node.right, sum - node.val);
+            return count;
+        }
+        return Dfs(root, targetSum)
+            + PathSumIII(root.left, targetSum)
+            + PathSumIII(root.right, targetSum);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
