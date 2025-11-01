@@ -7592,6 +7592,27 @@ public class Leetcode
         }
         return g == 0 ? true : false;
     }
+    public int Jump(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int res = 0;
+        int l = 0, r = 0;
+        while (r < nums.Length - 1)
+        {
+            int far = 0;
+            int i = l;
+            while (i <= r)
+            {
+                far = Math.Max(far, i + nums[i]);
+                i++;
+            }
+            l = r + 1;
+            r = far;
+            res++;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
