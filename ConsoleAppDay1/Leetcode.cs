@@ -7613,6 +7613,30 @@ public class Leetcode
         }
         return res;
     }
+    public int CanCompleteCircuit(int[] gas, int[] cost)
+    {
+        if (gas == null || cost == null)
+            return -1;
+        if (gas.Sum() < cost.Sum())
+            return -1;
+        int[] diffs = new int[gas.Length];
+        for (int i = 0; i < gas.Length; i++)
+        {
+            diffs[i] = gas[i] - cost[i];
+        }
+        int total = 0;
+        int res = 0;
+        for (int i = 0; i < gas.Length; i++)
+        {
+            total += diffs[i];
+            if (total < 0)
+            {
+                total = 0;
+                res = i + 1;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
