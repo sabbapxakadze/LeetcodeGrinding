@@ -7579,6 +7579,19 @@ public class Leetcode
         }
         return sum;
     }
+    public bool CanJump(int[] nums)
+    {
+        // greedy is the best
+        if (nums == null || nums.Length == 0)
+            return false;
+        int g = nums.Length - 1;
+        for (int i = nums.Length - 1; i >= 0; i--)
+        {
+            if (i + nums[i] >= g)
+                g = i;
+        }
+        return g == 0 ? true : false;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
