@@ -7637,6 +7637,24 @@ public class Leetcode
         }
         return res;
     }
+    public double MyPow(double x, int n)
+    {
+        if (x == 0)
+            return 0;
+        if (n == 0)
+            return 1;
+        double Helper(double x, long n)
+        {
+            if (n == 0)
+                return 1;
+            double half = Helper(x, n / 2);
+            return n % 2 == 1 ? x * half * half : half * half;
+        }
+        double result = Helper(x, Math.Abs((long) n));
+        if (n < 0)
+            result = 1 / result;
+        return result;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
