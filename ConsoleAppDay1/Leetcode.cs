@@ -7681,6 +7681,55 @@ public class Leetcode
         }
         return true;
     }
+    public int LongestIncreasingPath(int[][] matrix)
+    {
+        if (matrix == null)
+            return 0;
+        int rows = matrix.Length;
+        int cols = matrix[0].Length;
+        int[][] dp = new int[rows][];
+
+        for(int i = 0; i < dp.Length; i++)
+        {
+            dp[i] = new int[cols];
+        }
+
+        int Bfs(int i, int j)
+        {
+            if (i < 0 || j < 0 || i >= rows || j >= cols)
+                return 0;
+            if (dp[i][j] != 0)
+                return dp[i][j];
+            int res = 0;
+            int[][] directions = new int[][]
+            {
+                    new int[] { -1, 0 },
+                    new int[] { 1, 0 },
+                    new int[] { 0, -1 },
+                    new int[] { 0, 1 }
+            };
+            foreach (var item in directions)
+            {
+                int x = item[0] + i;
+                int y = item[1] + j;
+                if (x >= 0 && y >= 0 && x < rows && y < cols && matrix[x][y] > matrix[i][j])
+                {
+                    res = Math.Max(res, Bfs(x, y));
+                }
+            }
+            dp[i][j] = 1 + res;
+            return dp[i][j];
+        }
+        int max = 0;
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                max = Math.Max(max, Bfs(i, j));
+            }
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
