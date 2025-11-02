@@ -7655,6 +7655,32 @@ public class Leetcode
             result = 1 / result;
         return result;
     }
+    public bool IsNStraightHand(int[] hand, int groupSize)
+    {
+        if (hand == null || hand.Length % groupSize != 0)
+            return false;
+        Array.Sort(hand);
+        Dictionary<int, int> d = new Dictionary<int, int>();
+        foreach (int i in hand)
+        {
+            if (!d.ContainsKey(i))
+                d[i] = 0;
+            d[i]++;
+        }
+        foreach (int card in hand)
+        {
+            if (d[card] == 0)
+                continue;
+            for (int i = 0; i < groupSize; i++)
+            {
+                int next = card + i;
+                if (!d.ContainsKey(next) || d[next] == 0)
+                    return false;
+                d[next]--;
+            }
+        }
+        return true;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
