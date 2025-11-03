@@ -7774,6 +7774,17 @@ public class Leetcode
         }
         return 0;
     }
+    public ListNode SwapPairs(ListNode head)
+    {
+        if (head == null || head.next == null)
+            return head;
+        ListNode nn = head.next.next ?? null;
+        ListNode temp = head;
+        head = temp.next;
+        head.next = temp;
+        head.next.next = SwapPairs(nn);
+        return head;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
