@@ -7730,6 +7730,50 @@ public class Leetcode
         }
         return max;
     }
+    public int MinimumEffortPath(int[][] heights)
+    {
+        if (heights == null || heights.Length == 0)
+            return 0;
+        var pq = new PriorityQueue<(int diff, int r, int c), int>();
+        pq.Enqueue((0, 0, 0), 0);
+        var visited = new HashSet<(int, int)>();
+        int[][] directions = new int[][]
+        {
+                    new int[] { -1, 0 },
+                    new int[] { 1, 0 },
+                    new int[] { 0, -1 },
+                    new int[] { 0, 1 }
+        };
+
+        while (pq.Count != 0)
+        {
+            var current = pq.Dequeue();
+            int diff = current.diff, r = current.r, c = current.c;
+
+            if (visited.Contains((r, c)))
+                continue;
+            visited.Add((r, c));
+            if (r == heights.Length - 1 && c == heights[0].Length - 1)
+            {
+                return diff;
+            }
+
+            foreach (var dir in directions)
+            {
+                int x = r + dir[0];
+                int y = c + dir[1];
+
+                if (x < 0 || y < 0 || x >= heights.Length || y >= heights[0].Length || visited.Contains((x, y)))
+                {
+                    continue;
+                }
+
+                int z = Math.Max(diff, Math.Abs(heights[r][c] - heights[x][y]));
+                pq.Enqueue((z, x, y), z);
+            }
+        }
+        return 0;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
