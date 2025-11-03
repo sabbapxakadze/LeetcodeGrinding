@@ -7785,6 +7785,36 @@ public class Leetcode
         head.next.next = SwapPairs(nn);
         return head;
     }
+    public ListNode RotateRight(ListNode head, int k)
+    {
+        if (head == null || k <= 0)
+            return head;
+        int count = 1;
+        ListNode tail = head;
+        while (tail.next != null)
+        {
+            count++;
+            tail = tail.next;
+        }
+        tail.next = head;
+
+        int steps = count - (k % count);
+        if (steps == count)
+        {
+            tail.next = null;
+            return head;
+        }
+        ListNode temp = head;
+
+        while (steps > 1)
+        {
+            temp = temp.next;
+            steps--;
+        }
+        ListNode newHead = temp.next;
+        temp.next = null;
+        return newHead;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
