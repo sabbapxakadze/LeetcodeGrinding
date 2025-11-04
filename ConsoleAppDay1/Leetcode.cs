@@ -7872,6 +7872,26 @@ public class Leetcode
         }
         return result;
     }
+    public ListNode SortList(ListNode head)
+    {
+        if (head == null)
+            return null;
+        List<int> l = new List<int>();
+        while (head != null)
+        {
+            l.Add(head.val);
+            head = head.next;
+        }
+        l.Sort();
+        ListNode r = new ListNode(l[0]);
+        ListNode temp = r;
+        for (int i = 1; i < l.Count; i++)
+        {
+            temp.next = new ListNode(l[i]);
+            temp = temp.next;
+        }
+        return r;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
