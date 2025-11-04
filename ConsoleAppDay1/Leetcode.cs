@@ -7815,6 +7815,63 @@ public class Leetcode
         temp.next = null;
         return newHead;
     }
+    public IList<IList<int>> PacificAtlantic(int[][] heights)
+    {
+        if (heights == null || heights.Length == 0)
+            return new List<IList<int>>();
+        int[][] directions = new int[][]
+            {
+                    new int[] { -1, 0 },
+                    new int[] { 1, 0 },
+                    new int[] { 0, -1 },
+                    new int[] { 0, 1 }
+            };
+        int r = heights.Length;
+        int c = heights[0].Length;
+        int[][] pac = new int[r][];
+        int[][] atl = new int[r][];
+        for (int i = 0; i < r; i++)
+        {
+            pac[i] = new int[c];
+            atl[i] = new int[c];
+        }
+        void Dfs(int i, int j, int[][] ocean)
+        {
+            if (ocean[i][j] == 1)
+                return;
+
+            ocean[i][j] = 1;
+            foreach (var dir in directions)
+            {
+                int x = dir[0] + i;
+                int y = dir[1] + j;
+                if (x < 0 || y < 0 || x >= r || y >= c)
+                    continue;
+                if (heights[i][j] <= heights[x][y])
+                    Dfs(x, y, ocean);
+            }
+        }
+        for (int i = 0; i < r; i++)
+            Dfs(i, 0, pac);
+        for (int j = 0; j < c; j++)
+            Dfs(0, j, pac);
+
+        for (int i = 0; i < r; i++)
+            Dfs(i, c - 1, atl);
+        for (int j = 0; j < c; j++)
+            Dfs(r - 1, j, atl);
+        List<IList<int>> result = new List<IList<int>>();
+
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (atl[i][j] == 1 && pac[i][j] == 1)
+                    result.Add(new List<int> { i, j });
+            }
+        }
+        return result;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
