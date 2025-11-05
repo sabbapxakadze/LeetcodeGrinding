@@ -7892,6 +7892,41 @@ public class Leetcode
         }
         return r;
     }
+    public int NetworkDelayTime(int[][] times, int n, int k)
+    {
+        if (times == null || n < 0)
+            return -1;
+        var adj = new Dictionary<int, List<int[]>>();
+        foreach (var t in times)
+        {
+            if (!adj.ContainsKey(t[0]))
+            {
+                adj[t[0]] = new List<int[]>();
+            }
+            adj[t[0]].Add(new int[] { t[1], t[2] });
+        }
+        var d = new Dictionary<int, int>();
+        for (int i = 1; i <= n; i++)
+            d[i] = int.MaxValue;
+
+        void Dfs(int node, int time)
+        {
+            if (!d.ContainsKey(node))
+                return;
+            if (time >= d[node])
+                return;
+            d[node] = time;
+            if (!adj.ContainsKey(node))
+                return;
+            foreach (var item in adj[node])
+            {
+                Dfs(item[0], item[1] + time);
+            }
+        }
+        Dfs(k, 0);
+        int res = d.Values.Max();
+        return res != int.MaxValue ? res : -1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
