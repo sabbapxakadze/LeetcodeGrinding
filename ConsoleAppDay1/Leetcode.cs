@@ -7927,6 +7927,46 @@ public class Leetcode
         int res = d.Values.Max();
         return res != int.MaxValue ? res : -1;
     }
+    public IList<int> FindMinHeightTrees(int n, int[][] edges)
+    {
+        if (n == 1)
+            return new List<int> { 0 };
+        var adjList = new Dictionary<int, List<int>>();
+        foreach (var item in edges)
+        {
+            int n1 = item[0];
+            int n2 = item[1];
+            if (!adjList.ContainsKey(n1)) adjList[n1] = new List<int>();
+            adjList[n1].Add(n2);
+            if (!adjList.ContainsKey(n2)) adjList[n2] = new List<int>();
+            adjList[n2].Add(n1);
+        }
+
+        var edgeCnt = new Dictionary<int, int>();
+        var leaves = new Queue<int>();
+        foreach (var item in adjList)
+        {
+            edgeCnt[item.Key] = item.Value.Count;
+            if (item.Value.Count == 1)
+                leaves.Enqueue(item.Key);
+        }
+        while (n > 2)
+        {
+            int cnt = leaves.Count;
+            n -= cnt;
+            for (int i = 0; i < cnt; i++)
+            {
+                var node = leaves.Dequeue();
+                foreach (var neighbour in adjList[node])
+                {
+                    edgeCnt[neighbour]--;
+                    if (edgeCnt[neighbour] == 1)
+                        leaves.Enqueue(neighbour);
+                }
+            }
+        }
+        return new List<int>(leaves);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
