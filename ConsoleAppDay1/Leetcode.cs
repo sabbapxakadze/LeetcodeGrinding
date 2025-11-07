@@ -7967,6 +7967,58 @@ public class Leetcode
         }
         return new List<int>(leaves);
     }
+    public class WordDictionary
+    {
+        class Trienode
+        {
+            public Trienode[] nodes = new Trienode[26];
+            public bool end = false;
+        }
+        Trienode root;
+        public WordDictionary()
+        {
+            root = new Trienode();
+        }
+
+        public void AddWord(string word)
+        {
+            Trienode cur = root;
+            foreach (var c in word)
+            {
+                if (cur.nodes[c - 'a'] == null)
+                    cur.nodes[c - 'a'] = new Trienode();
+                cur = cur.nodes[c - 'a'];
+            }
+            cur.end = true;
+        }
+
+        public bool Search(string word)
+        {
+            bool Dfs(int j, Trienode node)
+            {
+                for (int i = j; i < word.Length; i++)
+                {
+                    if (word[i] == '.')
+                    {
+                        foreach (var item in node.nodes)
+                        {
+                            if (item != null && Dfs(i + 1, item))
+                                return true;
+                        }
+                        return false;
+                    }
+                    else
+                    {
+                        if (node.nodes[word[i] - 'a'] == null)
+                            return false;
+                        node = node.nodes[word[i] - 'a'];
+                    }
+                }
+                return node.end;
+            }
+            return Dfs(0, root);
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
