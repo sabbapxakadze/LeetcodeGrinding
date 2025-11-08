@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -8018,6 +8019,19 @@ public class Leetcode
             }
             return Dfs(0, root);
         }
+    }
+    // Contest 2
+    public int MinMoves(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int res = 0;
+        int max = nums.Max();
+        foreach (var num in nums)
+        {
+            res += Math.Abs(num - max);
+        }
+        return res;
     }
     static void Main(string[] args)
     {
