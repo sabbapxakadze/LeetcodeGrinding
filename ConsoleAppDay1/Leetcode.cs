@@ -8033,6 +8033,26 @@ public class Leetcode
         }
         return res;
     }
+    public int CountMajoritySubarrays(int[] nums, int target)
+    {
+        int total = 0;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int countT = 0;
+            int countN = 0;
+            for (int j = i; j < nums.Length; j++)
+            {
+                if (nums[j] == target)
+                    countT++;
+                else
+                    countN++;
+            }
+            if (countT > countN)
+                total++;
+        }
+        return total;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
