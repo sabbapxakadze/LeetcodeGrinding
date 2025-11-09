@@ -8078,6 +8078,29 @@ public class Leetcode
         }
         return Recursion(root);
     }
+    public int MaxPathSum(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+        int max = int.MinValue;
+        Dictionary<TreeNode, int> memo = new Dictionary<TreeNode, int>();
+        int Dfs(TreeNode node)
+        {
+            if (node == null)
+                return 0;
+            if (memo.ContainsKey(node))
+                return memo[node];
+
+            int left = Math.Max(0, Dfs(node.left));
+            int right = Math.Max(0, Dfs(node.right));
+            
+            max = Math.Max(max, node.val + left + right);
+            memo[node] = node.val + Math.Max(left, right);
+            return memo[node];
+        }
+        Dfs(root);
+        return max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
