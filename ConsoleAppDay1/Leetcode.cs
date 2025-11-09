@@ -7196,7 +7196,7 @@ public class Leetcode
         for (int x = 0; x < nums.Length; x++)
         {
             if (nums[x] < 0) nums[x] = -1 * nums[x];
-        }   
+        }
         Array.Sort(nums);
         int i = 0, j = nums.Length - 1;
         long sum = 0;
@@ -7213,7 +7213,7 @@ public class Leetcode
     {
         if (equations == null || values == null || queries == null)
             return Array.Empty<double>();
-        Dictionary<string, List<(string den, double val)>> adjList 
+        Dictionary<string, List<(string den, double val)>> adjList
             = new Dictionary<string, List<(string den, double x)>>();
         for (int i = 0; i < equations.Count; i++)
         {
@@ -7290,7 +7290,7 @@ public class Leetcode
                 {
                     memo[s] = true;
                     return true;
-                }  
+                }
             }
         }
         memo[s] = false;
@@ -7651,7 +7651,7 @@ public class Leetcode
             double half = Helper(x, n / 2);
             return n % 2 == 1 ? x * half * half : half * half;
         }
-        double result = Helper(x, Math.Abs((long) n));
+        double result = Helper(x, Math.Abs((long)n));
         if (n < 0)
             result = 1 / result;
         return result;
@@ -7690,7 +7690,7 @@ public class Leetcode
         int cols = matrix[0].Length;
         int[][] dp = new int[rows][];
 
-        for(int i = 0; i < dp.Length; i++)
+        for (int i = 0; i < dp.Length; i++)
         {
             dp[i] = new int[cols];
         }
@@ -8093,13 +8093,75 @@ public class Leetcode
 
             int left = Math.Max(0, Dfs(node.left));
             int right = Math.Max(0, Dfs(node.right));
-            
+
             max = Math.Max(max, node.val + left + right);
             memo[node] = node.val + Math.Max(left, right);
             return memo[node];
         }
         Dfs(root);
         return max;
+    }
+    public class Codec
+    {
+        public string serialize(TreeNode root)
+        {
+            if (root == null)
+                return "[]";
+            List<string> l = new List<string>();
+            Queue<TreeNode?> q = new Queue<TreeNode?>();
+
+            q.Enqueue(root);
+            while (q.Count != 0)
+            {
+                var item = q.Dequeue();
+                if (item == null)
+                {
+                    l.Add("null");
+                    continue;
+                }
+                l.Add(item.val.ToString());
+                q.Enqueue(item.left);
+                q.Enqueue(item.right);
+            }
+
+            int last = l.Count - 1;
+            while (last >= 0 && l[last] == "null")
+                last--;
+            return "[" + string.Join(",", l.Take(last + 1)) + "]";
+        }
+        public TreeNode deserialize(string data)
+        {
+            if (data == null || data == "[]")
+                return null;
+
+            data = data.Substring(1, data.Length - 2);
+
+            List<string> l = data.Split(new string[] { "," }, StringSplitOptions.None).ToList();
+            if (l.Count == 0 || l[0] == "null")
+                return null;
+
+            TreeNode res = new TreeNode(int.Parse(l[0]));
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(res);
+            int i = 1;
+            while (q.Count > 0 && i < l.Count)
+            {
+                var node = q.Dequeue();
+                if (i < l.Count && l[i] != "null")
+                {
+                    node.left = new TreeNode(int.Parse(l[i]));
+                    q.Enqueue(node.left);
+                }
+                i++;
+                if (i < l.Count && l[i] != "null")
+                {
+                    node.right = new TreeNode(int.Parse(l[i]));
+                    q.Enqueue(node.right);
+                }
+                i++;
+            }
+            return res;
+        }
     }
     static void Main(string[] args)
     {
