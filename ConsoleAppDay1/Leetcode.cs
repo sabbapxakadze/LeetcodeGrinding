@@ -8053,6 +8053,31 @@ public class Leetcode
         }
         return total;
     }
+    public int Rob(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+        Dictionary<TreeNode, int> memo = new Dictionary<TreeNode, int>();
+        int Recursion(TreeNode node)
+        {
+            if (node == null)
+                return 0;
+            if (memo.ContainsKey(node))
+                return memo[node];
+            int res = node.val;
+            if (node.left != null)
+            {
+                res += Recursion(node.left.left) + Recursion(node.left.right);
+            }
+            if (node.right != null)
+            {
+                res += Recursion(node.right.left) + Recursion(node.right.right);
+            }
+            memo[node] = Math.Max(res, Recursion(node.left) + Recursion(node.right));
+            return memo[node];
+        }
+        return Recursion(root);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
