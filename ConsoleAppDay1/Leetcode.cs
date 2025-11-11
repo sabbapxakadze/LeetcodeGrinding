@@ -8188,6 +8188,29 @@ public class Leetcode
         }
         return dp[0, 0];
     }
+    public IList<IList<int>> PathSum(TreeNode root, int targetSum)
+    {
+        if (root == null)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        void Dfs(TreeNode node, int target, List<int> curr)
+        {
+            if (node == null)
+                return;
+            curr.Add(node.val);
+
+            if (node.left == null && node.right == null && node.val == target)
+                lists.Add(new List<int>(curr));
+            else
+            {
+                Dfs(node.left, target - node.val, curr);
+                Dfs(node.right, target - node.val, curr);
+            }
+            curr.RemoveAt(curr.Count - 1);
+        }
+        Dfs(root, targetSum, new List<int>());
+        return lists;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
