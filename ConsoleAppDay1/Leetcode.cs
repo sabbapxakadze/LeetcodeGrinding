@@ -8211,6 +8211,22 @@ public class Leetcode
         Dfs(root, targetSum, new List<int>());
         return lists;
     }
+    public int IntegerBreak(int n)
+    {
+        if (n <= 0)
+            return 0;
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        for (int i = 2; i < dp.Length; i++)
+        {
+            dp[i] = i == n ? 0 : i;
+            for (int j = 1; j < i; j++)
+            {
+                dp[i] = Math.Max(dp[i], dp[j] * dp[i - j]);
+            }
+        }
+        return dp[n];
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
