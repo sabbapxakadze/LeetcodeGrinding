@@ -8227,6 +8227,28 @@ public class Leetcode
         }
         return dp[n];
     }
+    public int NumTilePossibilities(string tiles)
+    {
+        if (string.IsNullOrEmpty(tiles))
+            return 0;
+        HashSet<string> set = new HashSet<string>();
+        bool[] isUsed = new bool[tiles.Length];
+        void Backtrack(string curr)
+        {
+            if (curr.Length > 0)
+                set.Add(curr);
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                if (isUsed[i])
+                    continue;
+                isUsed[i] = true;
+                Backtrack(curr + tiles[i]);
+                isUsed[i] = false;
+            }
+        }
+        Backtrack("");
+        return set.Count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
