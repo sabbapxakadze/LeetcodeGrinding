@@ -8249,6 +8249,37 @@ public class Leetcode
         Backtrack("");
         return set.Count;
     }
+    public IList<string> RestoreIpAddresses(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return new List<string>();
+        List<string> l = new List<string>();
+
+        void Backtrack(int index, List<string> parts)
+        {
+            if (index == s.Length && parts.Count == 4)
+            {
+                l.Add(string.Join(".", parts));
+                return;
+            }
+            if (parts.Count > 4)
+                return;
+            for (int i = 1; i <= 3 && index + i <= s.Length; i++)
+            {
+                string seg = s.Substring(index, i);
+                if (int.Parse(seg) > 255)
+                    continue;
+                if (seg.Length > 1 && seg[0] == '0')
+                    continue;
+
+                parts.Add(seg);
+                Backtrack(index + i, parts);
+                parts.RemoveAt(parts.Count - 1);
+            }
+        }
+        Backtrack(0, new List<string>());
+        return l;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
