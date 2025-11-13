@@ -8316,6 +8316,35 @@ public class Leetcode
         Recursion(new List<int>(), 0);
         return res;
     }
+    public IList<string> WordBreak(string s, IList<string> wordDict)
+    {
+        if (string.IsNullOrEmpty(s))
+            return new List<string>();
+        List<string> list = new List<string>();
+        void Recursion(List<string> curr, int index)
+        {
+            if (index == s.Length)
+            {
+                if (curr.Count > 0)
+                {
+                    list.Add(string.Join(" ", curr));
+                }
+                return;
+            }
+            string substr = s.Substring(index);
+            foreach (var word in wordDict)
+            {
+                if (substr.StartsWith(word))
+                {
+                    curr.Add(word);
+                    Recursion(curr, index + word.Length);
+                    curr.RemoveAt(curr.Count - 1);
+                }
+            }
+        }
+        Recursion(new List<string>(), 0);
+        return list;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
