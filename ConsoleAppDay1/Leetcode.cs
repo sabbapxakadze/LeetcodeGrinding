@@ -8280,6 +8280,42 @@ public class Leetcode
         Backtrack(0, new List<string>());
         return l;
     }
+    public int BeautifulSubsets(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        Array.Sort(nums);
+        int res = 0;
+        void Recursion(List<int> curr, int index)
+        {
+            if (index == nums.Length)
+            {
+                if (curr.Count > 0)
+                    res++;
+                return;
+            }
+
+            Recursion(curr, index + 1);
+
+            bool add = true;
+            foreach (var item in curr)
+            {
+                if (Math.Abs(item - nums[index]) == k)
+                {
+                    add = false;
+                    break;
+                }
+            }
+            if (add)
+            {
+                curr.Add(nums[index]);
+                Recursion(curr, index + 1);
+                curr.RemoveAt(curr.Count - 1);
+            }
+        }
+        Recursion(new List<int>(), 0);
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
