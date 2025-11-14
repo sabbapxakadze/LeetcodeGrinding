@@ -8345,6 +8345,28 @@ public class Leetcode
         Recursion(new List<string>(), 0);
         return list;
     }
+    public string FindDifferentBinaryString(string[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return null;
+        HashSet<string> set = new HashSet<string>(nums);
+        string res = "";
+        void Recursion(string curr = "")
+        {
+            if (!string.IsNullOrEmpty(res))
+                return;
+            if (curr.Length == nums[0].Length)
+            {
+                if (!set.Contains(curr))
+                    res = curr;
+                return;
+            }
+            Recursion(curr + '0');
+            Recursion(curr + '1');
+        }
+        Recursion();
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
