@@ -8367,6 +8367,35 @@ public class Leetcode
         Recursion();
         return res;
     }
+    public IList<int> PartitionLabels(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return new List<int>();
+        Dictionary<char, int> map = new Dictionary<char, int>();
+        for (int i = 0; i < s.Length; i++)
+        {
+            map[s[i]] = i;
+        }
+        List<int> result = new List<int>();
+        int index = 0;
+        int LastIndex = map[s[index]];
+        int startIndex = 0;
+        while (index < s.Length)
+        {
+            int current = map[s[index]];
+            if (current > LastIndex)
+                LastIndex = current;
+            if (index < LastIndex)
+                index++;
+            else
+            {
+                index++;
+                result.Add(LastIndex - startIndex + 1);
+                startIndex = LastIndex + 1;
+            }
+        }
+        return result;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
