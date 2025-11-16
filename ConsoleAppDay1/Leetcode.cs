@@ -8396,6 +8396,31 @@ public class Leetcode
         }
         return result;
     }
+    public int MaxUniqueSplit(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+        int max = 0;
+        void Dfs(int index, HashSet<string> curr)
+        {
+            if (index == s.Length)
+            {
+                max = Math.Max(max, curr.Count);
+                return;
+            }
+            for (int i = index; i < s.Length; i++)
+            {
+                string x = s.Substring(index, i - index + 1);
+                if (curr.Contains(x))
+                    continue;
+                curr.Add(x);
+                Dfs(i + 1, curr);
+                curr.Remove(x);
+            }
+        }
+        Dfs(0, new HashSet<string>());
+        return max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
