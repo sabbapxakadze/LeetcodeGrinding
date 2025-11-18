@@ -8444,7 +8444,7 @@ public class Leetcode
         }
         return nums[l];
     }
-    public bool Search(int[] nums, int target)
+    public bool SearchSecond(int[] nums, int target)
     {
         int l = 0, r = nums.Length - 1;
         while (l <= r)
