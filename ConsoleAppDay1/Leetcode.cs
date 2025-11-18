@@ -8183,7 +8183,7 @@ public class Leetcode
                 if (word1[i] == word2[j])
                     dp[i, j] = dp[i + 1, j + 1];
                 else
-                    dp[i, j] = 1 + Math.Min(Math.Min(dp[i, j+1], dp[i+1, j]), dp[i+1, j+1]);
+                    dp[i, j] = 1 + Math.Min(Math.Min(dp[i, j + 1], dp[i + 1, j]), dp[i + 1, j + 1]);
             }
         }
         return dp[0, 0];
@@ -8473,6 +8473,73 @@ public class Leetcode
             }
         }
         return false;
+    }
+    public IList<IList<int>> SubsetsRevision(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        void Backtrack(int index, List<int> curr)
+        {
+            lists.Add(new List<int>(curr));
+            for (int i = index; i < nums.Length; i++)
+            {
+                curr.Add(nums[i]);
+                Backtrack(i + 1, curr);
+                curr.RemoveAt(curr.Count - 1);
+            }
+        }
+        Backtrack(0, new List<int>());
+        return lists;
+    }
+    public IList<IList<int>> CombineRevision(int n, int k)
+    {
+        if (k <= 0 || n <= 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        void Backtrack(int index, List<int> curr)
+        {
+            if (curr.Count == k)
+            {
+                lists.Add(new List<int>(curr));
+                return;
+            }
+            for (int i = index; i <= n; i++)
+            {
+                curr.Add(i);
+                Backtrack(i + 1, curr);
+                curr.RemoveAt(curr.Count - 1);
+            }
+        }
+        Backtrack(1, new List<int>());
+        return lists;
+    }
+    public IList<IList<int>> PermuteRevision(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>();
+        List<IList<int>> lists = new List<IList<int>>();
+        bool[] used = new bool[nums.Length];
+        void Backtrack(List<int> curr)
+        {
+            if (curr.Count == nums.Length)
+            {
+                lists.Add(new List<int>(curr));
+                return;
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (used[i])
+                    continue;
+                used[i] = true;
+                curr.Add(nums[i]);
+                Backtrack(curr);
+                curr.RemoveAt(curr.Count - 1);
+                used[i] = false;
+            }
+        }
+        Backtrack(new List<int>());
+        return lists;
     }
     static void Main(string[] args)
     {
