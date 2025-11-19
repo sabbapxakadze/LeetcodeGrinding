@@ -8636,6 +8636,32 @@ public class Leetcode
         }
         return set.Contains(targ);
     }
+    public List<int> LeftSideView(TreeNode root)
+    {
+        if (root == null)
+            return new List<int>();
+        Dictionary<int, List<int>> map = new Dictionary<int, List<int>>();
+        void Inorder(TreeNode node, int level)
+        {
+            if (node == null)
+                return;
+            Inorder(node.left, level + 1);
+            if (!map.ContainsKey(level))
+            {
+                map[level] = new List<int>();
+                map[level].Add(node.val);
+            }
+                
+            Inorder(node.right, level + 1);
+        }
+        Inorder(root, 0);
+        List<int> result = new List<int>();
+        for (int i = 0; i < map.Count; i++)
+        {
+            result.Add(map[i][0]);
+        }
+        return result;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
