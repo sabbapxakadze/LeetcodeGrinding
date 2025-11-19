@@ -8614,6 +8614,28 @@ public class Leetcode
             count += num - min;
         return count;
     }
+    public bool CanPartition(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return false;
+        int sum = nums.Sum();
+        int targ = sum / 2;
+        if (sum % 2 == 1) return false;
+        HashSet<int> set = new HashSet<int>() { 0 };
+        for (int i = nums.Length - 1; i >= 0; i--)
+        {
+            var tempSet = new HashSet<int>();
+            foreach (var item in set)
+            {
+                if (item + nums[i] == targ)
+                    return true;
+                tempSet.Add(item + nums[i]);
+                tempSet.Add(item);
+            }
+            set = tempSet;
+        }
+        return set.Contains(targ);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
