@@ -8568,6 +8568,29 @@ public class Leetcode
         }
         return nums[l] == target ? l : -1;
     }
+    int MinOperations(int[] nums)
+    {
+        Array.Sort(nums);
+        var correctSum = new int[nums.Length];
+        var prefixSum = new int[nums.Length];
+        for (int i = 0; i < nums.Length; i++)
+        {
+            correctSum[i] = i + 1;
+            if (i == 0)
+            {
+                prefixSum[0] = nums[0];
+                continue;
+            }
+            prefixSum[i] = prefixSum[i - 1] + nums[i];
+        }
+        int count = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            count += prefixSum[i] - count - correctSum[i];
+        }
+        return count;
+
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
