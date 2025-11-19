@@ -8605,6 +8605,15 @@ public class Leetcode
         }
         return count;
     }
+    public int MinMovesI(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int count = 0, min = nums.Min();
+        foreach (var num in nums)
+            count += num - min;
+        return count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
