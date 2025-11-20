@@ -8662,6 +8662,35 @@ public class Leetcode
         }
         return result;
     }
+    public ListNode MergeKLists(ListNode[] lists)
+    {
+        ListNode res = new ListNode();
+        ListNode temp = res;
+
+        bool allNull = false;
+        while (!allNull)
+        {
+            int min = int.MaxValue;
+            int index = -1;
+            for (int i = 0; i < lists.Length; i++)
+            {
+                if (lists[i] != null && lists[i].val < min)
+                {
+                    min = lists[i].val;
+                    index = i;
+                }
+            }
+            if (index == -1)
+                allNull = true;
+            else
+            {
+                temp.next = lists[index];
+                temp = temp.next;
+                lists[index] = lists[index].next;
+            }
+        }
+        return res.next;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
