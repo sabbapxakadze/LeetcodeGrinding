@@ -8691,6 +8691,25 @@ public class Leetcode
         }
         return res.next;
     }
+    public int MinimumTotal(IList<IList<int>> triangle)
+    {
+        if (triangle == null || triangle.Count == 0)
+            return 0;
+        int?[,] memo = new int?[triangle.Count, triangle.Count];
+        int Recursion(int ListIndex = 0, int currIndex = 0)
+        {
+            if (ListIndex == triangle.Count)
+                return 0;
+            if (memo[ListIndex, currIndex].HasValue)
+                return memo[ListIndex, currIndex].Value;
+            int res = triangle[ListIndex][currIndex];
+            res += Math.Min(Recursion(ListIndex + 1, currIndex),
+                Recursion(ListIndex + 1, currIndex + 1));
+            memo[ListIndex, currIndex] = res;
+            return res;
+        }
+        return Recursion(0, 0);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
