@@ -8710,6 +8710,38 @@ public class Leetcode
         }
         return Recursion(0, 0);
     }
+    public int DeleteAndEarn(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var map = new Dictionary<int, int>();
+        foreach (var item in nums)
+        {
+            if (!map.ContainsKey(item))
+                map[item] = 0;
+            map[item]++;
+        }
+        var list = map.Keys.ToList();
+        list.Sort();
+        int e1 = 0, e2 = 0;
+        for (int i = 0; i < list.Count; i++)
+        {
+            int curr = list[i] * map[list[i]];
+            if (i > 0 && list[i] == list[i-1] + 1)
+            {
+                int t = e2;
+                e2 = Math.Max(e2, e1 + curr);
+                e1 = t;
+            }
+            else
+            {
+                int t = e2;
+                e2 = curr + e2;
+                e1 = t;
+            }
+        }
+        return e2;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
