@@ -8789,6 +8789,33 @@ public class Leetcode
         }
         return c;
     }
+    public int TotalWaviness(int num1, int num2)
+    {
+        if (num2 < 100)
+            return 0;
+        int Wave(int x)
+        {
+            string st = x.ToString();
+            if (st.Length < 3)
+                return 0;
+            int count = 0;
+            for (int i = 1; i < st.Length - 1; i++)
+            {
+                int curr = st[i] - '0';
+                int prev = st[i - 1] - '0';
+                int next = st[i + 1] - '0';
+                count += (curr > prev && curr > next) ? 1 : 0;
+                count += (curr < prev && curr < next) ? 1 : 0;
+            }
+            return count;
+        }
+        int result = 0;
+        for (int i = num1; i <= num2; i++)
+        {
+            result += Wave(i);
+        }
+        return result;
+    }©leetcode
     static void Main(string[] args)
     {
         Console.WriteLine();
