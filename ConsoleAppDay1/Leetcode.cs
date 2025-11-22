@@ -8815,7 +8815,7 @@ public class Leetcode
             result += Wave(i);
         }
         return result;
-    }©leetcode
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
