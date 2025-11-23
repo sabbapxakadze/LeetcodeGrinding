@@ -8816,6 +8816,26 @@ public class Leetcode
         }
         return result;
     }
+    public int MincostTickets(int[] days, int[] costs)
+    {
+        int n = days.Length;
+        int[] dp = new int[n + 1];
+
+        for (int i = n - 1; i >= 0; i--)
+        {
+            dp[i] = int.MaxValue;
+            int j = i;
+            for (int x = 0; x < 3; x++)
+            {
+                int y = x == 0 ? 1 : x == 1 ? 7 : 30;
+                int c = costs[x];
+                while (j < n && days[j] < days[i] + y)
+                    j++;
+                dp[i] = Math.Min(dp[i], dp[j] + c);
+            }
+        }
+        return dp[0];
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
