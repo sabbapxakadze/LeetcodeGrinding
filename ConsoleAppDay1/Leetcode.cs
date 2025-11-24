@@ -8836,6 +8836,42 @@ public class Leetcode
         }
         return dp[0];
     }
+    public int NthUglyNumber(int n)
+    {
+        if (n == 1)
+            return 1;
+        var pq = new PriorityQueue<long, long>();
+        var set = new HashSet<long>();
+        pq.Enqueue(1L, 1L);
+        set.Add(1L);
+        long u = 1;
+        for (int i = 0; i < n; i++)
+        {
+            u = pq.Dequeue();
+            long a = u * 2;
+            long b = u * 3;
+            long c = u * 5;
+
+            if (!set.Contains(a))
+            {
+                set.Add(a);
+                pq.Enqueue(a, a);
+            }
+
+            if (!set.Contains(b))
+            {
+                set.Add(b);
+                pq.Enqueue(b, b);
+            }
+
+            if (!set.Contains(c))
+            {
+                set.Add(c);
+                pq.Enqueue(c, c);
+            }
+        }
+        return (int)u;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
