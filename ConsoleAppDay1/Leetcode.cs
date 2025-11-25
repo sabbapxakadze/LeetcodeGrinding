@@ -8872,6 +8872,26 @@ public class Leetcode
         }
         return (int)u;
     }
+    public double New21Game(int n, int k, int maxPts)
+    {
+        if (k == 0)
+            return 1.0;
+        double wSum = 0;
+        for (int i = k; i < k + maxPts; i++)
+        {
+            wSum += i <= n ? 1.0 : 0.0;
+        }
+        var dp = new Dictionary<int, double>();
+        for (int i = k - 1; i >= 0; i--)
+        {
+            dp[i] = wSum / maxPts;
+            double r = 0.0;
+            if (i + maxPts <= n)
+                r = dp.ContainsKey(i + maxPts) ? dp[i + maxPts] : 1.0;
+            wSum += dp[i] - r;
+        }
+        return dp[0];
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
