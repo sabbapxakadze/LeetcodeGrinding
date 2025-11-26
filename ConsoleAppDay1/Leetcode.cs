@@ -8931,6 +8931,32 @@ public class Leetcode
         }
         return arr[0, 0];
     }
+    public int LenLongestFibSubseq(int[] arr)
+    {
+        if (arr == null || arr.Length == 0)
+            return 0;
+        var s = new HashSet<int>(arr);
+        int res = 0;
+        for (int i = 0; i < arr.Length - 1; i++)
+        {
+            for (int j = i + 1; j < arr.Length; j++)
+            {
+                int prev = arr[i];
+                int curr = arr[j];
+                int next = prev + curr;
+                int l = 2;
+                while (s.Contains(next))
+                {
+                    prev = curr;
+                    curr = next;
+                    next = prev + curr;
+                    l++;
+                    res = Math.Max(res, l);
+                }
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
