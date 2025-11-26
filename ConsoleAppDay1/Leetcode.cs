@@ -8909,6 +8909,28 @@ public class Leetcode
         }
         return arr[0, 0];
     }
+    public int LongestPalindromeSubseq(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+        string r = "";
+        for (int i = s.Length - 1; i >= 0; i--)
+        {
+            r += s[i];
+        }
+        int[,] arr = new int[s.Length + 1, r.Length + 1];
+        for (int i = s.Length - 1; i >= 0; i--)
+        {
+            for (int j = r.Length - 1; j >= 0; j--)
+            {
+                if (s[i] == r[j])
+                    arr[i, j] = 1 + arr[i + 1, j + 1];
+                else
+                    arr[i, j] = Math.Max(arr[i + 1, j], arr[i, j + 1]);
+            }
+        }
+        return arr[0, 0];
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
