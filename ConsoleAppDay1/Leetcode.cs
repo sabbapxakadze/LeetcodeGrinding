@@ -8957,6 +8957,41 @@ public class Leetcode
         }
         return res;
     }
+    public int MaxProfit1(int[] prices)
+    {
+        if (prices == null || prices.Length == 0)
+            return 0;
+        int res = 0;
+        var memo = new Dictionary<(int, bool, bool, int), int>();
+        int Rec(int index, int curr, int priceBought, bool bought, bool cooldown)
+        {
+            if (index >= prices.Length)
+                return curr;
+            var key = (index, bought, cooldown, priceBought);
+            if (memo.ContainsKey(key))
+                return curr + memo[key];
+            int best = curr;
+            if (cooldown)
+            {
+                best = Math.Max(best, Rec(index + 1, curr, priceBought, bought, false));
+                memo[key] = best - curr;
+                return best;
+            }
+            best = Math.Max(best, Rec(index + 1, curr, priceBought, bought, false));
+            if (!bought)
+            {
+                best = Math.Max(best, Rec(index + 1, curr, prices[index], true, false));
+            }
+            else
+            {
+                best = Math.Max(best, Rec(index + 1, curr + (prices[index] - priceBought), 0, false, true));
+            }
+            memo[key] = best - curr;
+            return best;
+        }
+        Rec(0, 0, 0, false, false);
+        return memo[(0, false, false, 0)];
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
