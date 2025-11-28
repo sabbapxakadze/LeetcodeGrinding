@@ -8992,6 +8992,34 @@ public class Leetcode
         Rec(0, 0, 0, false, false);
         return memo[(0, false, false, 0)];
     }
+    public int CountServers(int[][] grid)
+    {
+        if (grid == null || grid.Length == 0)
+            return 0;
+        int res = 0;
+        var rows = new int[grid.Length];
+        var columns = new int[grid[0].Length];
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (grid[i][j] == 1)
+                {
+                    rows[i]++;
+                    columns[j]++;
+                }
+            }
+        }
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (grid[i][j] == 1 && (rows[i] > 1 || columns[j] > 1))
+                    res++;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
