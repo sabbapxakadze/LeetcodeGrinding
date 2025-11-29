@@ -9020,6 +9020,30 @@ public class Leetcode
         }
         return res;
     }
+    public int SubarraySumRevision(int[] nums, int k)
+    {
+        int[] pref = new int[nums.Length];
+        pref[0] = nums[0];
+        for (int i = 1; i < nums.Length; i++)
+        {
+            pref[i] = nums[i] + pref[i - 1];
+        }
+        int answer = 0;
+        Dictionary<int, int> map = new Dictionary<int, int>();
+        map[0] = 1;
+        for (int r = 0; r < nums.Length; r++)
+        {
+            int need = pref[r] - k;
+            if (map.ContainsKey(need))
+            {
+                answer += map[need];
+            }
+            if (!map.ContainsKey(pref[r]))
+                map[pref[r]] = 0;
+            map[pref[r]]++;
+        }
+        return answer;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
