@@ -9044,6 +9044,43 @@ public class Leetcode
         }
         return answer;
     }
+    public int FindMaxFish(int[][] grid)
+    {
+        if (grid == null || grid.Length == 0)
+            return 0;
+        int result = 0;
+        bool[,] b = new bool[grid.Length, grid[0].Length];
+
+        var dirs = new int[4][];
+        dirs[0] = new int[] { 0, 1 };
+        dirs[1] = new int[] { 0, -1 };
+        dirs[2] = new int[] { 1, 0 };
+        dirs[3] = new int[] { -1, 0 };
+        int Rec(int i, int j)
+        {
+            if (i < 0 || i >= grid.Length || j < 0 || j >= grid[0].Length)
+                return 0;
+            if (b[i, j] || grid[i][j] == 0)
+                return 0;
+            b[i, j] = true;
+
+            int sum = grid[i][j];    
+            foreach (var dir in dirs)
+            {
+                sum += Rec(i + dir[0], j + dir[1]);
+            }
+            return sum;
+        }
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (grid[i][j] > 0 && !b[i, j])
+                    result = Math.Max(result, Rec(i, j));
+            }
+        }
+        return result;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
