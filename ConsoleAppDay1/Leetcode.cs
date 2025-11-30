@@ -9081,6 +9081,46 @@ public class Leetcode
         }
         return result;
     }
+    public int CountSubIslands(int[][] grid1, int[][] grid2)
+    {
+        var dirs = new int[][]
+        {
+            new int[] {1, 0},
+            new int[] {-1, 0},
+            new int[] {0, 1},
+            new int[] {0, -1}
+        };
+        var visited = new bool[grid1.Length, grid1[0].Length];
+        int subIslands = 0;
+        bool Recursion(int i, int j)
+        {
+            if (i < 0 || j < 0 || i >= grid2.Length || j >= grid2[0].Length)
+                return true;
+            if (visited[i, j] || grid2[i][j] == 0)
+                return true;
+            visited[i, j] = true;
+            bool isSub = grid1[i][j] == 1;
+
+            foreach (var d in dirs)
+            {
+                bool child = Recursion(i + d[0], j + d[1]);
+                if (!child) isSub = false;
+            }
+            return isSub;
+        }
+        for (int i = 0; i < grid1.Length; i++)
+        {
+            for (int j = 0; j < grid1[0].Length; j++)
+            {
+                if (grid2[i][j] == 1 && !visited[i, j])
+                {
+                    if (Recursion(i, j))
+                        subIslands++;
+                }
+            }
+        }
+        return subIslands;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
