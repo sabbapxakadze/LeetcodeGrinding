@@ -8651,7 +8651,7 @@ public class Leetcode
                 map[level] = new List<int>();
                 map[level].Add(node.val);
             }
-                
+
             Inorder(node.right, level + 1);
         }
         Inorder(root, 0);
@@ -8727,7 +8727,7 @@ public class Leetcode
         for (int i = 0; i < list.Count; i++)
         {
             int curr = list[i] * map[list[i]];
-            if (i > 0 && list[i] == list[i-1] + 1)
+            if (i > 0 && list[i] == list[i - 1] + 1)
             {
                 int t = e2;
                 e2 = Math.Max(e2, e1 + curr);
@@ -9064,7 +9064,7 @@ public class Leetcode
                 return 0;
             b[i, j] = true;
 
-            int sum = grid[i][j];    
+            int sum = grid[i][j];
             foreach (var dir in dirs)
             {
                 sum += Rec(i + dir[0], j + dir[1]);
@@ -9120,6 +9120,67 @@ public class Leetcode
             }
         }
         return subIslands;
+    }
+    public int ShortestBridge(int[][] grid)
+    {
+        if (grid == null || grid.Length == 0)
+            return 0;
+        var dirs = new int[][]
+        {
+            new int[] {1, 0},
+            new int[] {-1, 0},
+            new int[] {0, 1},
+            new int[] {0, -1}
+        };
+        var q = new Queue<(int, int)>();
+        var visited = new bool[grid.Length, grid[0].Length];
+        bool found = false;
+        for (int i = 0; i < grid.Length && !found; i++)
+        {
+            for (int j = 0; j < grid[0].Length && !found; j++)
+            {
+                if (grid[i][j] == 1)
+                {
+                    Recursion(i, j);
+                    found = true;
+                }
+            }
+        }
+        void Recursion(int i, int j)
+        {
+            if (i < 0 || j < 0 || i >= grid.Length || j >= grid[0].Length)
+                return;
+            if (visited[i, j] || grid[i][j] == 0)
+                return;
+            visited[i, j] = true;
+            q.Enqueue((i, j));
+            foreach (var dir in dirs)
+            {
+                Recursion(i + dir[0], j + dir[1]);
+            }
+        }
+        int steps = 0;
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                (int x, int y) = q.Dequeue();
+                foreach (var dir in dirs)
+                {
+                    int a = x + dir[0];
+                    int b = y + dir[1];
+                    if (a < 0 || b < 0 || a >= grid.Length || b >= grid[0].Length || visited[a, b])
+                        continue;
+                    if (grid[a][b] == 1)
+                        return steps;
+                    q.Enqueue((a, b));
+                    visited[a, b] = true;
+                }
+            }
+            steps++;
+        }
+        return -1;
     }
     static void Main(string[] args)
     {
