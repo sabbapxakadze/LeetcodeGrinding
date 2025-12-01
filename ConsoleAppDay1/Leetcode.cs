@@ -9182,6 +9182,36 @@ public class Leetcode
         }
         return -1;
     }
+    public int FindLeastNumOfUniqueInts(int[] arr, int k)
+    {
+        if (arr == null || arr.Length == 0)
+            return 0;
+        var map = new Dictionary<int, int>();
+        foreach (var n in arr)
+        {
+            if (!map.ContainsKey(n))
+                map[n] = 0;
+            map[n]++;
+        }
+        var pq = new PriorityQueue<int, int>();
+        foreach (var item in map)
+        {
+            pq.Enqueue(item.Key, item.Value);
+        }    
+        while (k >= 0)
+        {
+            int a = pq.Dequeue();
+            if (map[a] == 1)
+                map.Remove(a);
+            else
+            {
+                map[a]--;
+                pq.Enqueue(a, map[a]);
+            }
+            k--;
+        }
+        return pq.Count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
