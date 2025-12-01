@@ -9197,7 +9197,7 @@ public class Leetcode
         foreach (var item in map)
         {
             pq.Enqueue(item.Key, item.Value);
-        }    
+        }
         while (k >= 0)
         {
             int a = pq.Dequeue();
@@ -9211,6 +9211,52 @@ public class Leetcode
             k--;
         }
         return pq.Count;
+    }
+    public int NumEnclaves(int[][] grid)
+    {
+        if (grid == null || grid.Length == 0)
+            return 0;
+        var boolArr = new bool[grid.Length, grid[0].Length];
+        int res = 0;
+        void Recursion(int i, int j)
+        {
+            if (i < 0 || j < 0 || i >= grid.Length || j >= grid[0].Length)
+                return;
+            if (boolArr[i, j] || grid[i][j] == 0)
+                return;
+
+            var dirs = new int[][]
+            {
+                new int[] {0, 1},
+                new int[] {0, -1},
+                new int[] {1, 0},
+                new int[] {-1, 0},
+            };
+            boolArr[i, j] = true;
+            foreach (var dir in dirs)
+            {
+                Recursion(i + dir[0], j + dir[1]);
+            }
+        }
+        for (int i = 0; i < grid.Length; i++)
+        {
+            if (grid[i][0] == 1) Recursion(i, 0);
+            if (grid[i][grid[0].Length - 1] == 1) Recursion(i, grid[0].Length - 1);
+        }
+        for (int i = 0; i < grid[0].Length; i++)
+        {
+            if (grid[0][i] == 1) Recursion(0, i);
+            if (grid[grid.Length - 1][i] == 1) Recursion(grid.Length - 1, i);
+        }
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (grid[i][j] == 1 && !boolArr[i, j])
+                    res++;
+            }
+        }
+        return res;
     }
     static void Main(string[] args)
     {
