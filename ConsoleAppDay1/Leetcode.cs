@@ -9258,6 +9258,50 @@ public class Leetcode
         }
         return res;
     }
+    public int ShortestPathBinaryMatrix(int[][] grid)
+    {
+        if (grid == null || grid.Length == 0)
+            return -1;
+        int r = grid.Length - 1, c = grid[0].Length - 1;
+        if (grid[0][0] == 1 || grid[r][c] == 1)
+            return -1;
+
+        Queue<(int, int)> q = new Queue<(int, int)>();
+        var visited = new bool[grid.Length, grid[0].Length];
+        q.Enqueue((0, 0));
+        visited[0, 0] = true;
+
+        var dirs = new int[][]
+        {
+            new int[] { 0, 1 }, new int[] { 0, -1 },
+            new int[] { 1, 0 }, new int[] { -1, 0 },
+            new int[] { 1, 1 }, new int[] { 1, -1 },
+            new int[] { -1, 1 }, new int[] { -1, -1 }
+        };
+        
+        int step = 1;
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                (int a, int b) = q.Dequeue();
+                if (a == r && b == c)
+                    return step;
+                foreach (var dir in dirs)
+                {
+                    int x = a + dir[0], y = b + dir[1];
+                    if (x >= 0 && y >= 0 && x <= r && y <= c && !visited[x, y] && grid[x][y] == 0)
+                    {
+                        q.Enqueue((x, y));
+                        visited[x, y] = true;
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
