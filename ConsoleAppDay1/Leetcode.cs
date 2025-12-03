@@ -9302,6 +9302,57 @@ public class Leetcode
         }
         return -1;
     }
+    public int LadderLength(string beginWord, string endWord, IList<string> wordList)
+    {
+        if (string.IsNullOrEmpty(beginWord) || string.IsNullOrEmpty(endWord))
+            return 0;
+        if (wordList == null || wordList.Count == 0 || beginWord == endWord)
+            return 0;
+        var map = new Dictionary<string, List<string>>();
+        wordList.Add(beginWord);
+        foreach (var word in wordList)
+        {
+            if (!map.ContainsKey(word))
+                map[word] = new List<string>();
+            foreach (var st in wordList)
+            {
+                if (st == word)
+                    continue;
+                int diff = 0;
+                for (int i = 0; i < word.Length; i++)
+                    if (st[i] != word[i]) diff++;
+                if (diff == 1)
+                {
+                    map[word].Add(st);
+                    if (!map.ContainsKey(st))
+                        map[st] = new List<string>();
+                    map[st].Add(word);
+                }
+            }
+        }
+        var q = new Queue<(string, int)>();
+        var visited = new HashSet<string>();
+        q.Enqueue((beginWord, 1));
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                (string word, int diff) = q.Dequeue();
+                if (word == endWord)
+                    return diff;
+                foreach (var w in map[word])
+                {
+                    if (!visited.Contains(w))
+                    {
+                        visited.Add(w);
+                        q.Enqueue((w, diff + 1));
+                    }
+                }
+            }
+        }
+        return 0;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
