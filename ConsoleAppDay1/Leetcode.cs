@@ -9353,6 +9353,31 @@ public class Leetcode
         }
         return 0;
     }
+    public int NumDistinct(string s, string t)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t))
+            return 0;
+        int occur = 0;
+        int?[,] memo = new int?[s.Length + 1, t.Length + 1];
+        int Recursion(int index, int curr)
+        {
+            if (curr == t.Length)
+                return 1;
+            if (index == s.Length || curr + s.Length - index < t.Length)
+                return 0;
+            if (memo[index, curr].HasValue)
+                return memo[index, curr].Value;
+
+            int occs = 0;
+            if (s[index] == t[curr])
+                occs += Recursion(index + 1, curr + 1);
+
+            occs += Recursion(index + 1, curr);
+            memo[index, curr] = occs;
+            return memo[index, curr].Value;
+        }
+        return Recursion(0, 0);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
