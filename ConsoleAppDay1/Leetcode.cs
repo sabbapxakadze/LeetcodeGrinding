@@ -9396,6 +9396,31 @@ public class Leetcode
         }
         return totalTime / customers.Length;
     }
+    public ListNode MergeInBetween(ListNode list1, int a, int b, ListNode list2)
+    {
+        if (list1 == null || list2 == null)
+            return new ListNode();
+        int cnt = 0;
+        ListNode temp = list1;
+        ListNode aa = new ListNode(); ListNode bb = new ListNode();
+        while (cnt <= b)
+        {
+            if (cnt == a - 1)
+                aa = temp;
+            if (cnt == b)
+                bb = temp;
+            temp = temp.next;
+            cnt++;
+        }
+        aa.next = list2;
+        ListNode temp2 = aa;
+        while (temp2.next != null)
+        {
+            temp2 = temp2.next;
+        }
+        temp2.next = bb.next;
+        return list1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
