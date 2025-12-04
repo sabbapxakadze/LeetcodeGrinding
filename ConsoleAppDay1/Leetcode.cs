@@ -9378,6 +9378,24 @@ public class Leetcode
         }
         return Recursion(0, 0);
     }
+    public double AverageWaitingTime(int[][] customers)
+    {
+        if (customers == null || customers.Length == 0)
+            return 0;
+
+        double waitTime = 0;
+        double totalTime = 0;
+        for (int i = 0; i < customers.Length; i++)
+        {
+            int currArr = customers[i][0];
+            int currWait = customers[i][1];
+            if (waitTime < currArr)
+                waitTime = currArr;
+            totalTime += (waitTime + currWait - currArr);
+            waitTime += currWait;
+        }
+        return totalTime / customers.Length;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
