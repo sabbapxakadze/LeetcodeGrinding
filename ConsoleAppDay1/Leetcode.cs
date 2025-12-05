@@ -9443,6 +9443,28 @@ public class Leetcode
         }
         return heights.Length - 1;
     }
+    public int[] CountByDistinctGreater(int[] A)
+    {
+        if (A == null || A.Length == 0)
+            return Array.Empty<int>();
+        var set = new HashSet<int>(A);
+        var pq = new PriorityQueue<int, int>();
+        foreach (var s in set)
+            pq.Enqueue(s, s);
+        var map = new Dictionary<int, int>();
+        while (pq.Count != 0)
+        {
+            int x = pq.Dequeue();
+            if (!map.ContainsKey(x))
+                map[x] = pq.Count;
+        }
+        int[] res = new int[A.Length];
+        foreach (var item in A)
+        {
+            res[map[item]]++;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
