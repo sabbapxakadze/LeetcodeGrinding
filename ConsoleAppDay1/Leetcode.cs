@@ -9421,6 +9421,28 @@ public class Leetcode
         temp2.next = bb.next;
         return list1;
     }
+    public int FurthestBuilding(int[] heights, int bricks, int ladders)
+    {
+        if (heights == null || heights.Length == 0)
+            return 0;
+        var pq = new PriorityQueue<int, int>();
+        for (int i = 0; i < heights.Length - 1; i++)
+        {
+            int need = heights[i + 1] - heights[i];
+            if (need <= 0)
+                continue;
+            bricks -= need;
+            pq.Enqueue(need, -need);
+            if (bricks < 0)
+            {
+                if (ladders == 0)
+                    return i;
+                ladders--;
+                bricks += pq.Dequeue();
+            }
+        }
+        return heights.Length - 1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
