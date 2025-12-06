@@ -9541,6 +9541,31 @@ public class Leetcode
         }
         return res;
     }
+    public long MaxPoints(int[] technique1, int[] technique2, int k)
+    {
+        if (technique1 == null || technique2 == null)
+            return 0;
+        long[,] dp = new long[technique1.Length + 1, technique1.Length + 1];
+        // i -> index j -> usedK
+        for (int i = 0; i < technique1.Length; i++)
+        {
+            for (int j = 0; j <= i; j++)
+            {
+                // pick from first
+                dp[i + 1, j + 1] =
+                Math.Max(dp[i + 1, j + 1], dp[i, j] + technique1[i]);
+                // pick from second
+                dp[i + 1, j] = Math.Max(dp[i + 1, j],
+                    dp[i, j] + technique2[i]);
+            }
+        }
+        long res = 0;
+        for (int i = k; i <= technique1.Length; i++)
+        {
+            res = Math.Max(res, dp[technique1.Length - 1, i]);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
