@@ -6313,7 +6313,7 @@ public class Leetcode
         }
         return Dfs(node);
     }
-    public string Convert(string s, int numRows)
+    public string ConvertI(string s, int numRows)
     {
         if (numRows == 1 || s.Length <= numRows)
             return s;
@@ -9278,7 +9278,7 @@ public class Leetcode
             new int[] { 1, 1 }, new int[] { 1, -1 },
             new int[] { -1, 1 }, new int[] { -1, -1 }
         };
-        
+
         int step = 1;
         while (q.Count != 0)
         {
@@ -9499,7 +9499,48 @@ public class Leetcode
         }
         return isPrime(num);
     }
-    
+    public int[] MinOperationsContest(int[] nums)
+    {
+        bool IsPal(int n)
+        {
+            string str = Convert.ToString(n, 2);
+            int l = 0, r = str.Length - 1;
+            while (l <= r)
+            {
+                if (str[l] != str[r])
+                    return false;
+                l++;
+                r--;
+            }
+            return true;
+        }
+        int MinOp(int num)
+        {
+            if (IsPal(num))
+                return 0;
+            int bigger = num + 1;
+            int smaller = num - 1;
+            while (!IsPal(bigger))
+            {
+                bigger++;
+            }
+            while (smaller >= 0 && !IsPal(smaller))
+            {
+                smaller--;
+            }
+            if (smaller < 0)
+                return bigger - num;
+            return Math.Min(num - smaller, bigger - num);
+        }
+        if (nums == null || nums.Length == 0)
+            return Array.Empty<int>();
+        var res = new int[nums.Length];
+        for (int i = 0; i < nums.Length; i++)
+        {
+            res[i] = MinOp(nums[i]);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
