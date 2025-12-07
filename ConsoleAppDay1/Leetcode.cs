@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -9565,6 +9566,40 @@ public class Leetcode
             res = Math.Max(res, dp[technique1.Length - 1, i]);
         }
         return res;
+    }
+    public int MinScore(int n, int[][] roads)
+    {
+        var g = new List<(int to, int dist)>[n + 1];
+        for (int i = 1; i <= n; i++)
+            g[i] = new List<(int, int)>();
+
+        foreach (var r in roads)
+        {
+            g[r[0]].Add((r[1], r[2]));
+            g[r[1]].Add((r[0], r[2]));
+        }
+
+        var q = new Queue<int>();
+        var seen = new HashSet<int>();
+        q.Enqueue(1);
+        seen.Add(1);
+
+        int ans = int.MaxValue;
+
+        while (q.Count > 0)
+        {
+            int x = q.Dequeue();
+            foreach (var (to, dist) in g[x])
+            {
+                ans = Math.Min(ans, dist);
+                if (!seen.Contains(to))
+                {
+                    seen.Add(to);
+                    q.Enqueue(to);
+                }
+            }
+        }
+        return ans;
     }
     static void Main(string[] args)
     {
