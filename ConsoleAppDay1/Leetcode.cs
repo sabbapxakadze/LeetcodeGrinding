@@ -2,6 +2,7 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9620,6 +9621,32 @@ public class Leetcode
             pq.Dequeue();
         }
         return pq.Dequeue();
+    }
+    public string GetHappyString(int n, int k)
+    {
+        if (n <= 0)
+            return Array.Empty<string>().ToString();
+        var chars = new List<char> { 'a', 'b', 'c' };
+        List<string> l = new List<string>();
+        string res = "";
+        void Backtrack(string curr = "")
+        {
+            if (curr.Length > n)
+                return;
+            if (curr.Length == n)
+            {
+                l.Add(curr);
+                Console.WriteLine(curr);
+                return;
+            }
+            foreach (var c in chars)
+            {
+                if (curr.Length == 0 || curr[^1] != c)
+                    Backtrack(curr + c);
+            }
+        }
+        Backtrack();
+        return l.Count >= k ? l[k - 1] : "";
     }
     static void Main(string[] args)
     {
