@@ -9601,6 +9601,26 @@ public class Leetcode
         }
         return ans;
     }
+    public string KthLargestNumber(string[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return "-1";
+        var pq = new PriorityQueue<string, string>(Comparer<string>.Create((a, b) =>
+        {
+            if (a.Length != b.Length)
+                return a.Length - b.Length;
+            return string.Compare(a, b, StringComparison.Ordinal);
+        }));
+        foreach (var num in nums)
+        {
+            pq.Enqueue(num, num);
+        }
+        for (int i = 0; i < nums.Length - k; i++)
+        {
+            pq.Dequeue();
+        }
+        return pq.Dequeue();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
