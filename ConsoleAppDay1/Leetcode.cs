@@ -9668,6 +9668,40 @@ public class Leetcode
             seats.Enqueue(seatNumber, seatNumber);
         }
     }
+    public string ReorganizeString(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return null;
+        var map = new Dictionary<char, int>();
+        foreach (char c in s)
+        {
+            if (!map.ContainsKey(c))
+                map[c] = 0;
+            map[c]++;
+        }
+        var maxHeap = new PriorityQueue<char, int>();
+        foreach (var item in map)
+            maxHeap.Enqueue(item.Key, -item.Value);
+        char prev = '0';
+        int prevCount = 0;
+        string res = "";
+        while (maxHeap.Count != 0)
+        {
+            var biggest = maxHeap.Dequeue();
+            res += biggest;
+            map[biggest]--;
+
+            if (map[biggest] == 0)
+                map.Remove(biggest);
+
+            if (prevCount > 0)
+                maxHeap.Enqueue(prev, -prevCount);
+
+            prevCount = map.ContainsKey(biggest) ? map[biggest] : 0;
+            prev = biggest;
+        }
+        return res.Length == s.Length ? res : "";
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
