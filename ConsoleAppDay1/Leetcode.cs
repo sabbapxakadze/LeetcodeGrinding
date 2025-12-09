@@ -9702,6 +9702,47 @@ public class Leetcode
         }
         return res.Length == s.Length ? res : "";
     }
+    public string LongestDiverseString(int a, int b, int c)
+    {
+        var pq = new PriorityQueue<(char ch, int cnt), int>();
+        if (a > 0) pq.Enqueue(('a', a), -a);
+        if (b > 0) pq.Enqueue(('b', b), -b);
+        if (c > 0) pq.Enqueue(('c', c), -c);
+
+        var sb = new StringBuilder();
+
+        while (pq.Count > 0)
+        {
+            var first = pq.Dequeue();
+            char ch1 = first.ch;
+            int cnt1 = first.cnt;
+
+            int L = sb.Length;
+            if (L >= 2 && sb[L - 1] == ch1 && sb[L - 2] == ch1)
+            {
+                if (pq.Count == 0)
+                    break;
+                var second = pq.Dequeue();
+                char ch2 = second.ch;
+                int cnt2 = second.cnt;
+
+                sb.Append(ch2);
+                cnt2--;
+
+                if (cnt2 > 0)
+                    pq.Enqueue((ch2, cnt2), -cnt2);
+                pq.Enqueue((ch1, cnt1), -cnt1);
+            }
+            else
+            {
+                sb.Append(ch1);
+                cnt1--;
+                if (cnt1 > 0)
+                    pq.Enqueue((ch1, cnt1), -cnt1);
+            }
+        }
+        return sb.ToString();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
