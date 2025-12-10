@@ -9789,6 +9789,25 @@ public class Leetcode
         }
         return max;
     }
+    public int CountGoodStrings(int low, int high, int zero, int one)
+    {
+        if (low > high)
+            return 0;
+        int answer = 0;
+        int mod = 1_0_0_0_0_0_0_0_0_7;
+        var dp = new int[high + 1];
+        dp[0] = 1;
+        for (int i = 1; i < dp.Length; i++)
+        {
+            if (i >= zero)
+                dp[i] = (dp[i] + dp[i - zero]) % mod;
+            if (i >= one)
+                dp[i] = (dp[i] + dp[i - one]) % mod;
+            if (i >= low)
+                answer = (answer + dp[i]) % mod;
+        }
+        return answer;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
