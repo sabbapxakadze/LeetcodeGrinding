@@ -9743,6 +9743,52 @@ public class Leetcode
         }
         return sb.ToString();
     }
+    public int GetMaximumGold(int[][] grid)
+    {
+        if (grid == null || grid.Length == 0)
+            return 0;
+        int r = grid.Length, c = grid[0].Length;
+        var dirs = new int[][]
+        {
+            new int[] {1, 0},
+            new int[] {-1, 0},
+            new int[] {0, 1},
+            new int[] {0, -1}
+        };
+        int Bfs(int i, int j, bool[,] visited)
+        {
+            if (i >= r || j >= c || i < 0 || j < 0)
+                return 0;
+
+            if (visited[i, j] || grid[i][j] == 0)
+                return 0;
+            int sum = 0;
+            visited[i, j] = true;
+            foreach (var dir in dirs)
+            {
+                sum = Math.Max(sum, Bfs(i + dir[0], j + dir[1], visited));
+            }
+            visited[i, j] = false;
+            return grid[i][j] + sum;
+        }
+        var q = new Queue<(int, int)>();
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (grid[i][j] != 0)
+                    q.Enqueue((i, j));
+            }
+        }
+        int max = 0;
+        while (q.Count != 0)
+        {
+            (int a, int b) = q.Dequeue();
+            bool[,] vis = new bool[r, c];
+            max = Math.Max(max, Bfs(a, b, vis));
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
