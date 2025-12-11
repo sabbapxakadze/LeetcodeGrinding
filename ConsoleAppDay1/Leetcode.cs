@@ -9808,6 +9808,31 @@ public class Leetcode
         }
         return answer;
     }
+    public string RemoveKdigits(string num, int k)
+    {
+        var stack = new Stack<char>();
+        foreach (char c in num)
+        {
+            while (stack.Count > 0 && k > 0 && stack.Peek() > c)
+            {
+                stack.Pop();
+                k--;
+            }
+            stack.Push(c);
+        }
+        while (stack.Count > 0 && k > 0)
+        {
+            stack.Pop();
+            k--;
+        }
+        var res = "";
+        while (stack.Count != 0)
+        {
+            res = stack.Pop() + res;
+        }
+        res = res.TrimStart('0');
+        return res == "" ? "0" : res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
