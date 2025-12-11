@@ -9833,6 +9833,20 @@ public class Leetcode
         res = res.TrimStart('0');
         return res == "" ? "0" : res;
     }
+    public string RemoveStars(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return "";
+        var stack = new Stack<char>();
+        foreach (var c in s)
+        {
+            if (c == '*')
+                stack.Pop();
+            else
+                stack.Push(c);
+        }
+        return new string(stack.Reverse().ToArray());
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
