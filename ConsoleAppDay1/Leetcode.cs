@@ -9847,6 +9847,23 @@ public class Leetcode
         }
         return new string(stack.Reverse().ToArray());
     }
+    public string AddSpaces(string s, int[] spaces)
+    {
+        if (string.IsNullOrEmpty(s))
+            return "";
+        if (spaces == null || spaces.Length == 0)
+            return s;
+        var res = new StringBuilder();   // 1 3 5    FROM [1 to 3) then FROM [3 to 5)
+        int x = 0;
+        for (int i = 0; i < spaces.Length; i++)
+        {
+            res.Append(s.Substring(x, spaces[i] - x));
+            res.Append(" ");
+            x = spaces[i];
+        }
+        res.Append(s.Substring(x));
+        return res.ToString();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
