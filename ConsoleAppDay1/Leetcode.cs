@@ -9864,6 +9864,47 @@ public class Leetcode
         res.Append(s.Substring(x));
         return res.ToString();
     }
+    public int MaxDistance(int[][] grid)
+    {
+        int n = grid.Length;
+        var q = new Queue<(int, int)>();
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                if (grid[i][j] == 1)
+                    q.Enqueue((i, j));
+
+        if (q.Count == 0 || q.Count == n * n)
+            return -1;
+
+        int[][] dirs = new int[][]
+        {
+        new []{1, 0}, new []{-1, 0},
+        new []{0, 1}, new []{0, -1}
+        };
+
+        int distance = -1;
+
+        while (q.Count > 0)
+        {
+            int size = q.Count;
+            distance++;
+            while (size-- > 0)
+            {
+                var (x, y) = q.Dequeue();
+                foreach (var d in dirs)
+                {
+                    int nx = x + d[0], ny = y + d[1];
+                    if (nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
+                    if (grid[nx][ny] != 0) continue;
+                    grid[nx][ny] = 1;
+                    q.Enqueue((nx, ny));
+                }
+            }
+        }
+        return distance;
+    }
+
     static void Main(string[] args)
     {
         Console.WriteLine();
