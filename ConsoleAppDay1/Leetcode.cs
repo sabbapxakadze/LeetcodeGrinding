@@ -9904,7 +9904,55 @@ public class Leetcode
         }
         return distance;
     }
+    public IList<int> FindAnagrams(string s, string p)
+    {
+        if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(p))
+            return new List<int>();
 
+        int[][] matrix = new int[26][];
+        for (int i = 0; i < matrix.Length; i++)
+        {
+            matrix[i] = new int[s.Length];
+        }
+        for (int i = 0; i < 26; i++)
+        {
+            int counter = 0;
+            for (int j = 0; j < s.Length; j++)
+            {
+                if (s[j] - 'a' == i)
+                {
+                    counter++;
+                }
+                matrix[i][j] = counter;
+            }
+        }
+        int[] pArray = new int[26];
+        for (int i = 0; i < p.Length; i++)
+        {
+            pArray[p[i] - 'a']++;
+        }
+        var res = new List<int>();
+        int l = 0;
+        for (int r = p.Length - 1; r < s.Length; r++)
+        {
+            bool x = true;
+            for (int i = 0; i < 26; i++)
+            {
+                if (l != 0)
+                {
+                    if (matrix[i][r] - matrix[i][l - 1] != pArray[i])
+                        x = false;
+                }
+                else
+                    if (matrix[i][r] != pArray[i])
+                    x = false;
+            }
+            if (x)
+                res.Add(l);
+            l++;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
