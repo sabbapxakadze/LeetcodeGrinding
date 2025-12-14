@@ -9953,6 +9953,21 @@ public class Leetcode
         }
         return res;
     }
+    //Virtual Contest 480
+    public int AbsDifference(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        Array.Sort(nums);
+        int small = 0;
+        int big = 0;
+        for (int i = 0; i < Math.Min(k, nums.Length); i++)
+        {
+            small += nums[i];
+            big += nums[nums.Length - 1 - i];
+        }
+        return Math.Abs(big - small);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
