@@ -9968,6 +9968,53 @@ public class Leetcode
         }
         return Math.Abs(big - small);
     }
+    public string ReverseWordsVC(string s)
+    {
+        bool isVowel(char c)
+        {
+            switch (char.ToLower(c))
+            {
+                case 'a':
+                case 'e':
+                case 'i':
+                case 'o':
+                case 'u':
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        int firstC = 0;
+        var words = s.Split(' ').ToArray();
+        foreach (var c in words[0])
+        {
+            if (isVowel(c))
+                firstC++;
+        }
+        bool[] bArr = new bool[words.Length];
+        for (int i = 1; i < words.Length; i++)
+        {
+            int count = 0;
+            foreach (var c in words[i])
+            {
+                if (isVowel(c))
+                    count++;
+            }
+            if (count == firstC)
+                bArr[i] = true;
+        }
+        var sb = new StringBuilder();
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (bArr[i])
+                sb.Append(new string(words[i].Reverse().ToArray()));
+            else
+                sb.Append(words[i]);
+            if (i != words.Length - 1)
+                sb.Append(' ');
+        }
+        return sb.ToString();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
