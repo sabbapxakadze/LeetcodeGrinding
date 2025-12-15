@@ -10015,6 +10015,63 @@ public class Leetcode
         }
         return sb.ToString();
     }
+    public int CountCompleteComponents(int n, int[][] edges)
+    {
+        var adjList = new Dictionary<int, List<int>>();
+        foreach (var edge in edges)
+        {
+            int f = edge[0];
+            int s = edge[1];
+            if (!adjList.ContainsKey(f))
+                adjList[f] = new List<int>();
+            if (!adjList.ContainsKey(s))
+                adjList[s] = new List<int>();
+            adjList[f].Add(s);
+            adjList[s].Add(f);
+        }
+        int count = 0;
+        var visited = new HashSet<int>();
+        for (int i = 0; i < n; i++)
+        {
+            if (visited.Contains(i))
+                continue;
+            if (!adjList.ContainsKey(i))
+            {
+                count++;
+                visited.Add(i);
+                continue;
+            }
+            var queue = new Queue<int>();
+            var set = new HashSet<int>() { i };
+            queue.Enqueue(i);
+            while (queue.Count != 0)
+            {
+                int current = queue.Dequeue();
+                foreach (var item in adjList[current])
+                {
+                    if (set.Add(item))
+                        queue.Enqueue(item);
+                }
+            }
+            bool complete = true;
+            int size = set.Count;
+            foreach (var node in set)
+            {
+                if (!adjList.ContainsKey(node) || adjList[node].Count != set.Count - 1)
+                {
+                    complete = false;
+                    break;
+                }
+            }
+            foreach (var node in set)
+            {
+                visited.Add(node);
+            }
+            if (complete)
+                count++;
+        }
+        return count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
