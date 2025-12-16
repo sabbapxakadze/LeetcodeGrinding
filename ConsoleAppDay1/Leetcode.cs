@@ -10072,6 +10072,28 @@ public class Leetcode
         }
         return count;
     }
+    public string CustomSortString(string order, string s)
+    {
+        if (string.IsNullOrEmpty(order))
+            return s;
+        var ranks = new Dictionary<char, int>();
+        for (int i = 0; i < order.Length; i++)
+        {
+            ranks[order[i]] = i;
+        }
+        for (char i = 'a'; i <= 'z'; i++)
+        {
+            if (!ranks.ContainsKey(i))
+                ranks[i] = order.Length + i;
+        }
+        var arr = s.OrderBy(x => ranks[x]).ToArray();
+        var sb = new StringBuilder();
+        foreach (var c in arr)
+        {
+            sb.Append(c);
+        }
+        return sb.ToString();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
