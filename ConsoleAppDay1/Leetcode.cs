@@ -10094,6 +10094,27 @@ public class Leetcode
         }
         return sb.ToString();
     }
+    public class CodecURL
+    {
+        Dictionary<string, string> urlMap = new Dictionary<string, string>();
+        Dictionary<string, string> encodeMap = new Dictionary<string, string>();
+        private static int count = 1;
+        public string encode(string longUrl)
+        {
+            if (urlMap.ContainsKey(longUrl))
+                return urlMap[longUrl];
+            urlMap[longUrl] = count.ToString();
+            encodeMap[count.ToString()] = longUrl;
+            count++;
+            return urlMap[longUrl];
+        }
+        public string decode(string shortUrl)
+        {
+            if (encodeMap.ContainsKey(shortUrl))
+                return encodeMap[shortUrl];
+            return null;
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
