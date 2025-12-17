@@ -10115,6 +10115,27 @@ public class Leetcode
             return null;
         }
     }
+    public int MaxPerformance(int n, int[] speed, int[] efficiency, int k)
+    {
+        var engineers = new int[n][];
+        for (int i = 0; i < n; i++)
+        {
+            engineers[i] = new int[2] { efficiency[i], speed[i] };
+        }
+        Array.Sort(engineers, (a, b) => b[0].CompareTo(a[0]));
+        var pq = new PriorityQueue<int, int>();
+        long sum = 0, res = 0;
+        foreach (var e in engineers)
+        {
+            if (pq.Count == k)
+                sum -= pq.Dequeue();
+            sum += e[1];
+            pq.Enqueue(e[1], e[1]);
+            res = Math.Max(res, sum * e[0]);
+        }
+        const int modulo = 1_000_000_007;
+        return (int)(res % modulo);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
