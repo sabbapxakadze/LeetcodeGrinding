@@ -10136,6 +10136,19 @@ public class Leetcode
         const int modulo = 1_000_000_007;
         return (int)(res % modulo);
     }
+    public int FindPeakElement(int[] nums)
+    {
+        int i = 0, j = nums.Length - 1;
+        while (i < j)
+        {
+            int m = i + (j - i) / 2;
+            if (nums[m] < nums[m + 1])
+                i = m + 1;
+            else
+                j = m;
+        }
+        return i;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
