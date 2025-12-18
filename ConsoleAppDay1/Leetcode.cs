@@ -10149,6 +10149,36 @@ public class Leetcode
         }
         return i;
     }
+    public int MaxFrequency(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        Array.Sort(nums);
+        var pref = new long[nums.Length];
+        pref[0] = nums[0];
+        for (int i = 1; i < nums.Length; i++)
+        {
+            pref[i] = pref[i - 1] + nums[i];
+        }
+        int l = 0, r = 0;
+        int res = -1;
+        while (r < nums.Length)
+        {
+            long total = 0;
+            if (l == 0)
+                total = pref[r];
+            else
+                total = pref[r] - pref[l - 1];
+            while ((long)nums[r] * (r - l + 1) > total + k)
+            {
+                total -= nums[l];
+                l++;
+            }
+            res = Math.Max(res, r - l + 1);
+            r++;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
