@@ -10207,6 +10207,38 @@ public class Leetcode
         }
         return (int)result;
     }
+    // Biweekly
+    public int MinOperationsToRemoveDups(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var map = new Dictionary<int, int>();
+        foreach (var n in nums)
+        {
+            if (!map.ContainsKey(n))
+                map[n] = 0;
+            map[n]++;
+        }
+        var dupCount = 0;
+        foreach (var item in map)
+        {
+            if (item.Value > 1)
+                dupCount++;
+        }
+        int count = 0, start = 0;
+        while (dupCount != 0)
+        {
+            for (int i = 0; i < 3 && start < nums.Length; i++, start++)
+            {
+                int num = nums[start];
+                if (map[num] == 2)
+                    dupCount--;
+                map[num]--;
+            }
+            count++;
+        }
+        return count;
+    }©leetcode
     static void Main(string[] args)
     {
         Console.WriteLine();
