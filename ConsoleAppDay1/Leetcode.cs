@@ -10238,7 +10238,37 @@ public class Leetcode
             count++;
         }
         return count;
-    }©leetcode
+    }
+    public int MaximumSum(int[] nums)
+    {
+        if (nums == null || nums.Length <= 2)
+            return 0;
+        var div0 = new List<int>();
+        var div1 = new List<int>();
+        var div2 = new List<int>();
+        foreach (var num in nums)
+        {
+            if (num % 3 == 0)
+                div0.Add(num);
+            else if (num % 3 == 1)
+                div1.Add(num);
+            else
+                div2.Add(num);
+        }
+        div0.Sort((a, b) => b - a);
+        div1.Sort((a, b) => b - a);
+        div2.Sort((a, b) => b - a);
+        int answer = 0;
+        if (div0.Count >= 3)
+            answer = Math.Max(answer, div0[0] + div0[1] + div0[2]);
+        if (div1.Count >= 3)
+            answer = Math.Max(answer, div1[0] + div1[1] + div1[2]);
+        if (div2.Count >= 3)
+            answer = Math.Max(answer, div2[0] + div2[1] + div2[2]);
+        if (div0.Count >= 1 && div1.Count >= 1 && div2.Count >= 1)
+            answer = Math.Max(answer, div0[0] + div1[0] + div2[0]);
+        return answer;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
