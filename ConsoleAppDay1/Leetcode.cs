@@ -10283,6 +10283,31 @@ public class Leetcode
         }
         return score;
     }
+    public int RangeSum(int[] nums, int n, int left, int right)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var pq = new PriorityQueue<int, int>();
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int sum = 0;
+            for (int j = i; j < nums.Length; j++)
+            {
+                sum += nums[j];
+                pq.Enqueue(sum, sum);
+            }
+        }
+        long res = 0;
+        int modulo = 1_000_000_007;
+        for (int i = 1; i <= right; i++)
+        {
+            int cur = pq.Dequeue();
+            if (i >= left)
+                res = (res + cur) % modulo;
+        }
+
+        return (int)res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
