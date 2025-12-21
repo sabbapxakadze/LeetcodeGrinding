@@ -10269,6 +10269,20 @@ public class Leetcode
             answer = Math.Max(answer, div0[0] + div1[0] + div2[0]);
         return answer;
     }
+    public long MaximumScore(int[] nums, string s)
+    {
+        long score = 0;
+        var pq = new PriorityQueue<int, int>();
+        for (int i = 0; i < s.Length; i++)
+        {
+            pq.Enqueue(nums[i], -nums[i]);
+            if (s[i] == '1')
+            {
+                score += pq.Dequeue();
+            }
+        }
+        return score;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
