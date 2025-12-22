@@ -10305,8 +10305,28 @@ public class Leetcode
             if (i >= left)
                 res = (res + cur) % modulo;
         }
-
         return (int)res;
+    }
+    public int MaxUncrossedLines(int[] nums1, int[] nums2)
+    {
+        if (nums1 == null || nums2 == null)
+            return 0;
+        int?[,] dp = new int?[nums1.Length, nums2.Length];
+        int Dfs(int i, int j)
+        {
+            if (i >= nums1.Length || j >= nums2.Length)
+                return 0;
+            if (dp[i, j].HasValue)
+                return dp[i, j].Value;
+
+            if (nums1[i] == nums2[j])
+                dp[i, j] = 1 + Dfs(i + 1, j + 1);
+            else
+                dp[i, j] = Math.Max(Dfs(i, j + 1), Dfs(i + 1, j));
+            return dp[i, j].Value;
+        }
+        Dfs(0, 0);
+        return dp[0, 0].Value;
     }
     static void Main(string[] args)
     {
