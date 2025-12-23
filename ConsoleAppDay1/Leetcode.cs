@@ -10328,6 +10328,37 @@ public class Leetcode
         Dfs(0, 0);
         return dp[0, 0].Value;
     }
+    public IList<IList<int>> ThreeSumRevision(int[] nums)
+    {
+        if (nums == null || nums.Length < 3)
+            return new List<IList<int>>();
+        Array.Sort(nums);
+        var res = new List<IList<int>>();
+        for (int i = 0; i < nums.Length - 2; i++)
+        {
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            int j = i + 1;
+            int k = nums.Length - 1;
+            while (j < k)
+            {
+                int ans = nums[i] + nums[j] + nums[k];
+                if (ans < 0)
+                    j++;
+                else if (ans > 0)
+                    k--;
+                else
+                {
+                    res.Add(new List<int> { nums[i], nums[j], nums[k] });
+                    while (j < k && nums[j] == nums[j + 1]) j++;
+                    while (k > j && nums[k] == nums[k - 1]) k--;
+                    j++;
+                    k--;
+                }
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
