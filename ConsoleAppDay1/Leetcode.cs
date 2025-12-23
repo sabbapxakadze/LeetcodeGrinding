@@ -10359,6 +10359,36 @@ public class Leetcode
         }
         return res;
     }
+    public int MinFallingPathSum(int[][] matrix)
+    {
+        if (matrix == null || matrix.Length == 0)
+            return 0;
+        int r = matrix.Length, c = matrix[0].Length;
+        int?[,] dp = new int?[r, c];
+        var dirs = new int[] { -1, 0, 1 };
+        int Rec(int i, int j)
+        {
+            if (j < 0 || j >= c)
+                return int.MaxValue;
+            if (i == r - 1)
+                return matrix[i][j];
+            if (dp[i, j].HasValue)
+                return dp[i, j].Value;
+            int min = int.MaxValue;
+            foreach (var d in dirs)
+            {
+                min = Math.Min(min, Rec(i + 1, j + d));
+            }
+            dp[i, j] = matrix[i][j] + min;
+            return dp[i, j].Value;
+        }
+        var min = int.MaxValue;
+        for (int i = 0; i < c; i++)
+        {
+            min = Math.Min(min, Rec(0, i));
+        }
+        return min;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
