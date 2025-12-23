@@ -10389,6 +10389,22 @@ public class Leetcode
         }
         return min;
     }
+    public int CountNumbersWithUniqueDigits(int n)
+    {
+        if (n == 0)
+            return 1;
+        double res = 10;
+        for (int i = 2; i <= n && i <= 10; i++)
+        {
+            double x = 9;
+            for (int j = 1; j < i; j++)
+            {
+                x *= 10 - j;
+            }
+            res += x;
+        }
+        return (int)res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
