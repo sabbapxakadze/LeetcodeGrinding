@@ -10405,6 +10405,32 @@ public class Leetcode
         }
         return (int)res;
     }
+    public long MaxPoints(int[][] points)
+    {
+        int rows = points.Length, cols = points[0].Length;
+        long[] prev = new long[cols];
+        for (int c = 0; c < cols; c++) prev[c] = points[0][c];
+
+        for (int r = 1; r < rows; r++)
+        {
+            long[] cur = new long[cols];
+            cur[0] = prev[0];
+            for (int c = 1; c < cols; c++)
+                cur[c] = Math.Max(prev[c], cur[c - 1] - 1);
+
+            long rightMax = prev[cols - 1];
+            for (int c = cols - 2; c >= 0; c--)
+            {
+                rightMax = Math.Max(prev[c], rightMax - 1);
+                cur[c] = Math.Max(cur[c], rightMax) + points[r][c];
+            }
+            cur[cols - 1] += points[r][cols - 1];
+            prev = cur;
+        }
+        long ans = long.MinValue;
+        foreach (long val in prev) ans = Math.Max(ans, val);
+        return ans;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
