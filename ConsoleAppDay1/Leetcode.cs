@@ -10447,6 +10447,23 @@ public class Leetcode
         }
         return nums[nums.Length - 1] == 1 && nums[nums.Length - 2] == 1 ? count : -1;
     }
+    public int MinIncrementForUnique(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        Array.Sort(nums);
+        int res = 0;
+        for (int i = 1; i < nums.Length; i++)
+        {
+            if (nums[i] <= nums[i - 1])
+            {
+                int need = nums[i - 1] + 1;
+                res += need - nums[i];
+                nums[i] = need;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
