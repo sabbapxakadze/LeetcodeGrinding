@@ -10431,6 +10431,22 @@ public class Leetcode
         foreach (long val in prev) ans = Math.Max(ans, val);
         return ans;
     }
+    public int MinOperationsAll1(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return -1;
+        int count = 0;
+        for (int i = 0; i < nums.Length - 2; i++)
+        {
+            if (nums[i] == 0)
+            {
+                count++;
+                for (int j = i; j <= i + 2; j++)
+                    nums[j] = nums[j] == 1 ? 0 : 1;
+            }
+        }
+        return nums[nums.Length - 1] == 1 && nums[nums.Length - 2] == 1 ? count : -1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
