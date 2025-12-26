@@ -10501,6 +10501,25 @@ public class Leetcode
         }
         return max;
     }
+    public int MaxLevelSum(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+        var map = new Dictionary<int, int>();
+        void Travel(TreeNode node, int level = 1)
+        {
+            if (node == null)
+                return;
+            if (!map.ContainsKey(level))
+                map[level] = 0;
+            map[level] += node.val;
+            Travel(node.left, level + 1);
+            Travel(node.right, level + 1);
+        }
+        Travel(root);
+        int max = map.Max(x => x.Value);
+        return map.Where(x => x.Value == max).Select(x => x.Key).First();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
