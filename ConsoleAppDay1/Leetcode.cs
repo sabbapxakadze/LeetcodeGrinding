@@ -10464,6 +10464,43 @@ public class Leetcode
         }
         return res;
     }
+    public int PairSum(ListNode head)
+    {
+        if (head == null)
+            return 0;
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        // now slow is in the middle;
+        ListNode ReverseList(ListNode head)
+        {
+            ListNode prev = null;
+            ListNode curr = head;
+
+            while (curr != null)
+            {
+                ListNode nextTemp = curr.next; // save next
+                curr.next = prev;              // reverse pointer
+                prev = curr;                   // move prev forward
+                curr = nextTemp;               // move curr forward
+            }
+            return prev;
+        }
+        ListNode reversedSecond = ReverseList(slow);
+        ListNode start = head;
+        int max = 0;
+        while (start != slow.next && reversedSecond != null)
+        {
+            max = Math.Max(max, reversedSecond.val + start.val);
+            reversedSecond = reversedSecond.next;
+            start = start.next;
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
