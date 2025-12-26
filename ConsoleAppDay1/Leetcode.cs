@@ -10520,6 +10520,32 @@ public class Leetcode
         int max = map.Max(x => x.Value);
         return map.Where(x => x.Value == max).Select(x => x.Key).First();
     }
+    public bool CanVisitAllRooms(IList<IList<int>> rooms)
+    {
+        if (rooms == null || rooms.Count == 0)
+            return true;
+        bool ans = false;
+        void Dfs(int room, HashSet<int> set)
+        {
+            if (set.Contains(room))
+                return;
+
+            set.Add(room);
+
+            if (set.Count == rooms.Count)
+            {
+                ans = true;
+                return;
+            }
+            foreach (var item in rooms[room])
+            {
+                if (!set.Contains(item))
+                    Dfs(item, set);
+            }
+        }
+        Dfs(0, new HashSet<int>());
+        return ans;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
