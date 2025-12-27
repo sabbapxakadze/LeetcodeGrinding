@@ -10577,6 +10577,37 @@ public class Leetcode
         }
         return provinces;
     }
+    public int MinReorder(int n, int[][] connections)
+    {
+        if (connections == null || connections.Length == 0)
+            return 0;
+        var adjList = new Dictionary<int, List<(int to, bool needsRev)>>();
+        for (int i = 0; i < n; i++)
+            adjList[i] = new List<(int to, bool needsRev)>();
+        for (int i = 0; i < connections.Length; i++)
+        {
+            int a = connections[i][0], b = connections[i][1];
+            adjList[a].Add((b, true));
+            adjList[b].Add((a, false));
+        }
+        int count = 0;
+        var set = new HashSet<int>();
+        void Dfs(int index)
+        {
+            set.Add(index);
+            foreach ((int nxt, bool needsRev) in adjList[index])
+            {
+                if (!set.Contains(nxt))
+                {
+                    if (needsRev)
+                        count++;
+                    Dfs(nxt);
+                }
+            }
+        }
+        Dfs(0);
+        return count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
