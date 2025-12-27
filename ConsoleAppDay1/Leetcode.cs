@@ -10608,6 +10608,52 @@ public class Leetcode
         Dfs(0);
         return count;
     }
+    public int NearestExit(char[][] maze, int[] entrance)
+    {
+        if (maze == null || maze.Length == 0)
+            return 0;
+        var visited = new bool[maze.Length, maze[0].Length];
+        visited[entrance[0], entrance[1]] = true;
+
+        var queue = new Queue<(int, int)>();
+        queue.Enqueue((entrance[0], entrance[1]));
+        var dirs = new int[][]
+        {
+            new int[] {1, 0},
+            new int[] {-1, 0},
+            new int[] {0, 1},
+            new int[] {0, -1}
+        };
+        int res = 0;
+        while (queue.Count != 0)
+        {
+            int size = queue.Count;
+            for (int a = 0; a < size; a++)
+            {
+                var (i, j) = queue.Dequeue();
+                if ((i == 0 || j == 0 || i == maze.Length - 1 || j == maze[0].Length - 1) &&
+                    !(i == entrance[0] && j == entrance[1]))
+                {
+                    return res;
+                }
+                foreach (var dir in dirs)
+                {
+                    int x = i + dir[0];
+                    int y = j + dir[1];
+
+                    if (x < 0 || y < 0 || x >= maze.Length || y >= maze[0].Length)
+                        continue;
+                    if (visited[x, y] || maze[x][y] == '+')
+                        continue;
+
+                    visited[x, y] = true;
+                    queue.Enqueue((x, y));
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
