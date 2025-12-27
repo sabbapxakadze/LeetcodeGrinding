@@ -10546,6 +10546,37 @@ public class Leetcode
         Dfs(0, new HashSet<int>());
         return ans;
     }
+    public int FindCircleNum(int[][] isConnected)
+    {
+        if (isConnected == null || isConnected.Length == 0)
+            return 0;
+        var set = new HashSet<int>();
+        int provinces = 0;
+        void Dfs(int a)
+        {
+            if (set.Contains(a))
+            {
+                return;
+            }        
+            set.Add(a);
+            for (int nextCity = 0; nextCity < isConnected.Length; nextCity++)
+            {
+                if (isConnected[a][nextCity] == 1)
+                {
+                    Dfs(nextCity);
+                }
+            }
+        }
+        for (int i = 0; i < isConnected.Length; i++)
+        {
+            if (!set.Contains(i))
+            {
+                provinces++;
+                Dfs(i);
+            }
+        }
+        return provinces;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
