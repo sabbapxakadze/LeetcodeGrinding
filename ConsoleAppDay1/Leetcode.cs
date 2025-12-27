@@ -10654,6 +10654,41 @@ public class Leetcode
         }
         return -1;
     }
+    public class SmallestInfiniteSet
+    {
+        HashSet<int> set;
+        PriorityQueue<int, int> pq;
+        public SmallestInfiniteSet()
+        {
+            set = new HashSet<int>();
+            pq = new PriorityQueue<int, int>();
+            for (int i = 1; i <= 1000; i++)
+            {
+                set.Add(i);
+                pq.Enqueue(1000 - i, 1000 - i);
+            }
+        }
+
+        public int PopSmallest()
+        {
+            if (set.Count != 0)
+            {
+                var small = pq.Dequeue();
+                set.Remove(small);
+                return small;
+            }
+            return -1;
+        }
+
+        public void AddBack(int num)
+        {
+            if (!set.Contains(num))
+            {
+                set.Add(num);
+                pq.Enqueue(num, num);
+            }
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
