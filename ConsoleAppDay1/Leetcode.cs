@@ -10714,6 +10714,38 @@ public class Leetcode
         }
         return res;
     }
+    public long TotalCost(int[] costs, int k, int candidates)
+    {
+        if (costs == null || costs.Length == 0)
+            return 0;
+        var pq1 = new PriorityQueue<int, int>();
+        var pq2 = new PriorityQueue<int, int>();
+
+        int a = 0, b = costs.Length - 1;
+        for (int i = 0; i < candidates && a <= b; i++)
+            pq1.Enqueue(costs[a], costs[a++]);
+
+        for (int i = 0; i < candidates && a <= b; i++)
+            pq2.Enqueue(costs[b], costs[b--]);
+
+        long res = 0;
+        for (int i = 0; i < k; i++)
+        {
+            if (pq2.Count == 0 || (pq1.Count > 0 && pq1.Peek() <= pq2.Peek()))
+            {
+                res += pq1.Dequeue();
+                if (a <= b)
+                    pq1.Enqueue(costs[a], costs[a++]);
+            }
+            else
+            {
+                res += pq2.Dequeue();
+                if (a <= b)
+                    pq2.Enqueue(costs[b], costs[b--]);
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
