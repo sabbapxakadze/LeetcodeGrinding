@@ -10746,6 +10746,29 @@ public class Leetcode
         }
         return res;
     }
+    public int[] SuccessfulPairs(int[] spells, int[] potions, long success)
+    {
+        if (spells == null || potions == null)
+            return Array.Empty<int>();
+        var res = new int[spells.Length];
+        Array.Sort(potions);
+        int Function(int spell, int i, int j)
+        {
+            if (i > j)
+                return i;
+            int mid = i + (j - i) / 2;
+            if ((long)spell * potions[mid] < success)
+                return Function(spell, mid + 1, j);
+            else
+                return Function(spell, i, mid - 1);
+        }
+        for (int i = 0; i < spells.Length; i++)
+        {
+            int index = Function(spells[i], 0, potions.Length - 1);
+            res[i] = potions.Length - index;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
