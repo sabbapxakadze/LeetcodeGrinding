@@ -10689,6 +10689,31 @@ public class Leetcode
             }
         }
     }
+    public long MaxScore(int[] nums1, int[] nums2, int k)
+    {
+        int n = nums2.Length;
+        var pairs = new int[n][];
+        for (int i = 0; i < n; i++)
+        {
+            pairs[i] = new int[2];
+            pairs[i][0] = nums1[i];
+            pairs[i][1] = nums2[i];
+        }
+        Array.Sort(pairs, (a, b) => b[1].CompareTo(a[1]));
+
+        var pq = new PriorityQueue<int, int>();
+        long n1Sum = 0, res = 0;
+        foreach (var pair in pairs)
+        {
+            n1Sum += pair[0];
+            pq.Enqueue(pair[0], pair[0]);
+            if (pq.Count > k)
+                n1Sum -= pq.Dequeue();
+            if (pq.Count == k)
+                res = Math.Max(res, n1Sum * pair[1]);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
