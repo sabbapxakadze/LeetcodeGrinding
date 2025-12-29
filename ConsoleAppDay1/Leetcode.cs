@@ -10796,6 +10796,26 @@ public class Leetcode
         }
         return prof;
     }
+    public int MinFlips(int a, int b, int c)
+    {
+        int cnt = 0;
+        for (int i = 0; i < 32; i++)
+        {
+            int x = (a & 1) | (b & 1);
+            int y = c & 1;
+
+            if (y == 0)
+                cnt += (a & 1) + (b & 1);
+            else
+                if ((a & 1) == 0 && (b & 1) == 0)
+                    cnt++;
+
+            a >>= 1;
+            b >>= 1;
+            c >>= 1;
+        }
+        return cnt;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
