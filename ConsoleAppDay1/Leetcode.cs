@@ -10782,6 +10782,20 @@ public class Leetcode
         }
         return (int)dp[n];
     }
+    public int MaxProfit(int[] prices, int fee)
+    {
+        if (prices == null || prices.Length == 0)
+            return 0;
+
+        var prof = 0;
+        var effectiveBuy = prices[0];
+        for (int i = 1; i < prices.Length; i++)
+        {
+            prof = Math.Max(prof, prices[i] - effectiveBuy - fee);
+            effectiveBuy = Math.Min(effectiveBuy, prices[i] - prof);
+        }
+        return prof;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
