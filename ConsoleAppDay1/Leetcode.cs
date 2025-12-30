@@ -10835,6 +10835,25 @@ public class Leetcode
         }
         return lists;
     }
+    public int FindMinArrowShots(int[][] points)
+    {
+        if (points == null || points.Length == 0)
+            return 0;
+        points = points.OrderBy(x => x[0]).ToArray();
+        int count = points.Length;
+        for (int i = 1; i < points.Length; i++)
+        {
+            var (a1, b1) = (points[i - 1][0], points[i - 1][1]);
+            var (a2, b2) = (points[i][0], points[i][1]);
+            if (a2 <= b1)
+            {
+                points[i][0] = Math.Max(a1, a2);
+                points[i][1] = Math.Min(b1, b2);
+                count--;
+            }
+        }
+        return count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
