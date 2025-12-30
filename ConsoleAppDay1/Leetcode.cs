@@ -10854,6 +10854,31 @@ public class Leetcode
         }
         return count;
     }
+    public void Flatten(TreeNode root)
+    {
+        if (root == null)
+            return;
+        TreeNode Pointer(TreeNode node)
+        {
+            if (node == null)
+                return null;
+            TreeNode tempRight = Pointer(node.right);
+            TreeNode tempLeft = Pointer(node.left);
+            node.left = null;
+            node.right = tempLeft;
+            if (node.right != null)
+            {
+                TreeNode tempBottom = node.right;
+                while (tempBottom.right != null)
+                    tempBottom = tempBottom.right;
+                tempBottom.right = tempRight;
+            }
+            else
+                node.right = tempRight;
+            return node;
+        }
+        root = Pointer(root);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
