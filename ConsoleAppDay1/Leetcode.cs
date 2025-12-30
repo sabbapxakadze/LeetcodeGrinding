@@ -10816,6 +10816,25 @@ public class Leetcode
         }
         return cnt;
     }
+    public IList<IList<string>> SuggestedProducts(string[] products, string searchWord)
+    {
+        if (products == null || products.Length == 0)
+            return new List<IList<string>>();
+        var lists = new List<IList<string>>();
+        Array.Sort(products);
+        for (int i = 1; i <= searchWord.Length; i++)
+        {
+            var pref = searchWord.Substring(0, i);
+            var list = new List<string>();
+            for (int j = 0; j < products.Length && list.Count < 3; j++)
+            {
+                if (products[j].StartsWith(pref))
+                    list.Add(products[j]);
+            }
+            lists.Add(list);
+        }
+        return lists;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
