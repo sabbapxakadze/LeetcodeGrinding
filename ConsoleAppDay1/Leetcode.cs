@@ -10879,6 +10879,37 @@ public class Leetcode
         }
         root = Pointer(root);
     }
+    public class MedianFinder
+    {
+        PriorityQueue<int, int> max;
+        PriorityQueue<int, int> min;
+        public MedianFinder()
+        {
+            max = new PriorityQueue<int, int>(
+                Comparer<int>.Create((a, b) => b.CompareTo(a))
+            );
+            min = new PriorityQueue<int, int>();
+        }
+        public void AddNum(int num)
+        {
+            max.Enqueue(num, num);
+
+            int moved = max.Dequeue();
+            min.Enqueue(moved, moved);
+
+            if (max.Count < min.Count)
+            {
+                int back = min.Dequeue();
+                max.Enqueue(back, back);
+            }
+        }
+        public double FindMedian()
+        {
+            if (max.Count > min.Count)
+                return max.Peek();
+            return (max.Peek() + min.Peek()) / 2.0;
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
