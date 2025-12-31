@@ -10933,6 +10933,34 @@ public class Leetcode
         }
         return slow;
     }
+    public void NextPermutation(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return;
+        int n = nums.Length;
+        int i;
+        for (i = n - 2; i >= 0; i--)
+        {
+            if (nums[i] < nums[i + 1])
+                break;
+        }
+        if (i < 0)
+        {
+            Array.Reverse(nums);
+            return;
+        }
+        for (int j = n - 1; j > i; j--)
+        {
+            if (nums[j] > nums[i])
+            {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                break;
+            }
+        }
+        Array.Reverse(nums, i + 1, n - i - 1);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
