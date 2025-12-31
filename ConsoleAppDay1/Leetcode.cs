@@ -10557,7 +10557,7 @@ public class Leetcode
             if (set.Contains(a))
             {
                 return;
-            }        
+            }
             set.Add(a);
             for (int nextCity = 0; nextCity < isConnected.Length; nextCity++)
             {
@@ -10775,7 +10775,7 @@ public class Leetcode
         if (n <= 2) return n;
 
         long[] dp = new long[n + 1];
-        dp[0] = 1;  dp[1] = 1; dp[2] = 2;
+        dp[0] = 1; dp[1] = 1; dp[2] = 2;
         for (int i = 3; i <= n; i++)
         {
             dp[i] = (2 * dp[i - 1] + dp[i - 3]) % modulo;
@@ -10808,7 +10808,7 @@ public class Leetcode
                 cnt += (a & 1) + (b & 1);
             else
                 if ((a & 1) == 0 && (b & 1) == 0)
-                    cnt++;
+                cnt++;
 
             a >>= 1;
             b >>= 1;
@@ -10960,6 +10960,25 @@ public class Leetcode
             }
         }
         Array.Reverse(nums, i + 1, n - i - 1);
+    }
+    public bool SearchMatrixII(int[][] matrix, int target)
+    {
+        if (matrix == null || matrix.Length == 0)
+            return false;
+        int r = matrix.Length;
+        int c = matrix[0].Length;
+
+        for (int i = 0, j = c - 1; i < r && j >= 0;)
+        {
+            int val = matrix[i][j];
+            if (target > val)
+                i++;
+            else if (target < val)
+                j--;
+            else
+                return true;
+        }
+        return false;
     }
     static void Main(string[] args)
     {
