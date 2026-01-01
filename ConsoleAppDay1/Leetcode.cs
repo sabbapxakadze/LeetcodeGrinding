@@ -10980,6 +10980,61 @@ public class Leetcode
         }
         return false;
     }
+    public IList<IList<string>> SolveNQueens(int n)
+    {
+        if (n <= 0)
+            return new List<IList<string>>();
+        List<IList<string>> lists = new List<IList<string>>();
+        string GenerateQueen(int index, int l)
+        {
+            StringBuilder res = new StringBuilder();
+            for (int i = 0; i < l; i++)
+            {
+                if (i == index)
+                    res.Append('Q');
+                else
+                    res.Append('.');
+            }
+            return res.ToString();
+        }
+        bool[] cols = new bool[n];
+        bool[] dg1 = new bool[2 * n];
+        bool[] dg2 = new bool[2 * n];
+        void Backtrack(int index, List<int> curr)
+        {
+            if (curr.Count == n)
+            {
+                var list = new List<string>();
+                foreach (var i in curr)
+                {
+                    list.Add(GenerateQueen(i, n));
+                }
+                lists.Add(new List<string>(list));
+                return;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                int d1 = index - i + n - 1;
+                int d2 = index + i;
+
+                if (dg1[d1] || dg2[d2] || cols[i])
+                    continue;
+                dg1[d1] = true;
+                dg2[d2] = true;
+                cols[i] = true;
+                curr.Add(i);
+
+                Backtrack(index + 1, curr);
+
+                dg1[d1] = false;
+                dg2[d2] = false;
+                cols[i] = false;
+                curr.RemoveAt(curr.Count - 1);
+            }
+        }
+        Backtrack(0, new List<int>());
+        return lists;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
