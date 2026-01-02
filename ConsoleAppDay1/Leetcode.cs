@@ -2,10 +2,12 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.Intrinsics.X86;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using static Leetcode;
 
 public class Leetcode
 {
@@ -11077,6 +11079,38 @@ public class Leetcode
             }
         }
         return max;
+    }
+    public ListNode ReverseKGroup(ListNode head, int k)
+    {
+        if (head == null)
+            return null;
+        ListNode dummy = new ListNode(1);
+        dummy.next = head;
+
+        ListNode prevGr = dummy;
+        
+        while (true)
+        {
+            ListNode end = prevGr;
+            for (int i = 0; i < k && end != null; i++)
+                end = end.next;
+            if (end == null)
+                break;
+
+            ListNode start = prevGr.next;
+            ListNode curr = start;
+            ListNode prev = end.next;
+            for (int i = 0; i < k; i++)
+            {
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
+            }
+            prevGr.next = prev;
+            prevGr = start;
+        }
+        return dummy.next;
     }
     static void Main(string[] args)
     {
