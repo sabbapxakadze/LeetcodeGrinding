@@ -11035,6 +11035,49 @@ public class Leetcode
         Backtrack(0, new List<int>());
         return lists;
     }
+    public int LongestValidParentheses(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+        int max = 0, l = 0, r = 0;
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (s[i] == '(')
+                l++;
+            else
+                r++;
+            if (r > l)
+            {
+                l = 0;
+                r = 0;
+            }
+            else if (l == r)
+            {
+                max = Math.Max(max, 2 * l);
+            }
+        }
+
+        l = 0;
+        r = 0;
+        for (int i = s.Length - 1; i >= 0; i--)
+        {
+            if (s[i] == '(')
+                l++;
+            else
+                r++;
+
+            if (l > r)
+            {
+                l = 0;
+                r = 0;
+            }
+            else if (l == r)
+            {
+                max = Math.Max(max, 2 * l);
+            }
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
