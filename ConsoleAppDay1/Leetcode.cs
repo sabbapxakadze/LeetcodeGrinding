@@ -11127,6 +11127,37 @@ public class Leetcode
         }
         return sb;
     }
+    public int MinLengthDistinctSumAtLeastK(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return -1;
+        var d = new Dictionary<int, int>();
+        int sum = 0;
+        int res = int.MaxValue;
+        int l = 0, r = 0;
+        while (r < nums.Length)
+        {
+            int val = nums[r];
+            if (!d.ContainsKey(val))
+                d[val] = 0;
+            if (d[val] == 0)
+                sum += nums[r];
+            d[val]++;
+            while (sum >= k)
+            {
+                res = Math.Min(res, r - l + 1);
+                int val2 = nums[l];
+                d[val2]--;
+                if (d[val2] == 0)
+                    sum -= val2;
+                l++;
+            }
+            r++;
+        }
+        if (res == int.MaxValue)
+            return -1;
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine(new Leetcode().ReversePrefix("abcd", 2));
