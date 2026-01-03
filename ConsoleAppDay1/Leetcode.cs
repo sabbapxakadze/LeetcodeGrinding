@@ -11158,6 +11158,28 @@ public class Leetcode
             return -1;
         return res;
     }
+    public int FindMaxVal(int n, int[][] restrictions, int[] diff)
+    {
+        var arr = new int[n];
+        arr[0] = 0;
+        var rests = new Dictionary<int, int>(); // index key, maxVal value
+        foreach (var x in restrictions)
+        {
+            rests[x[0]] = x[1];
+        }
+        for (int i = 1; i < n; i++) // so we check from left -> right
+        // means that it allows max possible val
+        {
+            arr[i] = arr[i - 1] + diff[i - 1];
+            if (rests.ContainsKey(i))
+                arr[i] = Math.Min(arr[i], rests[i]);
+        }
+        for (int i = n - 2; i >= 0; i--)
+        {
+            arr[i] = Math.Min(arr[i], arr[i + 1] + diff[i]);
+        }
+        return arr.Max();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine(new Leetcode().ReversePrefix("abcd", 2));
