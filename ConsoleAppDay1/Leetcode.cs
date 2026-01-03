@@ -11112,8 +11112,23 @@ public class Leetcode
         }
         return dummy.next;
     }
+    //BiweeklyContest
+    public string ReversePrefix(string s, int k)
+    {
+        if (string.IsNullOrEmpty(s))
+            return null;
+        var sb = "";
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (i < k)
+                sb = s[i] + sb;
+            else
+                sb += s[i];
+        }
+        return sb;
+    }
     static void Main(string[] args)
     {
-        Console.WriteLine();
+        Console.WriteLine(new Leetcode().ReversePrefix("abcd", 2));
     }
 }
