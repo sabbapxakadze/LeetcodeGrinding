@@ -11180,8 +11180,26 @@ public class Leetcode
         }
         return arr.Max();
     }
+    public int LargestRectangleArea(int[] heights)
+    {
+        int max = 0;
+        var stack = new Stack<int>();
+        for (int i = 0; i <= heights.Length; i++)
+        {
+            while (stack.Count > 0 && (i == heights.Length 
+                || heights[stack.Peek()] >= heights[i]))
+            {
+                int h = heights[stack.Pop()];
+                int w = stack.Count == 0
+                    ? i : i - stack.Peek() - 1;
+                max = Math.Max(max, h * w);
+            }
+            stack.Push(i);
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
-        Console.WriteLine(new Leetcode().ReversePrefix("abcd", 2));
+        Console.WriteLine();
     }
 }
