@@ -11198,6 +11198,33 @@ public class Leetcode
         }
         return max;
     }
+    public int[] MaxSlidingWindow(int[] nums, int k)
+    {
+        if (nums == null)
+            return Array.Empty<int>();
+        var res = new int[nums.Length - k + 1];
+        var deq = new LinkedList<int>();
+        int l = 0, r = 0;
+        while (r < nums.Length)
+        {
+            while (deq.Count != 0 && nums[deq.Last.Value] < nums[r])
+                deq.RemoveLast();
+            deq.AddLast(r);
+
+            if (l > deq.First.Value)
+            {
+                deq.RemoveFirst();
+            }
+
+            if ((r + 1) >= k)
+            {
+                res[l] = nums[deq.First.Value];
+                l++;
+            }
+            r++;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
