@@ -11225,6 +11225,49 @@ public class Leetcode
         }
         return res;
     }
+    public class LRUCache
+    {
+        LinkedList<(int key, int value)> list;
+        private int size;
+        Dictionary<int, LinkedListNode<(int key, int value)>> map;
+        public LRUCache(int capacity)
+        {
+            size = capacity;
+            list = new LinkedList<(int key, int value)>();
+            map = new Dictionary<int, LinkedListNode<(int key, int value)>>();
+        }
+        public int Get(int key)
+        {
+            if (!map.ContainsKey(key))
+                return -1;
+            var node = map[key];
+            list.Remove(node);
+            list.AddLast(node);
+            return node.Value.value;
+        }
+        public void Put(int key, int value)
+        {
+            if (map.ContainsKey(key))
+            {
+                var node = map[key];
+                list.Remove(node);
+                node.Value = (key, value);
+                list.AddLast(node);
+            }
+            else
+            {
+                if (list.Count == size)
+                {
+                    var first = list.First.Value;
+                    list.Remove(first);
+                    map.Remove(first.key);
+                }
+                var newNode = new LinkedListNode<(int key, int value)>((key, value));
+                map[key] = newNode;
+                list.AddLast(newNode);
+            }
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
