@@ -11088,7 +11088,7 @@ public class Leetcode
         dummy.next = head;
 
         ListNode prevGr = dummy;
-        
+
         while (true)
         {
             ListNode end = prevGr;
@@ -11186,7 +11186,7 @@ public class Leetcode
         var stack = new Stack<int>();
         for (int i = 0; i <= heights.Length; i++)
         {
-            while (stack.Count > 0 && (i == heights.Length 
+            while (stack.Count > 0 && (i == heights.Length
                 || heights[stack.Peek()] >= heights[i]))
             {
                 int h = heights[stack.Pop()];
@@ -11267,6 +11267,35 @@ public class Leetcode
                 list.AddLast(newNode);
             }
         }
+    }
+    public IList<IList<int>> FindSubsequences(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<IList<int>>();
+        var lists = new List<IList<int>>();
+        void Backtrack(int index, List<int> curr)
+        {
+            var used = new HashSet<int>();
+            for (int i = index; i < nums.Length; i++)
+            {
+                if (used.Contains(nums[i]))
+                    continue;
+
+                used.Add(nums[i]);
+                if (curr.Count == 0 || nums[i] >= curr[curr.Count - 1])
+                {
+                    curr.Add(nums[i]);
+
+                    if (curr.Count >= 2)
+                        lists.Add(new List<int>(curr));
+
+                    Backtrack(i + 1, curr);
+                    curr.RemoveAt(curr.Count - 1);
+                }
+            }
+        }
+        Backtrack(0, new List<int>());
+        return lists;
     }
     static void Main(string[] args)
     {
