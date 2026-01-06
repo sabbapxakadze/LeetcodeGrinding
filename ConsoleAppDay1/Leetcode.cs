@@ -11297,6 +11297,43 @@ public class Leetcode
         Backtrack(0, new List<int>());
         return lists;
     }
+    public int[] LoudAndRich(int[][] richer, int[] quiet)
+    {
+        if (richer == null || quiet == null)
+            return Array.Empty<int>();
+        int n = quiet.Length;
+        var adjList = new Dictionary<int, List<int>>();
+        for (int i = 0; i < n; i++)
+        {
+            adjList[i] = new List<int>();
+        }
+        foreach (var x in richer)
+        {
+            int a = x[0], b = x[1];
+            adjList[b].Add(a);
+        }
+        var memo = new Dictionary<int, int>(); // for index -> quietest
+        int Dfs(int index)
+        {
+            if (memo.ContainsKey(index))
+                return memo[index];
+            int quietPerson = index;
+            foreach (var person in adjList[index])
+            {
+                int candidate = Dfs(person);
+                if (quiet[candidate] < quiet[quietPerson])
+                    quietPerson = candidate;
+            }
+            memo[index] = quietPerson;
+            return memo[index];
+        }
+        var res = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            res[i] = Dfs(i);
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
