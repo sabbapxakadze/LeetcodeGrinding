@@ -11334,6 +11334,47 @@ public class Leetcode
         }
         return res;
     }
+    public IList<string> WatchedVideosByFriends(IList<IList<string>> watchedVideos, 
+        int[][] friends, int id, int level)
+    {
+        if (watchedVideos == null || friends == null)
+            return new List<string>();
+        var map = new Dictionary<string, int>();
+        var set = new HashSet<int>();
+        var queue = new Queue<int>(); // id-s
+        queue.Enqueue(id);
+        set.Add(id);
+        while (queue.Count != 0 && level > 0)
+        {
+            int size = queue.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var index = queue.Dequeue();
+                
+                foreach (var f in friends[index])
+                {
+                    if (set.Add(index))
+                        queue.Enqueue(f);
+                }
+            }
+            level--;
+        }
+        while (queue.Count != 0)
+        {
+            var index = queue.Dequeue();
+            foreach (var watched in watchedVideos[index])
+            {
+                if (!map.ContainsKey(watched))
+                    map[watched] = 0;
+                map[watched]++;
+            }
+        }
+        return map
+            .OrderBy(x => x.Value)
+            .ThenBy(x => x.Key)
+            .Select(x => x.Key)
+            .ToList();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
