@@ -11375,6 +11375,31 @@ public class Leetcode
             .Select(x => x.Key)
             .ToList();
     }
+    public int MinSetSize(int[] arr)
+    {
+        if (arr == null || arr.Length == 0)
+            return 0;
+        int count = arr.Length;
+        var map = new Dictionary<int, int>();
+        foreach (var a in arr)
+        {
+            if (!map.ContainsKey(a))
+                map[a] = 0;
+            map[a]++;
+        }
+        var pq = new PriorityQueue<int, int>(Comparer<int>
+            .Create((a, b) => b.CompareTo(a)));
+        foreach (var (k, v) in map)
+            pq.Enqueue(k, v);
+        int res = 0;
+        while (count > arr.Length / 2)
+        {
+            var item = pq.Dequeue();
+            count -= map[item];
+            res++;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
