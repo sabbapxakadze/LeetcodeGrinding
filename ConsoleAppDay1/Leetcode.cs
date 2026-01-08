@@ -11400,6 +11400,26 @@ public class Leetcode
         }
         return res;
     }
+    public int NumberOfArithmeticSlices(int[] nums)
+    {
+        if (nums == null || nums.Length <= 2)
+            return 0;
+        int count = 0;
+        int curr = 0;
+        for (int i = 2; i < nums.Length; i++)
+        {
+            if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2])
+            {
+                curr++;
+                count += curr;
+            }
+            else
+            {
+                curr = 0;
+            }
+        }
+        return count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
