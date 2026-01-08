@@ -11420,6 +11420,23 @@ public class Leetcode
         }
         return count;
     }
+    public int MinSteps(int n)
+    {
+        if (n <= 1)
+            return 0;
+        int steps = 0;
+        for (int d = 2; d * d <= n; d++)
+        {
+            while (n % d == 0)
+            {
+                steps += d;
+                n /= d;
+            }
+        }
+        if (n > 1)
+            steps += n;
+        return steps;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
