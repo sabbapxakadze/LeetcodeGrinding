@@ -11437,6 +11437,43 @@ public class Leetcode
             steps += n;
         return steps;
     }
+    public void RecoverTree(TreeNode root)
+    {
+        if (root == null)
+            return;
+        var treeRefs = new List<TreeNode>();
+        var inorder = new List<int>();
+        void Inorder(TreeNode node)
+        {
+            if (node == null)
+                return;
+            Inorder(node.left);
+            treeRefs.Add(node);
+            inorder.Add(node.val);
+            Inorder(node.right);
+        }
+        Inorder(root);
+        
+        int first = -1, second = -1;
+        for (int i = 1; i < inorder.Count; i++)
+        {
+            if (inorder[i] < inorder[i - 1])
+            {
+                if (first == -1)
+                {
+                    first = i - 1;
+                    second = i;
+                }
+                else
+                {
+                    second = i;
+                }
+            }
+        }
+        int temp = treeRefs[first].val;
+        treeRefs[first].val = treeRefs[second].val;
+        treeRefs[second].val = temp;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
