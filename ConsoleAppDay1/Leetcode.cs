@@ -11510,6 +11510,40 @@ public class Leetcode
         Dfs(root);
         return root;
     }
+    public int[] FindDiagonalOrder(IList<IList<int>> nums)
+    {
+        if (nums == null)
+            return Array.Empty<int>();
+
+        var map = new Dictionary<int, List<int>>();
+        int count = 0;
+        int maxKey = 0;
+        for (int r = 0; r < nums.Count; r++)
+        {
+            for (int c = 0; c < nums[r].Count; c++)
+            {
+                int key = r + c;
+                if (!map.TryGetValue(key, out var list))
+                {
+                    list = new List<int>();
+                    map[key] = list;
+                }
+
+                list.Add(nums[r][c]);
+                maxKey = Math.Max(maxKey, key);
+                count++;
+            }
+        }
+        var result = new int[count];
+        int idx = 0;
+        for (int k = 0; k <= maxKey; k++)
+        {
+            var diag = map[k];
+            for (int i = diag.Count - 1; i >= 0; i--)
+                result[idx++] = diag[i];
+        }
+        return result;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
