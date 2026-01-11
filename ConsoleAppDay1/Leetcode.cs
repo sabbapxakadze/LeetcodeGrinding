@@ -11544,6 +11544,26 @@ public class Leetcode
         }
         return result;
     }
+    public ListNode InsertionSortList(ListNode head)
+    {
+        if (head == null)
+            return null;
+        ListNode dummy = new ListNode(0);
+        ListNode curr = head;
+        while (curr != null)
+        {
+            ListNode next = curr.next;
+            ListNode prev = dummy;
+            while (prev.next != null && prev.next.val < curr.val)
+            {
+                prev = prev.next;
+            }
+            curr.next = prev.next;
+            prev.next = curr;
+            curr = next;
+        }
+        return dummy.next;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
