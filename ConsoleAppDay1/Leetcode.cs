@@ -11564,6 +11564,31 @@ public class Leetcode
         }
         return dummy.next;
     }
+    public IList<IList<int>> LevelOrderBottom(TreeNode root)
+    {
+        if (root == null)
+            return new List<IList<int>>();
+        var lists = new List<IList<int>>();
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            var list = new List<int>();
+            for (int i = 0; i < size; i++)
+            {
+                var node = q.Dequeue();
+                if (node.left != null)
+                    q.Enqueue(node.left);
+                if (node.right != null)
+                    q.Enqueue(node.right);
+                list.Add(node.val);
+            }
+            lists.Add(list);
+        }
+        lists.Reverse();
+        return lists;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
