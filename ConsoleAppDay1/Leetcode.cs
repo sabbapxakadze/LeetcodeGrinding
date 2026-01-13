@@ -11589,6 +11589,40 @@ public class Leetcode
         lists.Reverse();
         return lists;
     }
+    public IList<IList<int>> AllPathsSourceTarget(int[][] graph)
+    {
+        if (graph == null || graph.Length == 0)
+            return new List<IList<int>>();
+        int n = graph.Length;
+        var adjList = new Dictionary<int, List<int>>();
+        for (int i = 0; i < n; i++)
+        {
+            if (!adjList.ContainsKey(i))
+                adjList[i] = new List<int>();
+            foreach (var item in graph[i])
+                adjList[i].Add(item);
+        }
+        var lists = new List<IList<int>>();
+        var q = new Queue<(int, List<int>)>();
+        q.Enqueue((0, new List<int>()));
+        while (q.Count != 0)
+        {
+            var size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var (deq, list) = q.Dequeue();
+                list.Add(deq);
+                if (deq == n - 1)
+                {
+                    lists.Add(new List<int>(list));
+                    continue;
+                }
+                foreach (var item in adjList[deq])
+                    q.Enqueue((item, new List<int>(list)));
+            }
+        }
+        return lists;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
