@@ -11623,6 +11623,32 @@ public class Leetcode
         }
         return lists;
     }
+    public TreeNode SortedListToBST(ListNode head)
+    {
+        if (head == null)
+            return null;
+        TreeNode Recursion(ListNode node)
+        {
+            if (node == null)
+                return null;
+            ListNode slow = node;
+            ListNode fast = node;
+            ListNode prev = null;
+            while (fast != null && fast.next != null)
+            {
+                prev = slow;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            TreeNode root = new TreeNode(slow.val);
+            if (prev != null)
+                prev.next = null;
+            root.left = (node == slow) ? null : Recursion(node);
+            root.right = Recursion(slow.next);
+            return root;
+        }
+        return Recursion(head);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
