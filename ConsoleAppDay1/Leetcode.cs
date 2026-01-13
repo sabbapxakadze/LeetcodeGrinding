@@ -11649,6 +11649,48 @@ public class Leetcode
         }
         return Recursion(head);
     }
+    public class CodecBST
+    {
+        public string serialize(TreeNode root)
+        {
+            if (root == null)
+                return null;
+            var sb = new StringBuilder();
+            void Travel(TreeNode node)
+            {
+                if (node == null)
+                    return;
+                sb.Append($"{node.val},");
+                Travel(node.left);
+                Travel(node.right);
+            }
+            Travel(root);
+            if (sb.Length > 0)
+                sb.Length--;
+            return sb.ToString();
+        }
+        public TreeNode deserialize(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+                return null;
+            var values = data.Split(',').Select(int.Parse).ToArray();
+            int index = 0;
+            TreeNode Build(int min, int max)
+            {
+                if (index >= values.Length)
+                    return null;
+                int val = values[index];
+                if (val < min || val > max)
+                    return null;
+                index++;
+                var node = new TreeNode(val);
+                node.left = Build(min, val);
+                node.right = Build(val, max);
+                return node;
+            }
+            return Build(int.MinValue, int.MaxValue);
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
