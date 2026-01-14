@@ -11691,6 +11691,42 @@ public class Leetcode
             return Build(int.MinValue, int.MaxValue);
         }
     }
+    public IList<string> FindAllConcatenatedWordsInADict(string[] words)
+    {
+        if (words == null || words.Length == 0)
+            return new List<string>();
+        var list = new List<string>();
+        var set = new HashSet<string>();
+        Array.Sort(words, (a, b) => a.Length.CompareTo(b.Length));
+        bool Dfs(string word, Dictionary<string, bool> memo)
+        {
+            if (memo.ContainsKey(word))
+                return memo[word];
+            for (int i = 1; i < word.Length; i++)
+            {
+                string prefix = word.Substring(0, i);
+                string suffix = word.Substring(i);
+                if (set.Contains(prefix)
+                    && (set.Contains(suffix) || Dfs(suffix, memo)))
+                {
+                    memo[word] = true;
+                    return true;
+                }
+            }
+            memo[word] = false;
+            return false;
+        }
+        foreach (var word in words)
+        {
+            if (string.IsNullOrEmpty(word) || word.Length == 0)
+                continue;
+            var memo = new Dictionary<string, bool>();
+            if (Dfs(word, memo))
+                list.Add(word);
+            set.Add(word);
+        }
+        return list;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
