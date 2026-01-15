@@ -11727,6 +11727,30 @@ public class Leetcode
         }
         return list;
     }
+    public IList<int> LexicalOrder(int n)
+    {
+        if (n < 0)
+            return new List<int>();
+        var list = new List<int>();
+        int curr = 1;
+        for (int i = 1; i <= n; i++)
+        {
+            list.Add(curr);
+            if (10 * curr <= n)
+            {
+                curr *= 10;
+            }
+            else
+            {
+                while (curr % 10 == 9 || curr + 1 > n)
+                {
+                    curr /= 10;
+                }
+                curr++;
+            }
+        }
+        return list;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
