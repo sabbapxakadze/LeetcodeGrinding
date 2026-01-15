@@ -11751,6 +11751,27 @@ public class Leetcode
         }
         return list;
     }
+    public IList<int> LargestValues(TreeNode root)
+    {
+        if (root == null)
+            return new List<int>();
+        var map = new Dictionary<int, int>();
+        void Dfs(TreeNode node, int row = 0)
+        {
+            if (node == null)
+                return;
+            if (!map.ContainsKey(row))
+                map[row] = node.val;
+            map[row] = Math.Max(map[row], node.val);
+            Dfs(node.left, row + 1);
+            Dfs(node.right, row + 1);
+        }
+        Dfs(root);
+        return map
+                .OrderBy(x => x.Key)
+                .Select(x => x.Value)
+                .ToList();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
