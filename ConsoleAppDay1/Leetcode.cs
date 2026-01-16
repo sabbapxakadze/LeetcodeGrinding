@@ -11794,6 +11794,30 @@ public class Leetcode
         }
         return res;
     }
+    public bool IsCompleteTree(TreeNode root)
+    {
+        if (root == null)
+            return true;
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        bool seen = false;
+        while (q.Count > 0)
+        {
+            var node = q.Dequeue();
+            if (node == null)
+            {
+                seen = true;
+            }
+            else
+            {
+                if (seen)
+                    return false;
+                q.Enqueue(node.left);
+                q.Enqueue(node.right);
+            }
+        }
+        return true;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
