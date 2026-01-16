@@ -11772,6 +11772,28 @@ public class Leetcode
                 .Select(x => x.Value)
                 .ToList();
     }
+    public int FindBottomLeftValue(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        int res = 0;
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var node = q.Dequeue();
+                res = i == 0 ? node.val : res;
+                if (node.left != null)
+                    q.Enqueue(node.left);
+                if (node.right != null)
+                    q.Enqueue(node.right);
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
