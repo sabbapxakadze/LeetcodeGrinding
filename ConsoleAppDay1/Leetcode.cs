@@ -11855,6 +11855,24 @@ public class Leetcode
         }
         return new int[] { x, y };
     }
+    public int MinOperations(int[] nums, int[] target)
+    {
+        if (nums == null || target == null)
+            return 0;
+        int oper = 0;
+        var set = new HashSet<int>();
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (nums[i] == target[i])
+                continue;
+            if (!set.Contains(nums[i]))
+            {
+                oper++;
+                set.Add(nums[i]);
+            }
+        }
+        return oper;
+    }©leetcode
     static void Main(string[] args)
     {
         Console.WriteLine();
