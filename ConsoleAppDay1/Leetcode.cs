@@ -11818,6 +11818,43 @@ public class Leetcode
         }
         return true;
     }
+    // Biweekly Contest
+    public int[] BestTower(int[][] towers, int[] center, int radius)
+    {
+        if (towers == null || towers.Length == 0)
+            return new int[] { -1, -1 };
+        int bestQuality = -1;
+        int x = -1, y = -1;
+        int Manh(int x1, int y1, int x2, int y2)
+        {
+            return Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
+        }
+        foreach (var tower in towers)
+        {
+            int xi = tower[0];
+            int yi = tower[1];
+            int qi = tower[2];
+            var manDistance = Manh(center[0], center[1], xi, yi);
+            if (manDistance <= radius)
+            {
+                if (bestQuality < qi)
+                {
+                    x = xi;
+                    y = yi;
+                    bestQuality = qi;
+                }
+                else if (bestQuality == qi)
+                {
+                    if (x == -1 || xi < x || (xi == x && yi < y))
+                    {
+                        x = xi;
+                        y = yi;
+                    }
+                }
+            }
+        }
+        return new int[] { x, y };
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
