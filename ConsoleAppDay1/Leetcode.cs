@@ -11897,6 +11897,93 @@ public class Leetcode
         }
         return res;
     }
+    public int ContainVirus(int[][] isInfected)
+    {
+        if (isInfected == null || isInfected.Length == 0)
+            return 0;
+
+        int r = isInfected.Length;
+        int c = isInfected[0].Length;
+        int[][] dirs = new int[][]
+        {
+            new int[]{1,0},
+            new int[]{-1,0},
+            new int[]{0,1},
+            new int[]{0,-1}
+        };
+        int totalWalls = 0;
+        while (true)
+        {
+            bool[,] visited = new bool[r, c];
+            var regions = new List<List<(int, int)>>();
+            var threats = new List<HashSet<(int, int)>>();
+            var walls = new List<int>();
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    if (isInfected[i][j] == 1 && !visited[i, j])
+                    {
+                        var queue = new Queue<(int, int)>();
+                        var infected = new List<(int, int)>();
+                        var threatened = new HashSet<(int, int)>();
+                        int wallCount = 0;
+                        visited[i, j] = true;
+                        queue.Enqueue((i, j));
+                        while (queue.Count > 0)
+                        {
+                            var (x, y) = queue.Dequeue();
+                            infected.Add((x, y));
+                            foreach (var d in dirs)
+                            {
+                                int nx = x + d[0];
+                                int ny = y + d[1];
+                                if (nx < 0 || ny < 0 || nx >= r || ny >= c)
+                                    continue;
+                                if (isInfected[nx][ny] == 0)
+                                {
+                                    wallCount++;
+                                    threatened.Add((nx, ny));
+                                }
+                                else if (isInfected[nx][ny] == 1 && !visited[nx, ny])
+                                {
+                                    visited[nx, ny] = true;
+                                    queue.Enqueue((nx, ny));
+                                }
+                            }
+                        }
+                        regions.Add(infected);
+                        threats.Add(threatened);
+                        walls.Add(wallCount);
+                    }
+                }
+            }
+            if (regions.Count == 0)
+                break;
+            int idx = -1;
+            int maxThreat = 0;
+            for (int i = 0; i < threats.Count; i++)
+            {
+                if (threats[i].Count > maxThreat)
+                {
+                    maxThreat = threats[i].Count;
+                    idx = i;
+                }
+            }
+            if (maxThreat == 0)
+                break;
+            totalWalls += walls[idx];
+            foreach (var (x, y) in regions[idx])
+                isInfected[x][y] = -1;
+            for (int i = 0; i < regions.Count; i++)
+            {
+                if (i == idx) continue;
+                foreach (var (x, y) in threats[i])
+                    isInfected[x][y] = 1;
+            }
+        }
+        return totalWalls;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
