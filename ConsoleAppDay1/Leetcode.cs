@@ -11984,6 +11984,59 @@ public class Leetcode
         }
         return totalWalls;
     }
+    public IList<int> DistanceK(TreeNode root, TreeNode target, int k)
+    {
+        if (root == null)
+            return new List<int>();
+        var map = new Dictionary<TreeNode, TreeNode>();
+        map[root] = null;
+        void Travel(TreeNode node)
+        {
+            if (node.left != null)
+            {
+                map[node.left] = node;
+                Travel(node.left);
+            }
+            if (node.right != null)
+            {
+                map[node.right] = node;
+                Travel(node.right);
+            }   
+        }
+        Travel(root);
+        var list = new List<int>();
+        int n = k;
+        TreeNode temp = target;
+        var set = new HashSet<TreeNode>();
+        void GetChildren(TreeNode node, int depth)
+        {
+            var q = new Queue<TreeNode>();
+            q.Enqueue(node);
+            set.Add(node);
+            while (q.Count != 0)
+            {
+                int size = q.Count;
+                if (depth == 0)
+                {
+                    while (q.Count > 0)
+                        list.Add(q.Dequeue().val);
+                    return;
+                }
+                for (int i = 0; i < size; i++)
+                {
+                    var deq = q.Dequeue();
+                    foreach (var next in new[] { deq.left, deq.right, map[deq] })
+                    {
+                        if (next != null && set.Add(next))
+                            q.Enqueue(next);
+                    }
+                }
+                depth--;
+            }
+        }
+        GetChildren(target, k);
+        return list;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
