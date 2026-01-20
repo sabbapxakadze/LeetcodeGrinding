@@ -12083,6 +12083,53 @@ public class Leetcode
         }
         return curr.First();
     }
+    //SAME code works :Dddd
+    public TreeNode LcaDeepestLeaves(TreeNode root)
+    {
+        if (root == null)
+            return root;
+        var mapH = new Dictionary<TreeNode, int>();
+        void Depth(TreeNode node, int level = 0)
+        {
+            if (node == null)
+                return;
+            mapH[node] = level;
+            Depth(node.left, level + 1);
+            Depth(node.right, level + 1);
+        }
+        Depth(root);
+        var mapP = new Dictionary<TreeNode, TreeNode>();
+        mapP[root] = null;
+        void Parent(TreeNode node)
+        {
+            if (node == null)
+                return;
+            if (node.left != null)
+            {
+                mapP[node.left] = node;
+                Parent(node.left);
+            }
+            if (node.right != null)
+            {
+                mapP[node.right] = node;
+                Parent(node.right);
+            }
+        }
+        Parent(root);
+        int deepest = mapH.Max(x => x.Value);
+        var nodes = mapH.Where(x => x.Value == deepest);
+        var curr = nodes.Select(x => x.Key).ToHashSet<TreeNode>();
+        while (curr.Count > 1)
+        {
+            var next = new HashSet<TreeNode>();
+            foreach (var node in curr)
+            {
+                next.Add(mapP[node]);
+            }
+            curr = next;
+        }
+        return curr.First();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
