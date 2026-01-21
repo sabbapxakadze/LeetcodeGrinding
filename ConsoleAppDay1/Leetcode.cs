@@ -12232,6 +12232,19 @@ public class Leetcode
         }
         return ans;
     }
+    public int FindKthLargestRevision(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var pq = new PriorityQueue<int, int>();
+        foreach (var num in nums)
+            pq.Enqueue(num, -num);
+        for (int i = 0; i < k - 1; i++)
+        {
+            pq.Dequeue();
+        }
+        return pq.Dequeue();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
