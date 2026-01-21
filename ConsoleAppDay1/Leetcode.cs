@@ -12190,20 +12190,47 @@ public class Leetcode
         foreach (var num in nums)
         {
             int temp = 1;
+            set.Remove(num);
             int a = num - 1, b = num + 1;
             while (set.Contains(a))
             {
                 temp++;
+                set.Remove(a);
                 a--;
             }
             while (set.Contains(b))
             {
                 temp++;
+                set.Remove(b);
                 b++;
             }
             max = Math.Max(max, temp);
         }
         return max;
+    }
+    public int SubarraySumRevisionII(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var map = new Dictionary<int, int>();
+        map[0] = 1;
+        var pref = new int[nums.Length];
+        pref[0] = nums[0];
+        for (int i = 1; i < nums.Length; i++)
+        {
+            pref[i] = pref[i - 1] + nums[i];
+        }
+        int ans = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int need = pref[i] - k;
+            if (map.ContainsKey(need))
+                ans += map[need];
+            if (!map.ContainsKey(pref[i]))
+                map[pref[i]] = 0;
+            map[pref[i]]++;
+        }
+        return ans;
     }
     static void Main(string[] args)
     {
