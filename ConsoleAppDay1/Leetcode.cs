@@ -12161,6 +12161,25 @@ public class Leetcode
             res.Add(tree2[j++]);
         return res;
     }
+    public IList<IList<string>> GroupAnagramsRevision(string[] strs)
+    {
+        if (strs == null || strs.Length == 0)
+            return new List<IList<string>>();
+        var lists = new List<IList<string>>();
+        var map = new Dictionary<string, List<string>>();
+        foreach (var str in strs)
+        {
+            var curr = str.ToCharArray();
+            Array.Sort(curr);
+            string temp = new string(curr);
+            if (!map.ContainsKey(temp))
+                map[temp] = new List<string>();
+            map[temp].Add(str);
+        }
+        foreach (var item in map)
+            lists.Add(item.Value);
+        return lists;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
