@@ -12161,6 +12161,7 @@ public class Leetcode
             res.Add(tree2[j++]);
         return res;
     }
+    // Final Exam Revision
     public IList<IList<string>> GroupAnagramsRevision(string[] strs)
     {
         if (strs == null || strs.Length == 0)
@@ -12179,6 +12180,30 @@ public class Leetcode
         foreach (var item in map)
             lists.Add(item.Value);
         return lists;
+    }
+    public int LongestConsecutiveRevision(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var set = new HashSet<int>(nums);
+        int max = 1;
+        foreach (var num in nums)
+        {
+            int temp = 1;
+            int a = num - 1, b = num + 1;
+            while (set.Contains(a))
+            {
+                temp++;
+                a--;
+            }
+            while (set.Contains(b))
+            {
+                temp++;
+                b++;
+            }
+            max = Math.Max(max, temp);
+        }
+        return max;
     }
     static void Main(string[] args)
     {
