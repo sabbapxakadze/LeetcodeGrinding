@@ -12269,6 +12269,106 @@ public class Leetcode
         }
         return dummy.next;
     }
+    public bool CanJumpRevision(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return false;
+        var dp = new int[nums.Length];
+        dp[0] = 1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (dp[i] == 0)
+                continue;
+            for (int j = Math.Min(nums.Length - 1, i + nums[i]); j > i; j--)
+                dp[j] = 1;
+        }
+        return dp[dp.Length - 1] == 1;
+    }
+    public ListNode RemoveNthFromEndRevision(ListNode head, int n)
+    {
+        if (head == null)
+            return head;
+        int count = 0;
+        ListNode counter = head;
+        while (counter != null)
+        {
+            count++;
+            counter = counter.next;
+        }
+        int fromStart = count - n;
+        if (fromStart < 0)
+            return head;
+        else if (fromStart == 0)
+            return head.next;
+        ListNode temp = head;
+        for (int i = 0; i < fromStart - 1; i++)
+        {
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
+        return head;
+    }
+    public ListNode ReverseListRevision(ListNode head)
+    {
+        if (head == null)
+            return null;
+        ListNode curr = head;
+        ListNode prev = null;
+        while (curr != null)
+        {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    public int CoinChangeRevision(int[] coins, int amount)
+    {
+        if (coins == null || coins.Length == 0)
+            return 0;
+        var memo = new Dictionary<int, int>();
+        int Recursion(int amnt)
+        {
+            if (amnt < 0)
+                return int.MaxValue;
+            if (amnt == 0)
+                return 0;
+            if (memo.ContainsKey(amnt))
+                return memo[amnt];
+            int min = int.MaxValue;
+            foreach (int coin in coins)
+            {
+                var res = Recursion(amnt - coin);
+                if (res != int.MaxValue)
+                    min = Math.Min(min, res + 1);
+            }
+            memo[amnt] = min;
+            return min;
+        }
+        int res = Recursion(amount);
+        return res != int.MaxValue ? res : -1;
+    }
+    public int LongestCommonSubsequenceRevisionI(string text1, string text2)
+    {
+        if (string.IsNullOrEmpty(text1) || string.IsNullOrEmpty(text2))
+            return 0;
+        var dp = new int?[text1.Length + 1, text2.Length + 1];
+        int Recursion(int i, int j)
+        {
+            if (i >= text1.Length || j >= text2.Length)
+                return 0;
+            if (dp[i, j].HasValue)
+                return dp[i, j].Value;
+            if (text1[i] == text2[j])
+                dp[i, j] = 1 + Recursion(i + 1, j + 1);
+            else
+                dp[i, j] = Math.Max(Recursion(i + 1, j), Recursion(i, j + 1));
+            return dp[i, j].Value;
+        }
+        Recursion(0, 0);
+        return dp[0, 0].Value;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
