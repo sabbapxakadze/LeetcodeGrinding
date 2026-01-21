@@ -12130,6 +12130,37 @@ public class Leetcode
         }
         return curr.First();
     }
+    public IList<int> GetAllElements(TreeNode root1, TreeNode root2)
+    {
+        if (root1 == null && root2 == null)
+            return new List<int>();
+        void Inorder(TreeNode node, List<int> curr)
+        {
+            if (node == null)
+                return;
+            Inorder(node.left, curr);
+            curr.Add(node.val);
+            Inorder(node.right, curr);
+        }
+        var tree1 = new List<int>();
+        Inorder(root1, tree1);
+        var tree2 = new List<int>();
+        Inorder(root2, tree2);
+        int i = 0, j = 0;
+        var res = new List<int>();
+        while (i < tree1.Count && j < tree2.Count)
+        {
+            if (tree1[i] < tree2[j])
+                res.Add(tree1[i++]);
+            else
+                res.Add(tree2[j++]);
+        }
+        while (i < tree1.Count)
+            res.Add(tree1[i++]);
+        while (j < tree2.Count)
+            res.Add(tree2[j++]);
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
