@@ -12369,6 +12369,39 @@ public class Leetcode
         Recursion(0, 0);
         return dp[0, 0].Value;
     }
+    public int[] DailyTemperaturesRevision(int[] temperatures)
+    {
+        if (temperatures == null || temperatures.Length == 0)
+            return Array.Empty<int>();
+        var res = new int[temperatures.Length];
+        var stack = new Stack<int>();
+        for (int i = 0; i < temperatures.Length; i++)
+        {
+            while (stack.Count > 0 && temperatures[i] > temperatures[stack.Peek()])
+            {
+                int prev = stack.Pop();
+                res[prev] = i - prev;
+            }
+            stack.Push(i);
+        }
+        return res;
+    }
+    public int MaxAreaRevision(int[] height)
+    {
+        if (height == null || height.Length == 0)
+            return 0;
+        int i = 0, j = height.Length - 1;
+        int max = 0;
+        while (i < j)
+        {
+            int l = height[i], r = height[j];
+            if (l < r)
+                max = Math.Max(max, l * (j - i++ + 1));
+            else
+                max = Math.Max(max, r * (j-- - i + 1));
+        }
+        return max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
