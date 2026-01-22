@@ -12402,6 +12402,35 @@ public class Leetcode
         }
         return max;
     }
+    public IList<IList<int>> ZigzagLevelOrder(TreeNode root)
+    {
+        if (root == null)
+            return new List<IList<int>>();
+        var lists = new List<IList<int>>();
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        var goLeft = true;
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            var list = new List<int>();
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (goLeft)
+                    list.Add(deq.val);
+                else
+                    list.Insert(0, deq.val);
+                if (deq.left != null)
+                    q.Enqueue(deq.left);
+                if (deq.right != null)
+                    q.Enqueue(deq.right);
+            }
+            lists.Add(list);
+            goLeft = !goLeft;
+        }
+        return lists;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
