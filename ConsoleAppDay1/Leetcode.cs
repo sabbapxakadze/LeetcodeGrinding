@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -12580,6 +12581,42 @@ public class Leetcode
             return dp[index];
         }
         return Dfs(0);
+    }
+    public bool CanMeasureWater(int x, int y, int target)
+    {
+        if (x + y < target)
+            return false;
+        if (target == 0)
+            return true;
+
+        var q = new Queue<(int, int)>();
+        var visited = new HashSet<(int, int)>();
+        q.Enqueue((0, 0));
+        visited.Add((0, 0));
+        while (q.Count > 0)
+        {
+            var (a, b) = q.Dequeue();
+            if (a == target || b == target || a + b == target)
+                return true;
+            var nextStates = new List<(int, int)>
+            {
+                (x, b),
+                (a, y),
+                (0, b),
+                (a, 0),
+                (a - Math.Min(a, y - b), b + Math.Min(a, y - b)),
+                (a + Math.Min(b, x - a), b - Math.Min(b, x - a))
+            };
+            foreach (var state in nextStates)
+            {
+                if (!visited.Contains(state))
+                {
+                    visited.Add(state);
+                    q.Enqueue(state);
+                }
+            }
+        }
+        return false;
     }
     static void Main(string[] args)
     {      
