@@ -1965,35 +1965,35 @@ public class Leetcode
         else
             return set.Count;
     }
-    public IList<int> Preorder(Node root)
-    {
-        if (root == null)
-            return new List<int>();
+    //public IList<int> Preorder(Node root)
+    //{
+    //    if (root == null)
+    //        return new List<int>();
 
-        List<int> l = new List<int>();
-        l.Add(root.val);
+    //    List<int> l = new List<int>();
+    //    l.Add(root.val);
 
-        foreach (var node in root.children)
-        {
-            l.AddRange(Preorder(node));
-        }
-        return l;
-    }
-    public IList<int> Postorder(Node root)
-    {
-        if (root == null)
-            return new List<int>();
+    //    foreach (var node in root.children)
+    //    {
+    //        l.AddRange(Preorder(node));
+    //    }
+    //    return l;
+    //}
+    //public IList<int> Postorder(Node root)
+    //{
+    //    if (root == null)
+    //        return new List<int>();
 
-        List<int> l = new List<int>();
-        ;
-        foreach (var node in root.children)
-        {
-            l.AddRange(Postorder(node));
-        }
-        l.Add(root.val);
+    //    List<int> l = new List<int>();
+    //    ;
+    //    foreach (var node in root.children)
+    //    {
+    //        l.AddRange(Postorder(node));
+    //    }
+    //    l.Add(root.val);
 
-        return l;
-    }
+    //    return l;
+    //}
     public int FindLHS(int[] nums)
     {
         if (nums == null || nums.Length == 0)
@@ -12431,8 +12431,158 @@ public class Leetcode
         }
         return lists;
     }
-    static void Main(string[] args)
+    public static int[] CountElementsByGreaterDistinct(int[] arr)
     {
+        if (arr == null || arr.Length == 0)
+            return Array.Empty<int>();
+        var set = new HashSet<int>(arr);
+        var map = new Dictionary<int, int>();
+        var pq = new PriorityQueue<int, int>();
+        foreach (var item in set)
+            pq.Enqueue(item, item);
+        while (pq.Count != 0)
+        {
+            int deq = pq.Dequeue();
+            if (!map.ContainsKey(deq))
+                map[deq] = pq.Count;
+        }
+        var res = new int[arr.Length];
+        foreach (var item in arr)
+        {
+            res[map[item]]++;
+        }
+        return res;
+    }
+    public int MinDistanceRevision(string word1, string word2)
+    {
+        if (string.IsNullOrEmpty(word1))
+            return word2.Length;
+        if (string.IsNullOrEmpty(word2))
+            return word1.Length;
+        var dp = new int[word1.Length + 1, word2.Length + 1];
+        for (int i = 0; i < word1.Length; i++)
+        {
+            dp[i, word2.Length] = word1.Length - i;
+        }
+        for (int i = 0; i < word2.Length; i++)
+        {
+            dp[word1.Length, i] = word2.Length - i;
+        }
+        for (int i = word1.Length - 1; i >= 0; i--)
+        {
+            for (int j = word2.Length - 1; j >= 0; j--)
+            {
+                if (word1[i] == word2[j])
+                    dp[i, j] = dp[i + 1, j + 1];
+                else
+                    dp[i, j] = 1 + Math.Min(dp[i + 1, j + 1], Math.Min(dp[i + 1, j], dp[i, j + 1]));
+            }
+        }
+        return dp[0, 0];
+    }
+    public IList<IList<int>> PascalTriangle(int numRows)
+    {
+        if (numRows <= 0)
+            return new List<IList<int>>();
+        var lists = new List<IList<int>>();
+        for (int i = 0; i < numRows; i++)
+        {
+            var arr = new int[i + 1];
+            arr[0] = 1;
+            arr[i] = 1;
+            for (int j = 1; j < i; j++)
+            {
+                arr[j] = lists[i - 1][j - 1] + lists[i - 1][j];
+            }
+            lists.Add(arr);
+        }
+        return lists;
+    }
+    public bool WordBreakRevision(string s, IList<string> wordDict)
+    {
+        if (string.IsNullOrEmpty(s))
+            return false;
+        var memo = new Dictionary<string, bool>();
+        bool Recursion(string curr)
+        {
+            if (string.IsNullOrEmpty(curr))
+                return true;
+            if (memo.ContainsKey(curr))
+                return memo[curr];
+            foreach (var word in wordDict)
+            {
+                if (curr.StartsWith(word))
+                {
+                    bool r = Recursion(curr.Substring(word.Length));
+                    if (r)
+                    {
+                        memo[curr] = true;
+                        return memo[curr];
+                    } 
+                }
+            }
+            memo[curr] = false;
+            return memo[curr];
+        }
+        Recursion(s);
+        return memo[s];
+    }
+    public int MaxCircularSubarrayRevision(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int currMin = 0, currMax = 0;
+        int min = 0, max = 0;
+        int sum = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            currMin = Math.Min(nums[i], currMin + nums[i]);
+            currMax = Math.Max(nums[i], currMax + nums[i]);
+            min = Math.Min(min, currMin);
+            max = Math.Max(max, currMax);
+            sum += nums[i];
+        }
+        if (max < 0)
+            return max;
+        return Math.Max(max, sum - min);
+    }
+    public int MaxProductRevision(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int max = nums[0];
+        int currMin = 1, currMax = 1;
+        foreach (var item in nums)
+        {
+            int maxEndingHere = currMax * item;
+            int minEndingHere = currMin * item;
+
+            currMax = Math.Max(Math.Max(maxEndingHere, minEndingHere), item);
+            currMin = Math.Min(Math.Min(maxEndingHere, minEndingHere), item);
+
+            max = Math.Max(max, currMax);
+        }
+        return max;
+    }
+    public int RobRevision(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var dp = new int[nums.Length];
+        Array.Fill(dp, -1);
+        int Dfs(int index)
+        {
+            if (index >= nums.Length)
+                return 0;
+            if (dp[index] != -1)
+                return dp[index];
+            dp[index] = Math.Max(nums[index] + Dfs(index + 2), Dfs(index + 1));
+            return dp[index];
+        }
+        return Dfs(0);
+    }
+    static void Main(string[] args)
+    {      
         Console.WriteLine();
     }
 }
