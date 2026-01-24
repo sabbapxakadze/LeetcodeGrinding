@@ -11475,42 +11475,42 @@ public class Leetcode
         treeRefs[first].val = treeRefs[second].val;
         treeRefs[second].val = temp;
     }
-    public class Node
-    {
-        public int val;
-        public Node left;
-        public Node right;
-        public Node next;
-        public Node() { }
-        public Node(int _val)
-        {
-            val = _val;
-        }
-        public Node(int _val, Node _left, Node _right, Node _next)
-        {
-            val = _val;
-            left = _left;
-            right = _right;
-            next = _next;
-        }
-    }
-    public Node Connect(Node root)
-    {
-        if (root == null)
-            return null;
-        void Dfs(Node node)
-        {
-            if (node == null || node.left == null)
-                return;
-            node.left.next = node.right;
-            if (node.next != null)
-                node.right.next = node.next.left;
-            Dfs(node.left);
-            Dfs(node.right);
-        }
-        Dfs(root);
-        return root;
-    }
+    //public class Node
+    //{
+    //    public int val;
+    //    public Node left;
+    //    public Node right;
+    //    public Node next;
+    //    public Node() { }
+    //    public Node(int _val)
+    //    {
+    //        val = _val;
+    //    }
+    //    public Node(int _val, Node _left, Node _right, Node _next)
+    //    {
+    //        val = _val;
+    //        left = _left;
+    //        right = _right;
+    //        next = _next;
+    //    }
+    //}
+    //public Node Connect(Node root)
+    //{
+    //    if (root == null)
+    //        return null;
+    //    void Dfs(Node node)
+    //    {
+    //        if (node == null || node.left == null)
+    //            return;
+    //        node.left.next = node.right;
+    //        if (node.next != null)
+    //            node.right.next = node.next.left;
+    //        Dfs(node.left);
+    //        Dfs(node.right);
+    //    }
+    //    Dfs(root);
+    //    return root;
+    //}
     public int[] FindDiagonalOrder(IList<IList<int>> nums)
     {
         if (nums == null)
@@ -12617,6 +12617,48 @@ public class Leetcode
             }
         }
         return false;
+    }
+    public class Node
+    {
+        public int val;
+        public IList<Node> children;
+
+        public Node() { }
+
+        public Node(int _val)
+        {
+            val = _val;
+        }
+
+        public Node(int _val, IList<Node> _children)
+        {
+            val = _val;
+            children = _children;
+        }
+    }
+    public IList<IList<int>> LevelOrder(Node root)
+    {
+        if (root == null)
+            return new List<IList<int>>();
+        var q = new Queue<Node>();
+        q.Enqueue(root);
+        var lists = new List<IList<int>>();
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            var curr = new List<int>();
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                curr.Add(deq.val);
+                foreach (var c in deq.children)
+                {
+                    q.Enqueue(c);
+                }
+            }
+            lists.Add(curr);
+        }
+        return lists;
     }
     static void Main(string[] args)
     {      
