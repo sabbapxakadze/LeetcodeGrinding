@@ -12660,6 +12660,21 @@ public class Leetcode
         }
         return lists;
     }
+    public int SumNumbers(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+        int Dfs(TreeNode node, int curr)
+        {
+            if (node == null)
+                return 0;
+            curr = 10 * curr + node.val;
+            if (node.left == null && node.right == null)
+                return curr;
+            return Dfs(node.left, curr) + Dfs(node.right, curr);
+        }
+        return Dfs(root, 0);
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
