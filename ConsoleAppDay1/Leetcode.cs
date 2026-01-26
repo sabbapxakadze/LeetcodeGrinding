@@ -12675,6 +12675,66 @@ public class Leetcode
         }
         return Dfs(root, 0);
     }
+    public bool IsEvenOddTree(TreeNode root)
+    {
+        if (root == null)
+            return false;
+        var map = new Dictionary<int, List<int>>();
+        var q = new Queue<TreeNode>();
+        var level = 0;
+        q.Enqueue(root);
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            map[level] = new List<int>();
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                map[level].Add(deq.val);
+                if (deq.left != null)
+                    q.Enqueue(deq.left);
+                if (deq.right != null)
+                    q.Enqueue(deq.right);
+            }
+            level++;
+        }
+        bool Even(List<int> list)
+        {
+            if (list.Count == 1)
+                return list[0] % 2 == 1;
+            for (int i = 1; i < list.Count; i++)
+            {
+                if (list[i] % 2 != 1 || list[i] <= list[i - 1])
+                    return false;
+            }
+            return true;
+        }
+        bool Odd(List<int> list)
+        {
+            if (list.Count == 1)
+                return list[0] % 2 == 0;
+            for (int i = 1; i < list.Count; i++)
+            {
+                if (list[i] % 2 != 0 || list[i] >= list[i - 1])
+                    return false;
+            }
+            return true;
+        }
+        for (int i = 0; i < map.Count; i++)
+        {
+            if (i % 2 == 0)
+            {
+                if (!Even(map[i]))
+                    return false;
+            }
+            else
+            {
+                if (!Odd(map[i]))
+                    return false;
+            }
+        }
+        return true;
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
