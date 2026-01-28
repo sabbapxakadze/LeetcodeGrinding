@@ -12756,6 +12756,38 @@ public class Leetcode
                 res.Add(((char)(i + 'a')).ToString());
         return res;
     }
+    public class BSTIterator
+    {
+        List<int> l;
+        int index = 0;
+        public BSTIterator(TreeNode root)
+        {
+            l = new List<int>();
+            void Inorder(TreeNode node)
+            {
+                if (node == null)
+                    return;
+                Inorder(node.left);
+                l.Add(node.val);
+                Inorder(node.right);
+            }
+            Inorder(root);
+        }
+
+        public int Next()
+        {
+            if (!HasNext())
+                return -1;
+            return l[index++];
+        }
+
+        public bool HasNext()
+        {
+            if (index >= l.Count)
+                return false;
+            return true;
+        }
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
