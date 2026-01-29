@@ -12788,6 +12788,32 @@ public class Leetcode
             return true;
         }
     }
+    public TreeNode BalanceBST(TreeNode root)
+    {
+        if (root == null)
+            return null;
+        var list = new List<int>();
+        void Inorder(TreeNode node)
+        {
+            if (node == null)
+                return;
+            Inorder(node.left);
+            list.Add(node.val);
+            Inorder(node.right);
+        }
+        TreeNode BalancedBST(int left, int right)
+        {
+            if (left > right)
+                return null;
+            int mid = (left + right) / 2;
+            TreeNode node = new TreeNode(list[mid]);
+            node.left = BalancedBST(left, mid - 1);
+            node.right = BalancedBST(mid + 1, right);
+            return node;
+        }
+        Inorder(root);
+        return BalancedBST(0, list.Count - 1);
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
