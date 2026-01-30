@@ -12814,6 +12814,45 @@ public class Leetcode
         Inorder(root);
         return BalancedBST(0, list.Count - 1);
     }
+    public int FindCheapestPrice(int n, int[][] flights, int src, int dst, int k)
+    {
+        if (flights == null || flights.Length == 0)
+            return -1;
+        var adjList = new Dictionary<int, List<int>>();
+        var costs = new Dictionary<(int, int), int>();
+        foreach (var flight in flights)
+        {
+            int sr = flight[0], ds = flight[1], cost = flight[2];
+            if (!adjList.ContainsKey(sr))
+                adjList[sr] = new List<int>();
+            adjList[sr].Add(ds);
+            costs[(sr, ds)] = cost;
+        }
+        var memo = new Dictionary<(int, int), int>();
+        int Dfs(int source, int step = 0)
+        {
+            if (source == dst)
+                return 0;
+            if (!adjList.ContainsKey(source))
+                return int.MaxValue;
+            if (memo.ContainsKey((source, step)))
+                return memo[(source, step)];
+            if (step > k)
+                return int.MaxValue;
+            
+            int min = int.MaxValue;
+            foreach (var destination in adjList[source])
+            {
+                int cost = Dfs(destination, step + 1);
+                if (cost != int.MaxValue)
+                    min = Math.Min(min, cost + costs[(source, destination)]);
+            }
+            memo[(source, step)] = min;
+            return min;
+        }
+        int res = Dfs(src);
+        return res != int.MaxValue ? res : -1;
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
