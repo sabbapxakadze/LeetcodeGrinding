@@ -12853,6 +12853,44 @@ public class Leetcode
         int res = Dfs(src);
         return res != int.MaxValue ? res : -1;
     }
+    public ListNode AddTwoNumbers2(ListNode l1, ListNode l2)
+    {
+        if (l1 == null)
+            return l2;
+        if (l2 == null)
+            return l1;
+        int Length(ListNode n)
+        {
+            int len = 0;
+            while (n != null) { len++; n = n.next; }
+            return len;
+        }
+        ListNode Pad(ListNode n, int k)
+        {
+            while (k-- > 0)
+                n = new ListNode(0, n);
+            return n;
+        }
+        int len1 = Length(l1);
+        int len2 = Length(l2);
+
+        if (len1 < len2) l1 = Pad(l1, len2 - len1);
+        if (len2 < len1) l2 = Pad(l2, len1 - len2);
+
+        int Dfs(ListNode a, ListNode b)
+        {
+            if (a == null) return 0;
+
+            int carry = Dfs(a.next, b.next);
+            int sum = a.val + b.val + carry;
+            a.val = sum % 10;
+            return sum / 10;
+        }
+        int c = Dfs(l1, l2);
+        if (c > 0)
+            return new ListNode(c, l1);
+        return l1;
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
