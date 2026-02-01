@@ -12891,6 +12891,25 @@ public class Leetcode
             return new ListNode(c, l1);
         return l1;
     }
+    public void WiggleSort(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return;
+        int n = nums.Length;
+        Array.Sort(nums);
+
+        int[] res = new int[n];
+        int left = (n - 1) / 2;
+        int right = n - 1;
+        for (int i = 0; i < n; i++)
+        {
+            if (i % 2 == 0)
+                res[i] = nums[left--];
+            else
+                res[i] = nums[right--];
+        }
+        Array.Copy(res, nums, n);
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
