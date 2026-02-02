@@ -12910,6 +12910,32 @@ public class Leetcode
         }
         Array.Copy(res, nums, n);
     }
+    public int NumberOfSubarrays(int[] nums, int k)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int c = 0, odd = 0;
+        int l = 0, mid = 0;
+        for (int r = 0; r < nums.Length; r++)
+        {
+            if (nums[r] % 2 == 1)
+                odd++;
+            while (odd > k)
+            {
+                if (nums[l] % 2 == 1)
+                    odd--;
+                l++;
+                mid = l;
+            }
+            if (odd == k)
+            {
+                while (nums[mid] % 2 == 0)
+                    mid++;
+                c += mid - l + 1;
+            }
+        }
+        return c;
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
