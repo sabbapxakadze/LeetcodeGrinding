@@ -12936,6 +12936,27 @@ public class Leetcode
         }
         return c;
     }
+    public int FindMaxLength(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var map = new Dictionary<int, int>();
+        map[0] = -1;
+        int sum = 0, res = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            sum += nums[i] == 1 ? 1 : -1;
+            if (map.ContainsKey(sum))
+            {
+                res = Math.Max(res, i - map[sum]);
+            }
+            else
+            {
+                map[sum] = i;
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
