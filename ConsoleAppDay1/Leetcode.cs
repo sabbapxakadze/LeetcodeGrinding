@@ -12957,6 +12957,30 @@ public class Leetcode
         }
         return res;
     }
+    public string SmallestFromLeaf(TreeNode root)
+    {
+        if (root == null)
+            return null;
+        string smallest = null;
+        void Backtrack(TreeNode node, string curr)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            char c = (char)('a' + node.val);
+            curr = c + curr;
+            if (node.left == null && node.right == null)
+            {
+                if (smallest == null || string.Compare(curr, smallest) < 0)
+                    smallest = curr;
+            }
+            Backtrack(node.left, curr);
+            Backtrack(node.right, curr);
+        }
+        Backtrack(root, "");
+        return smallest;
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
