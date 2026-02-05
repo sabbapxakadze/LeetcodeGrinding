@@ -11335,7 +11335,7 @@ public class Leetcode
         }
         return res;
     }
-    public IList<string> WatchedVideosByFriends(IList<IList<string>> watchedVideos, 
+    public IList<string> WatchedVideosByFriends(IList<IList<string>> watchedVideos,
         int[][] friends, int id, int level)
     {
         if (watchedVideos == null || friends == null)
@@ -11351,7 +11351,7 @@ public class Leetcode
             for (int i = 0; i < size; i++)
             {
                 var index = queue.Dequeue();
-                
+
                 foreach (var f in friends[index])
                 {
                     if (set.Add(index))
@@ -11454,7 +11454,7 @@ public class Leetcode
             Inorder(node.right);
         }
         Inorder(root);
-        
+
         int first = -1, second = -1;
         for (int i = 1; i < inorder.Count; i++)
         {
@@ -12002,7 +12002,7 @@ public class Leetcode
             {
                 map[node.right] = node;
                 Travel(node.right);
-            }   
+            }
         }
         Travel(root);
         var list = new List<int>();
@@ -12519,7 +12519,7 @@ public class Leetcode
                     {
                         memo[curr] = true;
                         return memo[curr];
-                    } 
+                    }
                 }
             }
             memo[curr] = false;
@@ -12839,7 +12839,7 @@ public class Leetcode
                 return memo[(source, step)];
             if (step > k)
                 return int.MaxValue;
-            
+
             int min = int.MaxValue;
             foreach (var destination in adjList[source])
             {
@@ -12993,8 +12993,47 @@ public class Leetcode
         }
         return 0;
     }
+    public class RandomizedSet
+    {
+        List<int> list;
+        Dictionary<int, int> map;
+        public RandomizedSet()
+        {
+            list = new List<int>();
+            map = new Dictionary<int, int>();
+        }
+        public bool Insert(int val)
+        {
+            if (map.ContainsKey(val))
+                return false;
+
+            map[val] = list.Count;
+            list.Add(val);
+            return true;
+        }
+
+        public bool Remove(int val)
+        {
+            if (!map.ContainsKey(val))
+                return false;
+            int idx = map[val];
+            int lastVal = list[list.Count - 1];
+
+            list[idx] = lastVal;
+            map[lastVal] = idx;
+            list.RemoveAt(list.Count - 1);
+            map.Remove(val);
+
+            return true;
+        }
+        public int GetRandom()
+        {
+            int rand = Random.Shared.Next(list.Count);
+            return list[rand];
+        }
+    }
     static void Main(string[] args)
-    {      
+    {
         Console.WriteLine();
     }
 }
