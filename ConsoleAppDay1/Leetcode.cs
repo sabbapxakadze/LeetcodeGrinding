@@ -12981,6 +12981,18 @@ public class Leetcode
         Backtrack(root, "");
         return smallest;
     }
+    public int HIndex(int[] citations)
+    {
+        if (citations == null || citations.Length == 0)
+            return 0;
+        Array.Sort(citations);
+        for (int i = 0; i < citations.Length; i++)
+        {
+            if (citations[i] >= citations.Length - i)
+                return citations.Length - i;
+        }
+        return 0;
+    }
     static void Main(string[] args)
     {      
         Console.WriteLine();
