@@ -13032,6 +13032,35 @@ public class Leetcode
             return list[rand];
         }
     }
+    public ListNode DeleteDuplicatesII(ListNode head)
+    {
+        if (head == null)
+            return null;
+        var map = new Dictionary<int, int>();
+        ListNode temp = head;
+        while (temp != null)
+        {
+            if (!map.ContainsKey(temp.val))
+                map[temp.val] = 0;
+            map[temp.val]++;
+            temp = temp.next;
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode prev = dummy;
+        temp = head;
+
+        while (temp != null)
+        {
+            if (map[temp.val] == 1)
+            {
+                prev.next = temp;
+                prev = prev.next;
+            }
+            temp = temp.next;
+        }
+        prev.next = null;
+        return dummy.next;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
