@@ -13061,6 +13061,59 @@ public class Leetcode
         prev.next = null;
         return dummy.next;
     }
+    public int MinMutation(string startGene, string endGene, string[] bank)
+    {
+        if (string.IsNullOrEmpty(startGene) || string.IsNullOrEmpty(endGene))
+            return -1;
+        var set = new HashSet<string>(bank);
+        if (!set.Contains(endGene))
+            return -1;
+        set.Add(startGene);
+        var nextGene = new Dictionary<string, List<string>>();
+        foreach (var word in set)
+        {
+            foreach (var x in set)
+            {
+                if (word == x)
+                    continue;
+                int c = 0;
+                for (int i = 0; i < 8 && c < 2; i++)
+                {
+                    if (word[i] != x[i])
+                        c++;
+                }
+                if (c != 1)
+                    continue;
+                if (!nextGene.ContainsKey(word))
+                    nextGene[word] = new List<string>();
+                nextGene[word].Add(x);
+            }
+        }
+        var q = new Queue<string>();
+        var visited = new HashSet<string>();
+        q.Enqueue(startGene);
+        visited.Add(startGene);
+        int res = 0;
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (deq == endGene)
+                    return res;
+                if (!nextGene.ContainsKey(deq))
+                    continue;
+                foreach (var item in nextGene[deq])
+                {
+                    if (visited.Add(item))
+                        q.Enqueue(item);
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
