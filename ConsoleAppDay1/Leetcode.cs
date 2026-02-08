@@ -13114,6 +13114,53 @@ public class Leetcode
         }
         return -1;
     }
+    public int SnakesAndLadders(int[][] board)
+    {
+        if (board == null || board.Length == 0)
+            return 0;
+        int n = board.Length;
+        (int, int) Convert(int pos)
+        {
+            pos--;
+            int rowFromBottom = pos / n;
+            int col = pos % n;
+            int r = n - 1 - rowFromBottom;
+            if (rowFromBottom % 2 == 1)
+                col = n - 1 - col;
+            return (r, col);
+        }
+        var visited = new HashSet<int>();
+        var q = new Queue<int>();
+        q.Enqueue(1);
+        visited.Add(1);
+        int cost = 0;
+        while (q.Count > 0)
+        {
+            var size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (deq == n * n)
+                    return cost;
+                for (int dice = 1; dice <= 6; dice++)
+                {
+                    int next = deq + dice;
+                    if (next > n * n)
+                        break;
+                    var (r, c) = Convert(next);
+                    if (board[r][c] != -1)
+                        next = board[r][c];
+                    if (!visited.Contains(next))
+                    {
+                        visited.Add(next);
+                        q.Enqueue(next);
+                    }
+                }
+            }
+            cost++;
+        }
+        return -1;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
