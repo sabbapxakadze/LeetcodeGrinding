@@ -13209,6 +13209,34 @@ public class Leetcode
                 board[i][j] = newB[i, j];
         }
     }
+    public ListNode Partition(ListNode head, int x)
+    {
+        if (head == null)
+            return null;
+        var beforeHead = new ListNode(0);
+        var afterHead = new ListNode(0);
+
+        var before = beforeHead;
+        var after = afterHead;
+        var curr = head;
+        while (curr != null)
+        {
+            if (curr.val < x)
+            {
+                before.next = curr;
+                before = before.next;
+            }
+            else
+            {
+                after.next = curr;
+                after = after.next;
+            }
+            curr = curr.next;
+        }
+        after.next = null;
+        before.next = afterHead.next;
+        return beforeHead.next;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
