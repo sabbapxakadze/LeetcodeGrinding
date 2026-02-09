@@ -13161,6 +13161,54 @@ public class Leetcode
         }
         return -1;
     }
+    public void GameOfLife(int[][] board)
+    {
+        if (board == null || board.Length == 0)
+            return;
+        int r = board.Length, c = board[0].Length;
+        var dirs = new int[][]
+        {
+            new int[] {1, 1}, new int[] {-1, -1},
+            new int[] {1, 0}, new int[] {-1, 0},
+            new int[] {0, 1}, new int[] {0, -1},
+            new int[] {1, -1}, new int[] {-1, 1},
+        };
+        var newB = new int[r, c];
+        void Check(int i, int j)
+        {
+            int ns = 0;
+            foreach (var dir in dirs)
+            {
+                int x = i + dir[0], y = j + dir[1];
+                if (x < 0 || y < 0 || x >= r || y >= c)
+                    continue;
+                if (board[x][y] == 1)
+                    ns++;
+            }
+            if (board[i][j] == 1)
+            {
+                if (ns == 2 || ns == 3)
+                    newB[i, j] = 1;
+                else
+                    newB[i, j] = 0;
+            }
+            else
+            {
+                if (ns == 3)
+                    newB[i, j] = 1;
+            }
+        }
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+                Check(i, j);
+        }
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+                board[i][j] = newB[i, j];
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
