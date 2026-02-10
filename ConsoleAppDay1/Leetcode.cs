@@ -13237,6 +13237,18 @@ public class Leetcode
         before.next = afterHead.next;
         return beforeHead.next;
     }
+    public int SingleNumberII(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        int ones = 0, twos = 0;
+        foreach (int num in nums)
+        {
+            ones = (ones ^ num) & ~twos;
+            twos = (twos ^ num) & ~ones;
+        }
+        return ones;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
