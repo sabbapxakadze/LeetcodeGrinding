@@ -13249,6 +13249,18 @@ public class Leetcode
         }
         return ones;
     }
+    public int TrailingZeroes(int n)
+    {
+        if (n < 10)
+            return 0;
+        int c = 0;
+        while (n > 0)
+        {
+            n /= 5;
+            c++;
+        }
+        return c;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
