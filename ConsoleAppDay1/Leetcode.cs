@@ -13272,6 +13272,55 @@ public class Leetcode
         }
         return left << i;
     }
+    public class CBTInserter
+    {
+        Queue<TreeNode> q;
+        TreeNode root;
+        public CBTInserter(TreeNode root)
+        {
+            q = new Queue<TreeNode>();
+            this.root = root;
+            var bfs = new Queue<TreeNode>();
+            bfs.Enqueue(root);
+            while (bfs.Count != 0)
+            {
+                int size = bfs.Count;
+                for (int i = 0; i < size; i++)
+                {
+                    var deq = bfs.Dequeue();
+                    if (deq.left == null || deq.right == null)
+                        q.Enqueue(deq);
+                    if (deq.left != null)
+                        bfs.Enqueue(deq.left);
+                    if (deq.right != null)
+                        bfs.Enqueue(deq.right);
+                }
+            }
+        }
+
+        public int Insert(int val)
+        {
+            if (q.Count == 0)
+                return -1;
+            var peek = q.Peek();
+            if (peek.left == null)
+            {
+                peek.left = new TreeNode(val);
+                q.Enqueue(peek.left);
+            }
+            else if (peek.right == null)
+            {
+                peek = q.Dequeue();
+                peek.right = new TreeNode(val);
+                q.Enqueue(peek.right);
+            }
+            return peek.val;
+        }
+        public TreeNode Get_root()
+        {
+            return root;
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
