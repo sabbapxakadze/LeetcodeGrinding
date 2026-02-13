@@ -13321,6 +13321,27 @@ public class Leetcode
             return root;
         }
     }
+    public IList<IList<int>> KSmallestPairs(int[] nums1, int[] nums2, int k)
+    {
+        if (nums1 == null || nums2 == null)
+            return new List<IList<int>>();
+        var pq = new PriorityQueue<(int i, int j), int>();
+        for (int i = 0; i < Math.Min(nums1.Length, k); i++)
+            pq.Enqueue((i, 0), nums1[i] + nums2[0]);
+
+        var res = new List<IList<int>>();
+        while (k > 0 && pq.Count > 0)
+        {
+            var (i, j) = pq.Dequeue();
+            res.Add(new List<int> { nums1[i], nums2[j] });
+            if (j + 1 < nums2.Length)
+            {
+                pq.Enqueue((i, j + 1), nums1[i] + nums2[j + 1]);
+            }
+            k--;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
