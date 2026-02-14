@@ -13342,6 +13342,60 @@ public class Leetcode
         }
         return res;
     }
+    public IList<int> FindSubstring(string s, string[] words)
+    {
+        if (string.IsNullOrEmpty(s) || words == null || words.Length == 0)
+            return new List<int>();
+        var res = new List<int>();
+        int wordLen = words[0].Length;
+        int wordCount = words.Length;
+        int totalLen = wordLen * wordCount;
+
+        if (s.Length < totalLen)
+            return res;
+
+        var original = new Dictionary<string, int>();
+        foreach (var w in words)
+        {
+            if (!original.ContainsKey(w))
+                original[w] = 0;
+            original[w]++;
+        }
+        for (int i = 0; i < wordLen; i++)
+        {
+            int left = i;
+            int count = 0;
+            var window = new Dictionary<string, int>();
+
+            for (int right = i; right + wordLen <= s.Length; right += wordLen)
+            {
+                string word = s.Substring(right, wordLen);
+                if (!original.ContainsKey(word))
+                {
+                    window.Clear();
+                    count = 0;
+                    left = right + wordLen;
+                    continue;
+                }
+                if (!window.ContainsKey(word))
+                    window[word] = 0;
+
+                window[word]++;
+                count++;
+
+                while (window[word] > original[word])
+                {
+                    string leftWord = s.Substring(left, wordLen);
+                    window[leftWord]--;
+                    count--;
+                    left += wordLen;
+                }
+                if (count == wordCount)
+                    res.Add(left);
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
