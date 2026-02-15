@@ -13396,6 +13396,24 @@ public class Leetcode
         }
         return res;
     }
+    public int Candy(int[] ratings)
+    {
+        if (ratings == null || ratings.Length == 0)
+            return 0;
+        int[] arr = new int[ratings.Length];
+        Array.Fill(arr, 1);
+        for (int i = 1; i < ratings.Length; i++)
+        {
+            if (ratings[i] > ratings[i - 1])
+                arr[i] = arr[i - 1] + 1;
+        }
+        for (int i = ratings.Length - 2; i >= 0; i--)
+        {
+            if (ratings[i] > ratings[i + 1])
+                arr[i] = Math.Max(arr[i], arr[i + 1] + 1);
+        }
+        return arr.Sum();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
