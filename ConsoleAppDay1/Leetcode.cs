@@ -13414,6 +13414,33 @@ public class Leetcode
         }
         return arr.Sum();
     }
+    public int MaxPointsI(int[][] points)
+    {
+        if (points == null || points.Length == 0)
+            return 0;
+        int res = 1;
+        for (int i = 0; i < points.Length; i++)
+        {
+            var map = new Dictionary<float, int>();
+            int dups = 0;
+            for (int j = i + 1; j < points.Length; j++)
+            {
+                int x = points[j][0] - points[i][0];
+                int y = points[j][1] - points[i][1];
+                if (x == 0 && y == 0)
+                {
+                    dups++;
+                    continue;
+                }
+                float slope = x == 0 ? float.PositiveInfinity : (float)y / x;
+                if (!map.ContainsKey(slope))
+                    map[slope] = 0;
+                map[slope]++;
+                res = Math.Max(res, map[slope] + 1);
+            }
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
