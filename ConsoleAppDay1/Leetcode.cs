@@ -13441,6 +13441,66 @@ public class Leetcode
         }
         return res;
     }
+    //public IList<string> FindWords(char[][] board, string[] words)
+    //{
+    //    if (board == null || words == null)
+    //        return new List<string>();
+    //    var res = new List<string>();
+    //    int r = board.Length, c = board[0].Length;
+
+    //    TrieNode root = BuildTrie(words);
+    //    void DFS(int i, int j, TrieNode node)
+    //    {
+    //        if (i < 0 || j < 0 || i >= r || j >= c)
+    //            return;
+    //        char ch = board[i][j];
+    //        if (ch == '#' || !node.Children.ContainsKey(ch))
+    //            return;
+    //        node = node.Children[ch];
+    //        if (node.Word != null)
+    //        {
+    //            res.Add(node.Word);
+    //            node.Word = null;
+    //        }
+    //        board[i][j] = '#';
+    //        DFS(i + 1, j, node);
+    //        DFS(i - 1, j, node);
+    //        DFS(i, j + 1, node);
+    //        DFS(i, j - 1, node);
+    //        board[i][j] = ch;
+    //    }
+    //    for (int i = 0; i < r; i++)
+    //    {
+    //        for (int j = 0; j < c; j++)
+    //        {
+    //            DFS(i, j, root);
+    //        }
+    //    }
+    //    return res;
+    //}
+    //class TrieNode
+    //{
+    //    public Dictionary<char, TrieNode> Children = new();
+    //    public string Word = null;
+    //}
+    //TrieNode BuildTrie(string[] words)
+    //{
+    //    var root = new TrieNode();
+
+    //    foreach (var word in words)
+    //    {
+    //        var node = root;
+    //        foreach (char c in word)
+    //        {
+    //            if (!node.Children.ContainsKey(c))
+    //                node.Children[c] = new TrieNode();
+
+    //            node = node.Children[c];
+    //        }
+    //        node.Word = word;
+    //    }
+    //    return root;
+    //}
     static void Main(string[] args)
     {
         Console.WriteLine();
