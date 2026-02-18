@@ -4718,40 +4718,40 @@ public class Leetcode
         InOrder(root);
         return res;
     }
-    public class Node1
-    {
-        public int val;
-        public Node1 next;
-        public Node1 random;
+    //public class Node1
+    //{
+    //    public int val;
+    //    public Node1 next;
+    //    public Node1 random;
 
-        public Node1(int _val)
-        {
-            val = _val;
-            next = null;
-            random = null;
-        }
-    }
-    public Node1 CopyRandomList(Node1 head)
-    {
-        if (head == null)
-            return null;
+    //    public Node1(int _val)
+    //    {
+    //        val = _val;
+    //        next = null;
+    //        random = null;
+    //    }
+    //}
+    //public Node1 CopyRandomList(Node1 head)
+    //{
+    //    if (head == null)
+    //        return null;
 
-        Dictionary<Node1, Node1> d = new Dictionary<Node1, Node1>();
-        Node1 curr = head;
-        while (curr != null)
-        {
-            d[curr] = new Node1(curr.val);
-            curr = curr.next;
-        }
-        curr = head;
-        while (curr != null)
-        {
-            d[curr].next = curr.next == null ? null : d[curr.next];
-            d[curr].random = curr.random == null ? null : d[curr.random];
-            curr = curr.next;
-        }
-        return d[head];
-    }
+    //    Dictionary<Node1, Node1> d = new Dictionary<Node1, Node1>();
+    //    Node1 curr = head;
+    //    while (curr != null)
+    //    {
+    //        d[curr] = new Node1(curr.val);
+    //        curr = curr.next;
+    //    }
+    //    curr = head;
+    //    while (curr != null)
+    //    {
+    //        d[curr].next = curr.next == null ? null : d[curr.next];
+    //        d[curr].random = curr.random == null ? null : d[curr.random];
+    //        curr = curr.next;
+    //    }
+    //    return d[head];
+    //}
     public int LastStoneWeight(int[] stones)
     {
         if (stones == null || stones.Length == 0)
@@ -12618,24 +12618,24 @@ public class Leetcode
         }
         return false;
     }
-    public class Node
-    {
-        public int val;
-        public IList<Node> children;
+    //public class Node
+    //{
+    //    public int val;
+    //    public IList<Node> children;
 
-        public Node() { }
+    //    public Node() { }
 
-        public Node(int _val)
-        {
-            val = _val;
-        }
+    //    public Node(int _val)
+    //    {
+    //        val = _val;
+    //    }
 
-        public Node(int _val, IList<Node> _children)
-        {
-            val = _val;
-            children = _children;
-        }
-    }
+    //    public Node(int _val, IList<Node> _children)
+    //    {
+    //        val = _val;
+    //        children = _children;
+    //    }
+    //}
     public IList<IList<int>> LevelOrder(Node root)
     {
         if (root == null)
@@ -13501,6 +13501,50 @@ public class Leetcode
     //    }
     //    return root;
     //}
+    public class Node
+    {
+        public int val;
+        public Node left;
+        public Node right;
+        public Node next;
+
+        public Node() { }
+
+        public Node(int _val)
+        {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next)
+        {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+    }
+    public Node Connect(Node root)
+    {
+        if (root == null)
+            return null;
+        var q = new Queue<Node>();
+        q.Enqueue(root);
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (i != size - 1)
+                    deq.next = q.Peek();
+                if (deq.left != null)
+                    q.Enqueue(deq.left);
+                if (deq.right != null)
+                    q.Enqueue(deq.right);
+            }
+        }
+        return root;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
