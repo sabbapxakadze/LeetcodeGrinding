@@ -13545,6 +13545,27 @@ public class Leetcode
         }
         return root;
     }
+    public TreeNode BuildTreeInorderPostorder(int[] inorder, int[] postorder)
+    {
+        if (inorder == null || postorder == null)
+            return null;
+        int indexVal = postorder.Length - 1;
+        var inorderMap = new Dictionary<int, int>();
+        for (int i = 0; i < inorder.Length; i++)
+            inorderMap[inorder[i]] = i;
+        TreeNode Build(int l, int r)
+        {
+            if (l > r)
+                return null;
+            int root = postorder[indexVal--];
+            TreeNode rootNode = new TreeNode(root);
+            int index = inorderMap[root];
+            rootNode.right = Build(index + 1, r);
+            rootNode.left = Build(l, index - 1);
+            return rootNode;
+        }
+        return Build(0, inorder.Length - 1);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
