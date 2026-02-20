@@ -13566,6 +13566,36 @@ public class Leetcode
         }
         return Build(0, inorder.Length - 1);
     }
+    public bool CanReach(int[] arr, int start)
+    {
+        if (arr == null || arr.Length == 0)
+            return false;
+        if (start < 0 || start >= arr.Length)
+            return false;
+        var q = new Queue<int>();
+        if (arr[start] == 0)
+            return true;
+        q.Enqueue(start);
+        var set = new HashSet<int>();
+        set.Add(start);
+        while (q.Count != 0)
+        {
+            var size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (arr[deq] == 0)
+                    return true;
+                int up = deq + arr[deq];
+                if (up < arr.Length && set.Add(up))
+                    q.Enqueue(up);
+                int down = deq - arr[deq];
+                if (down >= 0 && set.Add(down))
+                    q.Enqueue(down);
+            }
+        }
+        return false;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
