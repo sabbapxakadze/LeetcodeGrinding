@@ -13596,6 +13596,53 @@ public class Leetcode
         }
         return false;
     }
+    public bool ContainsCycle(char[][] grid)
+    {
+        if (grid == null || grid.Length == 0)
+            return false;
+        var dirs = new int[][]
+        {
+            new int[] {1, 0},
+            new int[] {-1, 0},
+            new int[] {0, 1},
+            new int[] {0, -1}
+        };
+        bool[][] visited = new bool[grid.Length][];
+        for (int i = 0; i < grid.Length; i++)
+            visited[i] = new bool[grid[0].Length];
+        for (int i = 0; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (visited[i][j])
+                    continue;
+                var queue = new Queue<(int r, int c, int pr, int pc)>();
+                queue.Enqueue((i, j, -1, -1));
+                visited[i][j] = true;
+                char ch = grid[i][j];
+                while (queue.Count > 0)
+                {
+                    var (r, c, pr, pc) = queue.Dequeue();
+                    foreach (var d in dirs)
+                    {
+                        int x = r + d[0];
+                        int y = c + d[1];
+                        if (x < 0 || y < 0 || x >= grid.Length || y >= grid[0].Length)
+                            continue;
+                        if (grid[x][y] != ch)
+                            continue;
+                        if (x == pr && y == pc)
+                            continue;
+                        if (visited[x][y])
+                            return true;
+                        visited[x][y] = true;
+                        queue.Enqueue((x, y, r, c));
+                    }
+                }
+            }
+        }
+        return false;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
