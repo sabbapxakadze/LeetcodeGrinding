@@ -13643,6 +13643,35 @@ public class Leetcode
         }
         return false;
     }
+    public int TotalNQueens(int n)
+    {
+        if (n <= 0)
+            return 0;
+        bool[] cols = new bool[n];
+        bool[] dg1 = new bool[2 * n];
+        bool[] dg2 = new bool[2 * n];
+        int count = 0;
+        void Backtrack(int row)
+        {
+            if (row == n)
+            {
+                count++;
+                return;
+            }
+            for (int col = 0; col < n; col++)
+            {
+                int d1 = row - col + n - 1;
+                int d2 = row + col;
+                if (cols[col] || dg1[d1] || dg2[d2])
+                    continue;
+                cols[col] = dg1[d1] = dg2[d2] = true;
+                Backtrack(row + 1);
+                cols[col] = dg1[d1] = dg2[d2] = false;
+            }
+        }
+        Backtrack(0);
+        return count;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
