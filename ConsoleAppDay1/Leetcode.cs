@@ -13672,36 +13672,6 @@ public class Leetcode
         Backtrack(0);
         return count;
     }
-    public int MaximalSquare(char[][] matrix)
-    {
-        if (matrix == null || matrix.Length == 0)
-            return 0;
-        int r = matrix.Length, c = matrix[0].Length;
-        var memo = new Dictionary<(int, int), int>();
-        int Rec(int a, int b)
-        {
-            if (a >= r || b >= c)
-                return 0;
-            if (memo.ContainsKey((a, b)))
-                return memo[(a, b)];
-            if (matrix[a][b] == '0')
-                return memo[(a, b)] = 0;
-            memo[(a, b)] = 0;
-            int x = Rec(a + 1, b);
-            int y = Rec(a, b + 1);
-            int z = Rec(a + 1, b + 1);
-            return memo[(a, b)] = 1 + Math.Min(Math.Min(x, y), z);
-        }
-        int max = 0;
-        for (int i = 0; i < r; i++)
-        {
-            for (int j = 0; j < c; j++)
-            {
-                max = Math.Max(max, Rec(i, j));
-            }
-        }
-        return max * max;
-    }
     static void Main(string[] args)
     {
         Console.WriteLine();
