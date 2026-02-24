@@ -13702,6 +13702,45 @@ public class Leetcode
         }
         return max * max;
     }
+    public List<string> FullJustify(string[] words, int maxWidth)
+    {
+        if (words == null || words.Length <= 0)
+            return new List<string>();
+        var res = new List<string>();
+        var line = new List<string>();
+        int l = 0, index = 0;
+        while (index < words.Length)
+        {
+            if (l + words[index].Length + line.Count <= maxWidth)
+            {
+                line.Add(words[index]);
+                l += words[index].Length;
+                index++;
+            }
+            else
+            {
+                var ex = maxWidth - l;
+                var sp = ex / Math.Max(1, line.Count - 1);
+                var rem = ex % Math.Max(1, line.Count - 1);
+                for (int j = 0; j < Math.Max(1, line.Count - 1); j++)
+                {
+                    line[j] += new string(' ', sp);
+                    if (rem > 0)
+                    {
+                        line[j] += ' ';
+                        rem--;
+                    }
+                }
+                res.Add(string.Join("", line));
+                line.Clear();
+                l = 0;
+            }
+        }
+        var last_l = string.Join(" ", line);
+        int tr = maxWidth - last_l.Length;
+        res.Add(last_l + new string(' ', tr));
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
