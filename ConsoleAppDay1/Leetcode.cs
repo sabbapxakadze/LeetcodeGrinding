@@ -13741,6 +13741,26 @@ public class Leetcode
         res.Add(last_l + new string(' ', tr));
         return res;
     }
+    public string FrequencySort(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return null;
+        var map = new Dictionary<char, int>();
+        foreach (var c in s)
+        {
+            if (!map.ContainsKey(c))
+                map[c] = 0;
+            map[c]++;
+        }
+        map = map.OrderByDescending(x => x.Value).ToDictionary();
+        var res = new StringBuilder();
+        foreach (var item in map)
+        {
+            for (int i = 0; i < item.Value; i++)
+                res.Append(item.Key);
+        }
+        return res.ToString();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
