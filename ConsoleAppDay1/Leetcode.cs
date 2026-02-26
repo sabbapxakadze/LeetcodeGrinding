@@ -13776,6 +13776,24 @@ public class Leetcode
         }
         return list;
     }
+    public ListNode SwapNodes(ListNode head, int k)
+    {
+        if (head == null)
+            return null;
+        var d = new Dictionary<int, ListNode>();
+        ListNode temp = head;
+        int i = 1, cnt = 1;
+        while (temp != null)
+        {
+            d[i++] = temp;
+            temp = temp.next;
+            cnt++;
+        }
+        int t = d[cnt - k].val;
+        d[cnt - k].val = d[k].val;
+        d[k].val = t;
+        return head;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
