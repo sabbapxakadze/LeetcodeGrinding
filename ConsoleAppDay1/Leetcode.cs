@@ -13761,6 +13761,21 @@ public class Leetcode
         }
         return res.ToString();
     }
+    public IList<int> FindDuplicates(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return new List<int>();
+        var list = new List<int>();
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int ind = Math.Abs(nums[i]) - 1;
+            if (nums[ind] < 0)
+                list.Add(ind + 1);
+            else
+                nums[ind] *= -1;
+        }
+        return list;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
