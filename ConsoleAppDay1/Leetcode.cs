@@ -13794,6 +13794,29 @@ public class Leetcode
         d[k].val = t;
         return head;
     }
+    public int FindMaximizedCapital(int k, int w, int[] profits, int[] capital)
+    {
+        if (profits == null || capital == null)
+            return w;
+        var max = new PriorityQueue<int, int>(Comparer<int>.Create((a, b) => b.CompareTo(a)));
+        var minCap = new PriorityQueue<(int, int), (int, int)>();
+        for (int i = 0; i < profits.Length; i++)
+        {
+            minCap.Enqueue((capital[i], profits[i]), (capital[i], profits[i]));
+        }
+        for (int i = 0; i < k; i++)
+        {
+            while (minCap.Count != 0 && minCap.Peek().Item1 <= w)
+            {
+                var (c, p) = minCap.Dequeue();
+                max.Enqueue(p, p);
+            }
+            if (max.Count == 0)
+                break;
+            w += max.Dequeue();
+        }
+        return w;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
