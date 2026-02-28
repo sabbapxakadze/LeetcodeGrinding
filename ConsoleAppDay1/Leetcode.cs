@@ -13817,6 +13817,23 @@ public class Leetcode
         }
         return w;
     }
+    public int MaxProfit(int[] prices)
+    {
+        if (prices == null || prices.Length == 0)
+            return 0;
+        var dp = new int[3, prices.Length];
+        var min = new int[3];
+        Array.Fill(min, prices[0]);
+        for (int i = 1; i < prices.Length; i++)
+        {
+            for (int j = 1; j <= 2; j++)
+            {
+                min[j] = Math.Min(min[j], prices[i] - dp[j - 1, i - 1]);
+                dp[j, i] = Math.Max(dp[j, i - 1], prices[i] - min[j]);
+            }
+        }
+        return dp[2, prices.Length - 1];
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
