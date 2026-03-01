@@ -13817,7 +13817,7 @@ public class Leetcode
         }
         return w;
     }
-    public int MaxProfit(int[] prices)
+    public int MaxProfitIII(int[] prices)
     {
         if (prices == null || prices.Length == 0)
             return 0;
@@ -13833,6 +13833,32 @@ public class Leetcode
             }
         }
         return dp[2, prices.Length - 1];
+    }
+    public int MaxProfitIV(int k, int[] prices)
+    {
+        if (prices == null || prices.Length == 0)
+            return 0;
+        var memo = new Dictionary<(int, int, bool), int>();
+        int Rec(int i, int j, bool z) // i-th day, j-transaction left, z-state holding or not
+        {
+            if (i >= prices.Length)
+                return 0;
+            if (j <= 0 && z)
+                return memo[(i, j, z)] = 0;
+            if (memo.ContainsKey((i, j, z)))
+                return memo[(i, j, z)];
+            var ans = Rec(i + 1, j, z);
+            if (z)
+            {
+                ans = Math.Max(ans, prices[i] + Rec(i + 1, j - 1, !z));
+            }
+            else
+            {
+                ans = Math.Max(ans, -prices[i] + Rec(i + 1, j, !z));
+            }
+            return memo[(i, j, z)] = ans;
+        }
+        return Rec(0, k, false);
     }
     static void Main(string[] args)
     {
