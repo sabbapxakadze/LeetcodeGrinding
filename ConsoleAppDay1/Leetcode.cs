@@ -13860,6 +13860,39 @@ public class Leetcode
         }
         return Rec(0, k, false);
     }
+    public int Calculate(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+            return 0;
+        int output = 0, curr = 0, sign = 1;
+        var stack = new Stack<int>();
+        foreach (var c in s)
+        {
+            if (char.IsDigit(c))
+                curr = 10 * curr + (c - '0');
+            else if (c == '+' || c == '-')
+            {
+                output += (curr * sign);
+                curr = 0;
+                sign = c == '+' ? 1 : -1;
+            }
+            else if (c == '(')
+            {
+                stack.Push(output);
+                stack.Push(sign);
+                output = 0;
+                sign = 1;
+            }
+            else if (c == ')')
+            {
+                output += (curr * sign);
+                output *= stack.Pop();
+                output += stack.Pop();
+                curr = 0;
+            }
+        }
+        return output + (curr * sign);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
