@@ -13893,6 +13893,24 @@ public class Leetcode
         }
         return output + (curr * sign);
     }
+    public int LastRemaining(int n)
+    {
+        if (n < 0)
+            return 0;
+        int rem = n, head = 1, step = 1;
+        bool goLeft = true;
+        while (rem != 1)
+        {
+            if (goLeft || rem % 2 == 1)
+            {
+                head += step;
+            }
+            step *= 2;
+            rem /= 2;
+            goLeft = !goLeft;
+        }
+        return head;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
