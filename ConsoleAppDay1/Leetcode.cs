@@ -13911,6 +13911,25 @@ public class Leetcode
         }
         return head;
     }
+    public string ReplaceWords(IList<string> dictionary, string sentence)
+    {
+        if (dictionary == null || string.IsNullOrEmpty(sentence))
+            return null;
+        var res = new List<string>();
+        foreach (var word in sentence.Split(" "))
+        {
+            string replacement = word;
+            foreach (var root in dictionary)
+            {
+                if (word.StartsWith(root) && root.Length < replacement.Length)
+                {
+                    replacement = root;
+                }
+            }
+            res.Add(replacement);
+        }
+        return string.Join(' ', res);
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
