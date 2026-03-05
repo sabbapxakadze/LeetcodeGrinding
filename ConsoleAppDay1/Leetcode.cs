@@ -12636,30 +12636,30 @@ public class Leetcode
     //        children = _children;
     //    }
     //}
-    public IList<IList<int>> LevelOrder(Node root)
-    {
-        if (root == null)
-            return new List<IList<int>>();
-        var q = new Queue<Node>();
-        q.Enqueue(root);
-        var lists = new List<IList<int>>();
-        while (q.Count != 0)
-        {
-            int size = q.Count;
-            var curr = new List<int>();
-            for (int i = 0; i < size; i++)
-            {
-                var deq = q.Dequeue();
-                curr.Add(deq.val);
-                foreach (var c in deq.children)
-                {
-                    q.Enqueue(c);
-                }
-            }
-            lists.Add(curr);
-        }
-        return lists;
-    }
+    //public IList<IList<int>> LevelOrder(Node root)
+    //{
+    //    if (root == null)
+    //        return new List<IList<int>>();
+    //    var q = new Queue<Node>();
+    //    q.Enqueue(root);
+    //    var lists = new List<IList<int>>();
+    //    while (q.Count != 0)
+    //    {
+    //        int size = q.Count;
+    //        var curr = new List<int>();
+    //        for (int i = 0; i < size; i++)
+    //        {
+    //            var deq = q.Dequeue();
+    //            curr.Add(deq.val);
+    //            foreach (var c in deq.children)
+    //            {
+    //                q.Enqueue(c);
+    //            }
+    //        }
+    //        lists.Add(curr);
+    //    }
+    //    return lists;
+    //}
     public int SumNumbers(TreeNode root)
     {
         if (root == null)
@@ -13929,6 +13929,60 @@ public class Leetcode
             res.Add(replacement);
         }
         return string.Join(' ', res);
+    }
+    public int AmountOfTime(TreeNode root, int start)
+    {
+        if (root == null)
+            return 0;
+        var adjList = new Dictionary<int, List<int>>();
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (!adjList.ContainsKey(deq.val))
+                    adjList[deq.val] = new List<int>();
+                if (deq.left != null)
+                {
+                    if (!adjList.ContainsKey(deq.left.val))
+                        adjList[deq.left.val] = new List<int>();
+                    adjList[deq.val].Add(deq.left.val);
+                    adjList[deq.left.val].Add(deq.val);
+                    q.Enqueue(deq.left);
+                }
+                if (deq.right != null)
+                {
+                    if (!adjList.ContainsKey(deq.right.val))
+                        adjList[deq.right.val] = new List<int>();
+                    adjList[deq.val].Add(deq.right.val);
+                    adjList[deq.right.val].Add(deq.val);
+                    q.Enqueue(deq.right);
+                }
+            }
+        }
+        var q2 = new Queue<int>();
+        var set = new HashSet<int>();
+        q2.Enqueue(start);
+        set.Add(start);
+        int time = -1;
+        while (q2.Count != 0)
+        {
+            var size = q2.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q2.Dequeue();
+                foreach (var item in adjList[deq])
+                {
+                    if (set.Add(item))
+                        q2.Enqueue(item);
+                }    
+            }
+            time++;
+        }
+        return time;
     }
     static void Main(string[] args)
     {
