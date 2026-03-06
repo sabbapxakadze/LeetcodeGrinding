@@ -13984,6 +13984,32 @@ public class Leetcode
         }
         return time;
     }
+    public class Solution
+    {
+        int[] original;
+        Random rand;
+        public Solution(int[] nums)
+        {
+            original = (int[])nums.Clone();
+            rand = new Random();
+        }
+        public int[] Reset()
+        {
+            return original;
+        }
+        public int[] Shuffle()
+        {
+            int[] arr = (int[])original.Clone();
+            for (int i = original.Length - 1; i >= 0; i--)
+            {
+                var r = rand.Next(i + 1);
+                int temp = arr[i];
+                arr[i] = arr[r];
+                arr[r] = temp;
+            }
+            return arr;
+        }
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
