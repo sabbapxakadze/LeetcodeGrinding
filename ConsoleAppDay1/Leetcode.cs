@@ -14010,6 +14010,25 @@ public class Leetcode
             return arr;
         }
     }
+    public int SumOfUnique(int[] nums)
+    {
+        if (nums == null || nums.Length == 0)
+            return 0;
+        var map = new Dictionary<int, int>();
+        foreach (var c in nums)
+        {
+            if (!map.ContainsKey(c))
+                map[c] = 0;
+            map[c]++;
+        }
+        int res = 0;
+        foreach (var item in map)
+        {
+            if (item.Value == 1)
+                res += item.Key;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
