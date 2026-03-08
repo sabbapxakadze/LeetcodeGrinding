@@ -14029,6 +14029,34 @@ public class Leetcode
         }
         return res;
     }
+    public long KthLargestLevelSum(TreeNode root, int k)
+    {
+        if (root == null)
+            return -1;
+        var pq = new PriorityQueue<long, long>(Comparer<long>.Create((a, b) => b.CompareTo(a)));
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            long sum = 0;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                sum += deq.val;
+                if (deq.left != null)
+                    q.Enqueue(deq.left);
+                if (deq.right != null)
+                    q.Enqueue(deq.right);
+            }
+            pq.Enqueue(sum, sum);
+        }
+        if (pq.Count < k)
+            return -1;
+        for (int i = 0; i < k - 1; i++)
+            pq.Dequeue();
+        return pq.Dequeue();
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
