@@ -13978,7 +13978,7 @@ public class Leetcode
                 {
                     if (set.Add(item))
                         q2.Enqueue(item);
-                }    
+                }
             }
             time++;
         }
@@ -14056,6 +14056,51 @@ public class Leetcode
         for (int i = 0; i < k - 1; i++)
             pq.Dequeue();
         return pq.Dequeue();
+    }
+    public int MinimumOperations(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+        int MinSwaps(List<int> nums)
+        {
+            if (nums == null || nums.Count == 0)
+                return 0;
+            var swaps = 0;
+            var arr = nums.ToArray();
+            var sorted = nums.OrderBy(x => x).ToArray();
+            var map = new Dictionary<int, int>();
+            for (int i = 0; i < sorted.Length; i++)
+                map[sorted[i]] = i;
+            for (int i = 0; i < sorted.Length; i++)
+            {
+                while (arr[i] != sorted[i])
+                {
+                    int cor = map[arr[i]];
+                    (arr[i], arr[cor]) = (arr[cor], arr[i]);
+                    swaps++;
+                }
+            }
+            return swaps;
+        }
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        int op = 0;
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            var list = new List<int>();
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                list.Add(deq.val);
+                if (deq.left != null)
+                    q.Enqueue(deq.left);
+                if (deq.right != null)
+                    q.Enqueue(deq.right);
+            }
+            op += MinSwaps(list);
+        }
+        return op;
     }
     static void Main(string[] args)
     {
