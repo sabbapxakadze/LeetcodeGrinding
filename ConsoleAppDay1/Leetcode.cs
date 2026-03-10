@@ -14102,6 +14102,55 @@ public class Leetcode
         }
         return op;
     }
+    public TreeNode ReverseOddLevels(TreeNode root)
+    {
+        if (root == null)
+            return null;
+        var map = new Dictionary<int, List<int>>();
+        var q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        int index = 0;
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (index % 2 != 0)
+                {
+                    if (!map.ContainsKey(index))
+                        map[index] = new List<int>();
+                    map[index].Add(deq.val);
+                }
+                if (deq.left != null)
+                    q.Enqueue(deq.left);
+                if (deq.right != null)
+                    q.Enqueue(deq.right);
+            }
+            index++;
+        }
+        q = new Queue<TreeNode>();
+        q.Enqueue(root);
+        index = 0;
+        foreach (var item in map)
+            item.Value.Reverse();
+        while (q.Count != 0)
+        {
+            int size = q.Count;
+            for (int i = 0; i < size; i++)
+            {
+                var deq = q.Dequeue();
+                if (index % 2 != 0 && map.ContainsKey(index))
+                    deq.val = map[index][i];
+                if (deq.left != null)
+                    q.Enqueue(deq.left);
+                if (deq.right != null)
+                    q.Enqueue(deq.right);
+            }
+            index++;
+        }
+        return root;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
