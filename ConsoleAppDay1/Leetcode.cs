@@ -14151,6 +14151,28 @@ public class Leetcode
         }
         return root;
     }
+    public int MinimumRecolors(string blocks, int k)
+    {
+        if (string.IsNullOrEmpty(blocks))
+            return 0;
+        int count = 0;
+        int max = 0;
+        int i = 0;
+        for (int j = 0; j < blocks.Length; j++)
+        {
+            if (blocks[j] == 'B')
+                count++;
+            if (j - i + 1 > k)
+            {
+                if (blocks[i] == 'B')
+                    count--;
+                i++;
+            }
+            if (j - i + 1 == k)
+                max = Math.Max(max, count);
+        }
+        return k - max;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
