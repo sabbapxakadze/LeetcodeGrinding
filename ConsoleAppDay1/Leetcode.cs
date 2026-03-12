@@ -14173,6 +14173,32 @@ public class Leetcode
         }
         return k - max;
     }
+    public int CountCharacters(string[] words, string chars)
+    {
+        if (words == null || words.Length == 0)
+            return 0;
+        int result = 0;
+        int[] charCount = new int[26];
+        foreach (char c in chars)
+            charCount[c - 'a']++;
+        foreach (string word in words)
+        {
+            int[] temp = new int[26];
+            bool valid = true;
+            foreach (char c in word)
+            {
+                temp[c - 'a']++;
+                if (temp[c - 'a'] > charCount[c - 'a'])
+                {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid)
+                result += word.Length;
+        }
+        return result;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
