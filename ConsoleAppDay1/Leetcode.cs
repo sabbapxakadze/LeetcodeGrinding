@@ -14227,6 +14227,51 @@ public class Leetcode
         }
         return result;
     }
+    public bool FindSafeWalk(IList<IList<int>> grid, int health)
+    {
+        if (grid == null || grid.Count == 0)
+            return false;
+        int m = grid.Count, n = grid[0].Count;
+        var dirs = new int[][]
+        {
+        new int[]{1,0},
+        new int[]{-1,0},
+        new int[]{0,1},
+        new int[]{0,-1}
+        };
+        var q = new Queue<(int i, int j, int h)>();
+        int[,] best = new int[m, n];
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
+                best[i, j] = -1;
+        int startHealth = health - grid[0][0];
+        if (startHealth <= 0)
+            return false;
+        q.Enqueue((0, 0, startHealth));
+        best[0, 0] = startHealth;
+        while (q.Count > 0)
+        {
+            var (i, j, h) = q.Dequeue();
+            if (i == m - 1 && j == n - 1)
+                return true;
+            foreach (var d in dirs)
+            {
+                int ni = i + d[0];
+                int nj = j + d[1];
+                if (ni < 0 || nj < 0 || ni >= m || nj >= n)
+                    continue;
+                int nh = h - grid[ni][nj];
+                if (nh <= 0)
+                    continue;
+                if (nh > best[ni, nj])
+                {
+                    best[ni, nj] = nh;
+                    q.Enqueue((ni, nj, nh));
+                }
+            }
+        }
+        return false;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
