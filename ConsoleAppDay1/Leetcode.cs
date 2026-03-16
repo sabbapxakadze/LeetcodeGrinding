@@ -14272,6 +14272,35 @@ public class Leetcode
         }
         return false;
     }
+    public int DistributeCookies(int[] cookies, int k)
+    {
+        if (cookies == null || cookies.Length == 0)
+            return 0;
+        int ans = int.MaxValue;
+        var children = new int[k];
+        void Dfs(int index)
+        {
+            if (index == cookies.Length)
+            {
+                int unfairness = 0;
+                for (int i = 0; i < children.Length; i++)
+                    unfairness = Math.Max(unfairness, children[i]);
+                ans = Math.Min(ans, unfairness);
+                return;
+            }
+            for (int i = 0; i < children.Length; i++)
+            {
+                children[i] += cookies[index];
+                if (children[i] < ans)
+                    Dfs(index + 1);
+                children[i] -= cookies[index];
+                if (children[i] == 0)
+                    break;
+            }
+        }
+        Dfs(0);
+        return ans;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
