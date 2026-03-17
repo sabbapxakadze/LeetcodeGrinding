@@ -14301,6 +14301,28 @@ public class Leetcode
         Dfs(0);
         return ans;
     }
+    public int NumRabbits(int[] answers)
+    {
+        if (answers == null || answers.Length == 0)
+            return 0;
+        var map = new Dictionary<int, int>();
+        foreach (var ans in answers)
+        {
+            if (!map.ContainsKey(ans))
+                map[ans] = 0;
+            map[ans]++;
+        }
+        var res = 0;
+        foreach (var item in map)
+        {
+            int x = item.Key;
+            int count = item.Value;
+            int groupSize = x + 1;
+            int groups = (count + groupSize - 1) / groupSize;
+            res += groups * groupSize;
+        }
+        return res;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
