@@ -14323,6 +14323,44 @@ public class Leetcode
         }
         return res;
     }
+    public int[] MaximumBobPoints(int numArrows, int[] aliceArrows)
+    {
+        if (aliceArrows == null || aliceArrows.Length == 0)
+            return Array.Empty<int>();
+        int max = 0;
+        List<int> l = new List<int>();
+        void Backtrack(int index, List<int> curr, int arrows)
+        {
+            if (index == 12)
+            {
+                int score = curr.Sum();
+                if (score > max)
+                {
+                    max = score;
+                    l = new List<int>(curr);
+                }
+                return;
+            }
+            int aliceCurr = aliceArrows[index];
+            if (arrows > aliceCurr)
+            {
+                curr.Add(index);
+                Backtrack(index + 1, curr, arrows - aliceCurr - 1);
+                curr.RemoveAt(curr.Count - 1);            
+            }
+            Backtrack(index + 1, curr, arrows);
+        }
+        Backtrack(0, new List<int>(), numArrows);
+        var bob = new int[12];
+        int used = 0;
+        foreach (var item in l)
+        {
+            bob[item] = aliceArrows[item] + 1;
+            used += bob[item];
+        }
+        bob[0] += numArrows - used;
+        return bob;
+    }
     static void Main(string[] args)
     {
         Console.WriteLine();
